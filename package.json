@@ -1,0 +1,19 @@
+{
+  "name": "suplidora-hu",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx turbo dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "packageManager": "npm@10.9.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "turbo": "^2.2.3"
+  }
+}
