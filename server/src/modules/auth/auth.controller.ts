@@ -7,7 +7,7 @@ import { IsPublic } from '@shared/decorators/isPublic'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/sign-in')
+  @Post('/signin')
   @IsPublic()
   async signInUser(@Body() data: SignInDTO) {
     return this.authService.signIn(data)

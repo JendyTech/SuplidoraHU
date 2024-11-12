@@ -4,9 +4,10 @@ import { AppService } from '@/app.service'
 import { AuthModule } from '@modules/auth/auth.module'
 import { AuthGuard } from '@shared/guards/session'
 import { APP_GUARD } from '@nestjs/core'
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, ProductsModule],
   controllers: [AppController],
   providers: [
     AppService,

@@ -1,0 +1,40 @@
+import { IProduct } from '@/interfaces/Product'
+
+export const data: IProduct[] = [
+  {
+    _id: '1',
+    name: 'Product 1',
+    price: 100,
+    description: 'Description for product 1',
+    code: 'P1',
+    unitsPerPack: 10,
+    createdBy: 'Admin',
+    updatedBy: 'Admin',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    _id: '2',
+    name: 'Product 2',
+    price: 200,
+    description: 'Description for product 2',
+    code: 'P2',
+    unitsPerPack: 20,
+    createdBy: 'Admin',
+    updatedBy: 'Admin',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    _id: '3',
+    name: 'Product 3',
+    price: 300,
+    description: 'Description for product 3',
+    code: 'P3',
+    unitsPerPack: 30,
+    createdBy: 'Admin',
+    updatedBy: 'Admin',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+]

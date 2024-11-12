@@ -8,7 +8,6 @@ import { successResponse, errorResponse } from '@shared/functions/response'
 import { createToken } from '@shared/functions/jwt'
 import { SignInDTO } from '@modules/auth/dto/signIn.dto'
 import { TOKEN_DESTINATION } from '@config/constants'
-import { IUser } from '@interfaces/User'
 
 @Injectable()
 export class AuthService {

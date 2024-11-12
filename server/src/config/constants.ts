@@ -13,5 +13,8 @@ export const TOKEN_DESTINATION = {
 
 export const MODELS_NAMES = {
   USERS: 'users',
+  PRODUCTS: 'products',
+  PRODUCTS_IMAGES: 'products_images',
 }
+
 export const SESSION_TOKEN_TIME = 30 * 24 * 60 * 60 * 1000 // 30 days
