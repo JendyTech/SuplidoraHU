@@ -1,0 +1,44 @@
+.container {
+
+    width: 100%;
+    position: relative;
+}
+
+.input {
+    height: 46px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #DBDCDE;
+    background-color: #F4F5F9;
+    padding: 0 16px;
+    color: #727272;
+    font-size: 14px;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.inputError {
+    border: 1px solid rgb(216, 76, 76);
+}
+
+.eyeButton {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 20;
+    top: 10;
+    cursor: pointer;
+    transition: opacity .1s ease-in;
+}
+
+.eyeButton:hover {
+    opacity: .5;
+}
+
+.errorMessage {
+    color: rgb(216, 76, 76);
+    font-size: 12px;
+    padding-left: 4px;
+}

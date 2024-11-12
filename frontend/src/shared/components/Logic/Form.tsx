@@ -14,7 +14,9 @@ interface Props {
   children: React.ReactNode
   style: React.CSSProperties
   actionTimeout: number
-  formProps: React.HTMLProps<HTMLFormElement>
+  formProps: React.HTMLProps<HTMLFormElement
+  >
+  className : string
 }
 
 const SubmitForm = forwardRef<HTMLFormElement, Readonly<Partial<Props>>>((props, ref) => {
@@ -25,7 +27,8 @@ const SubmitForm = forwardRef<HTMLFormElement, Readonly<Partial<Props>>>((props,
     children,
     formProps,
     style,
-    manageLoading = true
+    manageLoading = true,
+    className
   } = props
 
   const { setLoading } = useLoader()
@@ -108,6 +111,7 @@ const SubmitForm = forwardRef<HTMLFormElement, Readonly<Partial<Props>>>((props,
         width: "100%",
         ...style
       }}
+      className={className}
       ref={ref}
       {...formProps}
     >

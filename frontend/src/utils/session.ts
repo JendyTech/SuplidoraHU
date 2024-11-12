@@ -17,7 +17,7 @@ export const readTokenServer = async () => {
 	}
 
 	try {
-		const parts = token.value.split(".")
+		const parts = token.value?.split(".")
 		if (parts.length !== 3) {
 			throw new Error("Invalid token")
 		}
@@ -94,5 +94,5 @@ export const redirectSession = async () => {
 		return
 	}
 
-	return redirect("/")
+	return redirect("/admin")
 }

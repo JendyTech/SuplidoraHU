@@ -61,7 +61,7 @@ export function SessionProvider({ children, payload, token }: Props) {
   }
 
 
-  const firstName = data.name.split(" ")[0]
+  const firstName = ""
 
   return (
     <SessionContext.Provider value={{

@@ -1,0 +1,58 @@
+import React, { useState } from "react";
+import styles from "@shared/styles/components/Form/Input.module.css";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
+
+interface InputProps {
+    type: string;
+    name: string;
+    maxWidth?: string;
+    placeholder?: string;
+    required?: boolean
+}
+
+export default function CustomInput(props: InputProps) {
+    const [error, setError] = useState<string | null>(null)
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const { type, placeholder, name, maxWidth = '330px', required = true } = props;
+
+    const handleShowPass = () => {
+        setShowPassword((prev) => !prev)
+    }
+
+    const handleInvalid = (e: React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const { type } = e.target as HTMLInputElement;
+        if (type === 'email') {
+            setError('Correo no valido')
+            return
+        }
+
+        setError('Este campo es requerido')
+    }
+
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+        if (error) {
+            setError(null)
+
+        }
+    }
+
+
+    return (
+        <div className={styles.container} style={{ maxWidth }}>
+            <input
+                onInvalid={handleInvalid}
+                className={`${styles.input} ${error && styles.inputError}`}
+                type={showPassword ? 'text' : type}
+                name={name}
+                placeholder={placeholder}
+                required={required}
+                onInput={handleInput}
+            />
+            {type === "password" && (
+                <button type='button' className={styles.eyeButton} onClick={handleShowPass}> {showPassword ? <IconEyeOff strokeWidth={1} /> : <IconEye strokeWidth={1} />} </button>
+            )}
+            {error && <span className={styles.errorMessage}>{error}</span>}
+        </div>
+    );
+}

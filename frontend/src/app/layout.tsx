@@ -28,6 +28,9 @@ export default async function RootLayout({
           closeButton
           position='top-right'
           visibleToasts={1}
+          toastOptions={{
+            duration: 3000
+          }}
         />
       </body>
     </html>
