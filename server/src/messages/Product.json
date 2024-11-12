@@ -1,0 +1,11 @@
+{
+  "ERROR_CREATING_PRODUCT": "Error al crear el producto",
+  "PRODUCT_NAME_IN_USE": "El nombre del producto ya está en uso",
+  "PRODUCT_CREATED": "Producto creado exitosamente",
+  "PRODUCT_UPDATED": "Producto actualizado exitosamente",
+  "PRODUCT_DELETED": "Producto eliminado exitosamente",
+  "PRODUCT_NOT_FOUND": "Producto no encontrado",
+  "PRODUCTS_NOT_FOUND": "Productos no encontrados",
+  "PRODUCTS_FOUND": "Productos encontrados",
+  "PRODUCTS_FETCHED": "Productos obtenidos exitosamente"
+}
