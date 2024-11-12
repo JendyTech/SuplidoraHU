@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import { LoaderProvider } from '@/contexts/Loader'
 import { Toaster } from 'sonner'
 import { LoadAppScreen } from '@/shared/components/Screen/LoadAppScreen'
+import { poppins } from '@config/fonts'
 
 export const metadata: Metadata = {
   title: "Suplidora HU",
@@ -16,7 +17,7 @@ export default async function RootLayout({
 }>) {
 
   return (
-    <html lang="es">
+    <html lang="es" className={poppins.className}>
       <body>
         <LoaderProvider>
           {children}
