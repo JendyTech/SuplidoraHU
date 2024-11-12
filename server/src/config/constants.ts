@@ -1,6 +1,6 @@
 import path from 'node:path'
 
-export const APP_SIZE_LIMIT_UPLOAD = '10mb'
+export const APP_SIZE_LIMIT_UPLOAD = '100mb'
 export const APP_NAME = 'Suplidora HU Services'
 export const APP_SWAGGER_URL = '/'
 export const ROOT_DIR = path.resolve(__dirname, '..', '..')
@@ -13,6 +13,8 @@ export const TOKEN_DESTINATION = {
 
 export const MODELS_NAMES = {
   USERS: 'users',
+  INVOICES: 'invoices',
+  INVOICE_ITEMS: 'invoice_items',
   PRODUCTS: 'products',
   PRODUCTS_IMAGES: 'products_images',
 }

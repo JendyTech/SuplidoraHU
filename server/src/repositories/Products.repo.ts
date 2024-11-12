@@ -1,8 +1,10 @@
-import { CreateProducts } from '@contracts/repositories/Products.repo'
-import { ProductModel } from '@database/products.db'
+import { CreateProducts, GetProductByIdWithImagesResult, SaveImageProduct } from '@contracts/repositories/Products.repo'
+import { ProductModel, ProductPhotoModel } from '@database/products.db'
 import { mongoosePagination } from '@shared/functions/pagination'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { HttpException, HttpStatus } from '@nestjs/common'
+import { MODELS_NAMES } from '@config/constants'
+import { Types } from 'mongoose'
 
 export class ProductRepository {
   static async getProducts(pagination: PaginationDTO) {
@@ -14,6 +16,35 @@ export class ProductRepository {
 
   static async getProductById(id: string) {
     const result = await ProductModel.findById(id)
+
+    if (!result) {
+      return null
+    }
+
+    return result.toObject()
+  }
+
+  static async getProductByIdWithImages(id: string): Promise<null | GetProductByIdWithImagesResult> {
+    const [ product = null ] = await ProductModel.aggregate([
+      {
+        $match: {
+          _id: new Types.ObjectId(id)
+        }
+      },
+      {
+        $lookup: {
+          from: MODELS_NAMES.PRODUCTS_IMAGES,
+          as: 'images',
+          localField: '_id',
+          foreignField: 'productId',
+        }
+      },  
+      {
+        $limit: 1
+      }
+    ])
+
+    return product
   }
 
   static async createProduct(data: CreateProducts) {
@@ -56,6 +87,31 @@ export class ProductRepository {
     return result.toObject()
   }
 
+  static async addImage(image: SaveImageProduct){
+    const result = new ProductPhotoModel(image)
+    
+    await result.save()
+
+    return result.toObject()
+  }
+
+
+  static async findImageById(id: string) {
+    const image = await ProductPhotoModel.findById(id)
+
+    if (!image) return null
+
+    return image.toObject()
+  }
+
+  static async deleteImage(id: string) {
+    const deletedImage = await ProductModel.findByIdAndDelete(id)
+
+    if (!deletedImage) return null
+
+    return deletedImage.toObject()
+  }
+
   static async findById(id: string) {
     const product = await ProductModel.findById(id)
 
@@ -63,6 +119,8 @@ export class ProductRepository {
       return null
     }
 
+
     return product.toObject()
   }
+
 }

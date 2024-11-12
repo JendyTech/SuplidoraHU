@@ -1,11 +1,17 @@
 {
   "ERROR_CREATING_PRODUCT": "Error al crear el producto",
+  "ERROR_UPLOAD_IMAGE": "Error al subir la imagen",
+  "ERROR_DELETE_IMAGE": "Error al eliminar la imagen",
   "PRODUCT_NAME_IN_USE": "El nombre del producto ya está en uso",
   "PRODUCT_CREATED": "Producto creado exitosamente",
   "PRODUCT_UPDATED": "Producto actualizado exitosamente",
   "PRODUCT_DELETED": "Producto eliminado exitosamente",
   "PRODUCT_NOT_FOUND": "Producto no encontrado",
+  "PRODUCT_IMAGE_NOT_FOUND": "Imagen no encontrada",
   "PRODUCTS_NOT_FOUND": "Productos no encontrados",
   "PRODUCTS_FOUND": "Productos encontrados",
-  "PRODUCTS_FETCHED": "Productos obtenidos exitosamente"
+  "PRODUCTS_FETCHED": "Productos obtenidos exitosamente",
+  "SUCCESS_UPLOAD_IMAGE": "Imagen subida exitosamente",
+  "SUCCESS_DELETE_IMAGE": "Imagen eliminada exitosamente"
 }
+

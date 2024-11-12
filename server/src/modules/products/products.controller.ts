@@ -10,9 +10,10 @@ import {
 } from '@nestjs/common'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { ProductsService } from '@modules/products/products.service'
-import { CreateProductDto } from '@modules/products/dto/Product.dto'
+import { CreateProductDto, UploadProductImageDto } from '@modules/products/dto/Product.dto'
 import { User } from '@shared/decorators/Session'
 import { IUser } from '@interfaces/User'
+
 @Controller('/api/products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
@@ -23,8 +24,8 @@ export class ProductsController {
   }
 
   @Get('/:id')
-  getProductById(@Param('id') id: string) {
-    return this.productsService.getProductById(id)
+  getProductById(@Param('id') id: string, @Query('images') images: boolean = false) {
+    return this.productsService.getProductById(id, String(images) === 'true')
   }
 
   @Post('/')
@@ -32,9 +33,19 @@ export class ProductsController {
     return this.productsService.createProduct(dto, user)
   }
 
+  @Post('/:id/upload-image')
+  uploadProductImage(@Body() dto: UploadProductImageDto, @User() user: IUser, @Param('id') id: string) {
+    return this.productsService.uploadImage(id, dto.image, user)
+  }
+
   @Delete('/:id')
   deleteProduct(@Param('id') id: string) {
     return this.productsService.deleteProduct(id)
+  }
+
+  @Delete('/delete-image/:id')
+  deleteProductImage(@Param('id') id: string){
+    return this.productsService.deleteImage(id)
   }
 
   @Patch('/:id')

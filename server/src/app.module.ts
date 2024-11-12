@@ -5,9 +5,11 @@ import { AuthModule } from '@modules/auth/auth.module'
 import { AuthGuard } from '@shared/guards/session'
 import { APP_GUARD } from '@nestjs/core'
 import { ProductsModule } from './modules/products/products.module';
+import { UsersModule } from './modules/users/users.module';
+import { InvoicesModule } from './modules/invoices/invoices.module';
 
 @Module({
-  imports: [AuthModule, ProductsModule],
+  imports: [AuthModule, ProductsModule, UsersModule, InvoicesModule],
   controllers: [AppController],
   providers: [
     AppService,

@@ -51,10 +51,18 @@ const productPhotoSchema = new Schema<IProductPhoto>(
       type: String,
       required: true,
     },
+    productId: {
+      type: Types.ObjectId,
+      required: true,
+    },
     url: {
       type: String,
       required: true,
     },
+    uploadBy: {
+      type: Types.ObjectId,
+      required: true,
+    }
   },
   {
     timestamps: true,

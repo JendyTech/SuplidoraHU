@@ -16,7 +16,10 @@ export interface IProduct {
 export interface IProductPhoto {
   _id: string
   url: string
+  productId: string | ObjectId
   publicId: string
+  uploadBy: ObjectId | string
   createdAt: Date
   updatedAt: Date
 }
+

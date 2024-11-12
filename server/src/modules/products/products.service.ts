@@ -7,6 +7,8 @@ import { ProductRepository } from '@repositories/Products.repo'
 import { successResponse, errorResponse } from '@shared/functions/response'
 import { HttpStatus } from '@nestjs/common'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
+import { uploadBase64, deleteResource } from '@shared/functions/cloudinary'
+import { CloudinaryResult } from '@contracts/Cloudinary'
 
 @Injectable()
 export class ProductsService {
@@ -143,11 +145,11 @@ export class ProductsService {
     }
   }
 
-  async getProductById(id: string) {
+  async getProductById(productId: string, images: boolean = false) {
     let product
 
     try {
-      product = await ProductRepository.findById(id)
+      product = await (images ? ProductRepository.getProductByIdWithImages(productId) : ProductRepository.findById(productId))
     } catch (error) {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
@@ -163,9 +165,112 @@ export class ProductsService {
       })
     }
 
+
     return successResponse({
       data: product,
       message: PRODUCT.PRODUCTS_FETCHED,
     })
+  }
+
+  async uploadImage(productId: string, image: string, user: IUser) {
+    let result: CloudinaryResult, resultImageDatabase
+
+    try {
+      const product = await ProductRepository.findById(productId)
+
+      if (!product) {
+        return errorResponse({
+          message: PRODUCT.PRODUCT_NOT_FOUND,
+          status: HttpStatus.NOT_FOUND
+        })
+      }
+
+    } catch (error) {
+      return errorResponse({
+        message: GENERAL.ERROR_DATABASE_MESSAGE,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error
+      })
+    }
+
+    try {
+      result = await uploadBase64(image)
+    } catch (error) {
+      return errorResponse({
+        message: PRODUCT.ERROR_UPLOAD_IMAGE,
+        error,
+        status: HttpStatus.INTERNAL_SERVER_ERROR
+      })
+    }
+
+    try {
+      resultImageDatabase = await ProductRepository.addImage({
+        productId,
+        publicId: result.publicId,
+        url: result.secureUrl,
+        uploadBy: user._id
+      })
+    } catch (error) {
+      return errorResponse({
+        message: GENERAL.ERROR_DATABASE_MESSAGE,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error
+      })
+    }
+
+    return successResponse({
+      message: PRODUCT.SUCCESS_UPLOAD_IMAGE,
+      data: resultImageDatabase
+    })
+  }
+
+
+  async deleteImage(imageId: string) {
+    let image
+
+    try {
+      image = await ProductRepository.findImageById(imageId)
+
+      if (!image) {
+        return errorResponse({
+          message: PRODUCT.PRODUCT_IMAGE_NOT_FOUND,
+          status: HttpStatus.NOT_FOUND
+        })
+      }
+
+    } catch (error) {
+      return errorResponse({
+        message: GENERAL.ERROR_DATABASE_MESSAGE,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error,
+      })
+
+    }
+
+    try {
+      await deleteResource(image.publicId)
+
+    } catch (error) {
+      return errorResponse({
+        message: PRODUCT.ERROR_DELETE_IMAGE,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error,
+      })
+    }
+
+    try {
+      const imageDeleted = await ProductRepository.deleteImage(imageId)
+
+      return successResponse({
+        message: PRODUCT.SUCCESS_DELETE_IMAGE,
+        data: imageDeleted
+      })
+    } catch (error) {
+      return errorResponse({
+        message: GENERAL.ERROR_DATABASE_MESSAGE,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error,
+      })  
+    }
   }
 }

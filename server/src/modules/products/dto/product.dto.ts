@@ -1,13 +1,14 @@
+import { IsBase64Image } from '@shared/decorators/Validator'
+import { ApiProperty } from '@nestjs/swagger'
+import { imageBase64 } from '@shared/data/imageBase64'
 import {
   IsString,
   IsNumber,
-  IsOptional,
   IsNotEmpty,
   MinLength,
   IsInt,
   Min,
 } from 'class-validator'
-import { ApiProperty } from '@nestjs/swagger'
 
 export class CreateProductDto {
   @ApiProperty({ example: 'Producto 1', description: 'Nombre del producto' })
@@ -46,4 +47,12 @@ export class CreateProductDto {
   @IsInt()
   @Min(1, { message: 'Las unidades por paquete debe ser mayor a 0' })
   unitsPerPack: number
+}
+
+export class UploadProductImageDto {
+  @ApiProperty({ example: imageBase64, description: 'Imagen del producto' })
+  @IsString({ message: 'La imagen debe ser un string' })
+  @IsNotEmpty({ message: 'La imagen no puede estar vacía' })
+  @IsBase64Image({ message: 'La imagen debe ser base64' })
+  image: string
 }

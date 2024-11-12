@@ -1,0 +1,11 @@
+{
+    "ERROR_CREATING_INVOICE": "Error al crear la Factura",
+    "INVOICE_NAME_IN_USE": "El nombre de la Factura ya está en uso",
+    "INVOICE_CREATED": "Factura creada exitosamente",
+    "INVOICE_UPDATED": "Factura actualizada exitosamente",
+    "INVOICE_DELETED": "Factura eliminada exitosamente",
+    "INVOICE_NOT_FOUND": "Factura no encontrada",
+    "INVOICES_NOT_FOUND": "Facturas no encontradas",
+    "INVOICES_FOUND": "Facturas encontradas",
+    "INVOICES_FETCHED": "Facturas obtenidas exitosamente"
+}
