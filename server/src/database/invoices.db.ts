@@ -7,12 +7,10 @@ const invoiceSchema = new Schema<IInvoice>(
         ncfNumber: {
             type: String,
             required: true,
-            unique: true,
         },
         rncNumber: {
             type: String,
             required: true,
-            unique: true,
         },
         expirationDate: {
             type: Date,

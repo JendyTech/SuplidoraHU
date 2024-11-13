@@ -37,6 +37,7 @@ export class ProductsService {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error,
       })
     }
 

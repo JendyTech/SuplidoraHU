@@ -1,7 +1,16 @@
 import { IInvoice } from "@interfaces/Invoice";
 
-export type CreateInvoices = Omit<
-IInvoice,
-'_id' | 'createdAt' | 'updatedAt'
->
+export interface CreateInvoices extends Omit<
+    IInvoice,
+    '_id' | 'createdAt' | 'updatedAt'
+> {
+  items: CreateInvoiceItem[]
+}
 
+export interface CreateInvoiceItem {
+    productId: string
+    quantity: number
+    description: string
+    unitPrice: number
+    total: number
+}

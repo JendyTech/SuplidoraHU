@@ -25,7 +25,7 @@ export class ProductRepository {
   }
 
   static async getProductByIdWithImages(id: string): Promise<null | GetProductByIdWithImagesResult> {
-    const [ product = null ] = await ProductModel.aggregate([
+    const [product = null] = await ProductModel.aggregate([
       {
         $match: {
           _id: new Types.ObjectId(id)
@@ -38,7 +38,7 @@ export class ProductRepository {
           localField: '_id',
           foreignField: 'productId',
         }
-      },  
+      },
       {
         $limit: 1
       }
@@ -58,9 +58,7 @@ export class ProductRepository {
       new: true,
     })
 
-    if (!result) {
-      return null
-    }
+    if (!result) return null
 
     return result.toObject()
   }
@@ -80,21 +78,18 @@ export class ProductRepository {
       name,
     })
 
-    if (!result) {
-      return null
-    }
+    if (!result) return null
 
     return result.toObject()
   }
 
-  static async addImage(image: SaveImageProduct){
+  static async addImage(image: SaveImageProduct) {
     const result = new ProductPhotoModel(image)
-    
+
     await result.save()
 
     return result.toObject()
   }
-
 
   static async findImageById(id: string) {
     const image = await ProductPhotoModel.findById(id)
@@ -115,12 +110,15 @@ export class ProductRepository {
   static async findById(id: string) {
     const product = await ProductModel.findById(id)
 
-    if (!product) {
-      return null
-    }
-
-
+    if (!product) return null
+    
     return product.toObject()
+  }
+
+
+  static async getProductsByIds (ids: string[]) {
+    const result = await ProductModel.find({_id: { $in: ids } })
+    return result.map((item) => item.toObject())
   }
 
 }

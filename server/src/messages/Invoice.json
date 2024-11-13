@@ -1,11 +1,14 @@
 {
     "ERROR_CREATING_INVOICE": "Error al crear la Factura",
-    "INVOICE_NAME_IN_USE": "El nombre de la Factura ya está en uso",
+    "INVOICE_NAME_IN_USE": "El RNC ya está en uso",
     "INVOICE_CREATED": "Factura creada exitosamente",
     "INVOICE_UPDATED": "Factura actualizada exitosamente",
     "INVOICE_DELETED": "Factura eliminada exitosamente",
     "INVOICE_NOT_FOUND": "Factura no encontrada",
     "INVOICES_NOT_FOUND": "Facturas no encontradas",
     "INVOICES_FOUND": "Facturas encontradas",
-    "INVOICES_FETCHED": "Facturas obtenidas exitosamente"
+    "INVOICES_FETCHED": "Facturas obtenidas exitosamente",
+    "INVOICE_ITEMS_REQUIRED": "Se requiere al menos un artículo para la factura",
+    "INVOICE_ITEM_NOT_FOUND": "No se encontraron los items de la factura",
+    "INVOICE_DATE_VALIDATION": "La fecha de la factura debe ser mayor a la fecha actual"
 }
