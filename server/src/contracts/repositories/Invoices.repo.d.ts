@@ -1,4 +1,4 @@
-import { IInvoice } from "@interfaces/Invoice";
+import { IInvoice, IInvoiceItem } from "@interfaces/Invoice";
 
 export interface CreateInvoices extends Omit<
     IInvoice,
@@ -13,4 +13,8 @@ export interface CreateInvoiceItem {
     description: string
     unitPrice: number
     total: number
+}
+
+export interface GetInvoiceByIdWithItemsResults extends IInvoice {
+  items: IInvoiceItem[]
 }

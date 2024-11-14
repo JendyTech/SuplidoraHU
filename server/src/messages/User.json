@@ -1,0 +1,19 @@
+{
+    "USER_ERROR_CREATING_USER": "Error al crear el Usuario",
+    "USER_NAME_IN_USE": "El nombre de usuario ya está en uso",
+    "USER_CREATED": "Usuario creado exitosamente",
+    "USER_UPDATED": "Usuario actualizado exitosamente",
+    "USER_DELETED": "Usuario eliminado exitosamente",
+    "USER_NOT_FOUND": "Usuario no encontrado",
+    "USERS_NOT_FOUND": "Usuarios no encontrados",
+    "USERS_FOUND": "Usuarios encontrados",
+    "USERS_FETCHED": "Usuarios obtenidos exitosamente",
+    "USER_ITEMS_REQUIRED": "Se requiere al menos un artículo para el usuario",
+    "USER_ITEM_NOT_FOUND": "No se encontraron los items del usuario",
+    "USER_DATE_VALIDATION": "La fecha del usuario debe ser mayor a la fecha actual",
+    "EMAIL_IN_USE": "El correo electrónico ya está en uso",
+    "ERROR_UPLOAD_IMAGE": "Error al subir la imagen",
+    "CANNOT_UPDATE_OWN_PROFILE": "No puedes actualizar tu propio perfil",
+    "CANNOT_DELETE_OWN_PROFILE": "No puedes eliminar tu propio perfil"
+
+}

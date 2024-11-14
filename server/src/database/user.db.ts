@@ -1,5 +1,5 @@
 import { IUser } from '@interfaces/User'
-import { model, Schema } from 'mongoose'
+import { model, Schema, Types } from 'mongoose'
 import { MODELS_NAMES } from '@config/constants'
 
 const UserSchema = new Schema<IUser>(
@@ -28,6 +28,18 @@ const UserSchema = new Schema<IUser>(
       type: String,
       default: null,
     },
+    active: {
+      type: Boolean,
+      default: true
+    },
+    createdBy: {
+      type: Types.ObjectId,
+      default: null
+    },
+    updatedBy: {
+      type: Types.ObjectId,
+      default: null
+    }
   },
   {
     timestamps: true,

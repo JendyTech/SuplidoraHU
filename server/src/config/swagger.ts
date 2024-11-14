@@ -22,6 +22,10 @@ const swaggerConfig = new DocumentBuilder()
 export const swaggerSetup = (app: INestApplication) => {
   if (NODE_ENV === 'DEVELOPMENT') {
     const document = SwaggerModule.createDocument(app, swaggerConfig)
-    SwaggerModule.setup(APP_SWAGGER_URL, app, document)
+    SwaggerModule.setup(APP_SWAGGER_URL, app, document, {
+      swaggerOptions: {
+        persistAuthorization: NODE_ENV === 'DEVELOPMENT'
+      }
+    })
   }
 }

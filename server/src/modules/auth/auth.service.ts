@@ -48,6 +48,13 @@ export class AuthService {
       })
     }
 
+    if (!user.active) {
+      return errorResponse({
+        message: AUTH.LOGIN.USER_IS_NOT_ACTIVE,
+        status: HttpStatus.UNAUTHORIZED
+      })
+    }
+
     const token = createToken({
       destination: TOKEN_DESTINATION.AUTH,
       payload: {

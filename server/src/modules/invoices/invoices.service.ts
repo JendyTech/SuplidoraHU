@@ -107,4 +107,30 @@ export class InvoicesService {
             })
         }
     }
+
+    async getInvoiceById(id: string, items: boolean = false) {
+        let invoice
+
+        try {
+            invoice = await (items ? InvoicesRepository.getInvoicesWithItems(id) : InvoicesRepository.getInvoiceById(id))
+        } catch (error) {
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            })
+        }
+
+        if (!invoice) {
+            return errorResponse({
+                message: INVOICE.INVOICE_NOT_FOUND,
+                status: HttpStatus.NOT_FOUND,
+            })
+        }
+
+        return successResponse({
+            data: invoice,
+            message: INVOICE.INVOICES_FETCHED,
+        })
+    }
 }

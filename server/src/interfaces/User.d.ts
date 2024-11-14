@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongoose'
+
 export interface IUser {
   _id: string
   firstName: string
@@ -6,6 +8,9 @@ export interface IUser {
   photoPublicId: string | null
   email: string
   password: string
+  active: boolean
+  createdBy: string | ObjectId | null
+  updatedBy: string | ObjectId | null
   createdAt: Date
   updatedAt: Date
 }

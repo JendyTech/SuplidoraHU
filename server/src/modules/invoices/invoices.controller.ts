@@ -1,4 +1,4 @@
-import { Controller, Query, Get, Post, Body } from '@nestjs/common';
+import { Controller, Query, Get, Post, Body, Delete, Param } from '@nestjs/common';
 import { InvoicesService } from '@modules/invoices/invoices.service';
 import { PaginationDTO } from '@shared/dto/Pagination.dto';
 import { CreateInvoiceDto } from '@modules/invoices/dto/invoice.dto';
@@ -18,4 +18,10 @@ export class InvoicesController {
     createInvoice(@Body() dto: CreateInvoiceDto, @User() user: IUser){
         return this.invoicesService.createInvoice(dto, user)
     }
+
+    @Get('/:id')
+    getInvoiceById(@Param('id') id: string, @Query('items') items: boolean = false) {
+        return this.invoicesService.getInvoiceById(id, String(items) === 'true')
+    }
 }
+
