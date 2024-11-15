@@ -15,7 +15,7 @@ interface ButtonProps {
 }
 
 export default function CustomButton(props: ButtonProps) {
-  const { text, buttonType, textColor = '#ffffff', icon, maxWidth = '330px', style, backgroundColor = '#2b57d8', onClick } = props;
+  const { text, buttonType, textColor = '#ffffff', icon, maxWidth = '330px', style, backgroundColor = 'var(--primary-color)', onClick } = props;
   return (
     <button onClick={onClick} style={{ color: textColor, maxWidth, backgroundColor, }} className={styles.button} type={buttonType ?? "button"}>
       {text}

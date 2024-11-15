@@ -3,6 +3,7 @@ import { SessionProvider } from '@/contexts/Session'
 import { readTokenServer } from '@/utils/session'
 import styles from '@shared/styles/layout.module.css'
 import Sidebar from '@shared/components/Sidebar'
+import Navbar from '@shared/components/Navbar'
 
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 export default async function AdminLayout({ children }: Props) {
   const result = await readTokenServer()
+
   return (
     <>
       <SessionProvider
@@ -19,11 +21,20 @@ export default async function AdminLayout({ children }: Props) {
       >
         <PreventBackButton />
         <div className={styles.layout}>
-          <nav className={styles.nav}></nav>
           <Sidebar />
-          <section className={styles.content}>
-            {children}
-          </section>
+         <div className={styles.layout2}>
+         <div className={styles.navContainer}>
+            <nav className={styles.nav}>
+              <Navbar />
+            </nav>
+          </div>
+          <div className={styles.appContainer} >
+            <main className={styles.content}>
+              {children}
+            </main>
+          </div>
+         </div>
+
         </div>
 
       </SessionProvider>
