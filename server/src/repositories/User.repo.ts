@@ -40,7 +40,7 @@ export class UserRepository {
   }
 
   static async findById(id: string) {
-    const result = await UserModel.findById(id)
+    const result = await UserModel.findById(id).select('-password')
 
     if (!result) {
       return null

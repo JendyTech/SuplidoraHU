@@ -28,4 +28,9 @@ constructor(private readonly usersService: UsersService){}
     deleteUser(@Param('id') id: string, @User() user: IUser) {
         return this.usersService.deleteUser(id, user)
     }
+
+    @Get('/profile')
+    getProfile(@User() user: IUser) {
+        return this.usersService.getProfile(user)
+    }
 }
