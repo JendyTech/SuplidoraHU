@@ -61,6 +61,8 @@ export class InvoicesRepository {
         return invoice
     }
 
+    
+
     static async findById(id: string) {
         const result = await InvoiceModel.findById(id)
 

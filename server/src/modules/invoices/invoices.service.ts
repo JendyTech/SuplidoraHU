@@ -81,7 +81,7 @@ export class InvoicesService {
                 productId: id,
                 quantity,
                 description: product.description,
-                total:  product.price * quantity,
+                total: product.price * quantity,
                 unitPrice: product.unitsPerPack
             })
         }

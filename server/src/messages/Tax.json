@@ -1,0 +1,12 @@
+{
+    "ERROR_CREATING_TAX": "Error al crear el producto",
+    "TAX_NAME_IN_USE": "El nombre del producto ya está en uso",
+    "TAX_CREATED": "Producto creado exitosamente",
+    "TAX_UPDATED": "Producto actualizado exitosamente",
+    "TAX_DELETED": "Producto eliminado exitosamente",
+    "TAX_NOT_FOUND": "Producto no encontrado",
+    "PRODUCT_IMAGE_NOT_FOUND": "Imagen no encontrada",
+    "TAXES_NOT_FOUND": "Productos no encontrados",
+    "TAXES_FOUND": "Productos encontrados",
+    "TAXES_FETCHED": "Productos obtenidos exitosamente"
+}

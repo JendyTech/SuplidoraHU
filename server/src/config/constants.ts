@@ -17,6 +17,7 @@ export const MODELS_NAMES = {
   INVOICE_ITEMS: 'invoice_items',
   PRODUCTS: 'products',
   PRODUCTS_IMAGES: 'products_images',
+  TAXES: 'taxes',
 }
 
 export const SESSION_TOKEN_TIME = 30 * 24 * 60 * 60 * 1000 // 30 days
