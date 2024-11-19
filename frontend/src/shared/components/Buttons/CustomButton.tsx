@@ -4,8 +4,8 @@ import styles from "@shared/styles/components/button.module.css";
 type buttonStyle = "filled" | "outlined" | "icon" | "text";
 
 interface ButtonProps {
-  style: buttonStyle;
   text: string;
+  style?: buttonStyle;
   onClick?: () => void
   buttonType?: "button" | "submit" | "reset";
   backgroundColor?: string;
@@ -17,7 +17,10 @@ interface ButtonProps {
 export default function CustomButton(props: ButtonProps) {
   const { text, buttonType, textColor = '#ffffff', icon, maxWidth = '330px', style, backgroundColor = 'var(--primary-color)', onClick } = props;
   return (
-    <button onClick={onClick} style={{ color: textColor, maxWidth, backgroundColor, }} className={styles.button} type={buttonType ?? "button"}>
+    <button
+      onClick={onClick}
+      style={{ color: textColor, maxWidth, backgroundColor, }}
+      className={styles.button} type={buttonType ?? "button"}>
       {text}
     </button>
   );

@@ -1,8 +1,9 @@
 export interface IUserLoggeding {
-	id: string
-	email: string
-	avatar: string
-	name: string
 	exp: number
+	firstName: string
 	iat: number
+	id: string
+	lastName: string
+	photo: null | string
+	sub: string
 }

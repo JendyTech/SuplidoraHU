@@ -15,7 +15,7 @@
     width: 100%;
     grid-area: navbar;
     height: 100px;
-    padding-left: 16px;
+    padding-left: 32px;
 }
 
 .nav {
@@ -45,8 +45,8 @@
     margin: 0px auto;
     width: 100%;
     padding: 1rem;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     max-width: 1400px;

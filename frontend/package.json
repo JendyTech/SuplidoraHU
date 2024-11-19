@@ -9,19 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tabler/icons-react": "^3.21.0",
+    "@tabler/icons-react": "3.21.0",
+    "dayjs": "1.11.13",
     "next": "15.0.3",
-    "normalize.css": "^8.0.1",
+    "normalize.css": "8.0.1",
     "react": "19.0.0-rc-66855b96-20241106",
+    "react-data-table-component": "7.6.2",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "sonner": "^1.7.0"
+    "sonner": "1.7.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
+    "@types/node": "20",
+    "@types/react": "18",
+    "@types/react-dom": "18",
+    "eslint": "8",
     "eslint-config-next": "15.0.3",
-    "typescript": "^5"
+    "typescript": "5"
+  },
+  "overrides": {
+    "react": "19.0.0-rc-66855b96-20241106",
+    "react-dom": "19.0.0-rc-66855b96-20241106"
   }
 }

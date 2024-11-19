@@ -10,7 +10,6 @@ import { setCookie } from '@/utils/cookies'
 interface SessionContextType {
   setData: (token: string) => void
   data: IUserLoggeding
-  firstName: string
   token: string
 }
 
@@ -50,10 +49,7 @@ export function SessionProvider({ children, payload, token }: Props) {
         return
       }
 
-      setData({
-        ...payload,
-        name: useShortFormatName(payload?.name),
-      })
+      setData(payload)
       await setCookie(STORAGES.TOKEN, token, 30)
     } catch (error) {
       push("/auth")
@@ -61,15 +57,11 @@ export function SessionProvider({ children, payload, token }: Props) {
   }
 
 
-  const firstName = ""
-
   return (
     <SessionContext.Provider value={{
       data: {
         ...data,
-        name: useShortFormatName(data.name),
       }, setData: setDataToken,
-      firstName,
       token
     }}>
       {children}

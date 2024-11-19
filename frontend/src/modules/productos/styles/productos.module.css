@@ -1,0 +1,47 @@
+.infoContainerGroup {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.infoContainer {
+    box-shadow: var(--shadow-md);
+    width: 280px;
+    height: 100px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    border: .1px solid rgba(214, 214, 214, 0.24);
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+.infoContainer p {
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 24px;
+
+}
+
+.infoContainer span {
+    line-height: 0;
+    font-size: 14;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.tableContainer {
+    background-color: white;
+    border: .1px solid rgba(214, 214, 214, 0.24);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    min-height: 500px;
+    border-radius: 8px;
+    padding: 24px;
+}

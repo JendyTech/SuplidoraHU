@@ -1,17 +1,19 @@
-.button {
+.link {
     border: none;
     border-radius: 8px;
     font-size: 15px;
+    font-weight: 500;
     min-width: "fit-content";
     cursor: pointer;
     padding: 16px 10px;
-    background-color: #007bff;
+    background-color: #287881;
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    text-decoration: none;
 }
 
-.button:hover {
-    background-color: #0056b3;
+.link:hover {
+    background-color: #1d5c63;
     transform: translateY(-1px);
 }

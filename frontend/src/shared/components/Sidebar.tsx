@@ -5,13 +5,14 @@ import styles from '@shared/styles/sidebar.module.css'
 import Logo from '@/assets/logo.jpeg'
 import Yo from '@/assets/yo.jpg'
 import Link from 'next/link'
+import CustomButton from '@shared/components/Buttons/CustomButton'
 import { usePathname, useRouter } from 'next/navigation'
 import { IconHome, IconReceipt, IconShoppingCart, IconSettings, IconUser } from '@tabler/icons-react'
-import CustomButton from '@shared/components/Buttons/CustomButton'
 import { logoutService } from '@services/auth'
+import { useSession } from '@/contexts/Session'
+import { useShortFormatName } from '@/hooks/useShortName'
 
 export default function Sidebar() {
-
     const path = usePathname()
     const navigation = useRouter()
 
@@ -19,6 +20,8 @@ export default function Sidebar() {
         await logoutService()
         navigation.replace('/login')
     }
+
+    const { data } = useSession()
 
     const items = [
         {
@@ -64,11 +67,14 @@ export default function Sidebar() {
 
     }
 
+    const userName = useShortFormatName(`${data.firstName} ${data.lastName}`)
+
     return (
 
         <aside className={styles.sidebar}>
             <div className={styles.siderbarContent}>
                 <div className={styles.logo}>
+
                     <img src={Logo.src} alt="logo" width={150} />
 
                 </div>
@@ -93,23 +99,42 @@ export default function Sidebar() {
 
             </div>
 
-                <div className={styles.sidebarBottom}>
-                    <div className={styles.sidebarBottomProfile}>
-                        <img src={Yo.src} alt="yo" width={40} height={40} />
-                        <div>
-                            <p>Jeriel Gomez Susaña</p>
-                            <span>Administrador</span>
-
+            <div className={styles.sidebarBottom}>
+                <div className={styles.sidebarBottomProfile}>
+                    {data.photo ? (
+                        <img src={data.photo} alt={`Foto de ${data.firstName} ${data.lastName}`} width={40} height={40} />
+                    ) : (
+                        <div
+                            style={{
+                                height: "40px",
+                                width: "40px",
+                                borderRadius: "50%",
+                                backgroundColor: "#287881",
+                                display: "flex",
+                                color: "#FFF",
+                                fontSize: "16px",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                textAlign: "center"
+                            }}
+                        >
+                            {data.firstName.at(0)?.toUpperCase()}
                         </div>
+                    )}
+
+                    <div>
+                        <p>{userName}</p>
+                        <span>Administrador</span>
                     </div>
-                    <CustomButton
-                        onClick={handleLogOut}
-                        style="filled"
-                        maxWidth="350px"
-                        text="Cerrar sesión"
-                        buttonType="submit"
-                    />
                 </div>
+                <CustomButton
+                    onClick={handleLogOut}
+                    style="filled"
+                    maxWidth="350px"
+                    text="Cerrar sesión"
+                    buttonType="submit"
+                />
+            </div>
         </aside>
     )
 }

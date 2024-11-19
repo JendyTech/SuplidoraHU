@@ -17,8 +17,18 @@ export default function Navbar() {
         </h2>
     )
 
+    const { header: Actions = <></> } = item
 
     return (
-        <h2 className={styles.title}>{item.title}</h2>
+        <nav
+            className={styles.nav}
+        >
+            <h2 className={styles.title}>{item.title}</h2>
+            <div
+                className={styles.items}
+            >
+                {Actions}
+            </div>
+        </nav>
     )
 }
