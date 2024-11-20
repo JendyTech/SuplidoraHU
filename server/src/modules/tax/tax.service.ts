@@ -6,17 +6,18 @@ import { PaginationDTO } from '@shared/dto/Pagination.dto';
 import { errorResponse, successResponse } from '@shared/functions/response';
 import { CreateTaxesDto } from '@modules/tax/dto/tax.dto';
 import { IUser } from '@interfaces/User';
+import { ITax } from '@interfaces/Tax';
 
 @Injectable()
 export class TaxService {
-    async getTaxes(pagination: PaginationDTO) {
+    async getTaxes(pagination: PaginationDTO): Promise<{ data: ITax[], message: string }> {
         try {
             const result = await TaxesRepository.getTaxes(pagination)
 
             return successResponse({
                 data: result,
                 message: TAX.TAXES_FETCHED
-            })
+            }) as unknown as { data: ITax[], message: string }
         } catch (error) {
             console.log(error)
             return errorResponse({

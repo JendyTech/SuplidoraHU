@@ -2,6 +2,8 @@ import INVOICE from '@messages/Invoice.json'
 import GENERAL from '@messages/General.json'
 import { Injectable } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common'
+import { TaxService } from '@modules/tax/tax.service'
+import { TaxModule } from '@modules/tax/tax.module'
 import { successResponse, errorResponse } from '@shared/functions/response'
 import { InvoicesRepository } from '@repositories/Invoices.repo';
 import { ProductRepository } from '@repositories/Products.repo'
@@ -12,6 +14,9 @@ import { CreateInvoiceItem } from '@contracts/repositories/Invoices.repo';
 
 @Injectable()
 export class InvoicesService {
+    constructor(
+        private readonly taxService: TaxService,
+    ) {}
     async getInvoices(pagination: PaginationDTO) {
         try {
             const result = await InvoicesRepository.getInvoices(pagination)
@@ -31,6 +36,7 @@ export class InvoicesService {
 
     async createInvoice(dto: CreateInvoiceDto, user: IUser) {
         let products
+        let taxes
 
         const itemsMap: Record<string, { productId: string, quantity: number }> = {}
         const itemsInvoice: CreateInvoiceItem[] = []
@@ -53,9 +59,9 @@ export class InvoicesService {
 
         try {
             products = await ProductRepository.getProductsByIds(ids)
+            taxes = await this.taxService.getTaxes({ page: 1, max: 1000 })
         } catch (error) {
             console.log(error)
-
             return errorResponse({
                 message: GENERAL.ERROR_DATABASE_MESSAGE,
                 status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -77,11 +83,18 @@ export class InvoicesService {
 
             const { quantity } = itemsMap[id]
 
+            const applicableTaxes = taxes.data.filter((tax) => !tax.isExempt)
+
+            let totalTaxes = 0;
+            applicableTaxes.forEach((tax) => {
+                totalTaxes += product.price * tax.rate; 
+            });
+
             itemsInvoice.push({
                 productId: id,
                 quantity,
                 description: product.description,
-                total: product.price * quantity,
+                total: product.price * quantity + totalTaxes,
                 unitPrice: product.unitsPerPack
             })
         }
