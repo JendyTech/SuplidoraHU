@@ -3,7 +3,6 @@ import {
     IsString,
     IsNumber,
     IsNotEmpty,
-    IsInt,
     Min,
     IsBoolean,
 } from 'class-validator'
@@ -19,7 +18,6 @@ export class CreateTaxesDto {
     @ApiProperty({ example: 0.16, description: 'Tasa del impuesto', })
     @IsNumber({}, { message: 'La tasa debe ser un número' })
     @Min(0, { message: 'La tasa debe ser mayor a 0' })
-    @IsInt()
     rate: number
 
     @ApiProperty({ example: 16, description: 'Monto del impuesto' })

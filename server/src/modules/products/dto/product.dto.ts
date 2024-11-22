@@ -22,7 +22,7 @@ export class CreateProductDto {
     description: 'Descripción del producto',
   })
   @IsNumber({}, { message: 'El precio debe ser un número' })
-  @IsInt()
+  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'El precio debe ser un número entero o con 2 decimales' })
   @Min(1, { message: 'El precio debe ser mayor a 0' })
   price: number
 
