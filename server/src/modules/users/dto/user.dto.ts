@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator'
 import { Transform } from 'class-transformer'
 import { imageBase64 } from '@shared/data/imageBase64'
+import { IsBase64Image } from '@shared/decorators/Validator'
 
 export class CreateUserDto {
     @ApiProperty({ example: 'John', description: 'First name of the user' })
@@ -43,24 +44,33 @@ export class UpdateUserDto {
     @IsNotEmpty({ message: 'El nombre no puede estar vacio' })
     @MinLength(3, { message: 'El nombre debe tener al menos 3 caracteres' })
     @Transform(({ value }: { value: string }) => value.trim())
-    firstName: string
+    firstName?: string
 
     @ApiProperty({ example: 'Doe', description: 'Last name of the user' })
     @IsString({ message: 'El apellido debe ser un string' })
     @IsNotEmpty({ message: 'El apellido no puede estar vacio' })
     @MinLength(3, { message: 'El apellido debe tener al menos 3 caracteres' })
     @Transform(({ value }: { value: string }) => value.trim())
-    lastName: string
+    lastName?: string
 
     @ApiProperty({ example: imageBase64, description: 'Photo of the user' })
     @IsString({ message: 'La foto debe ser un string' })
     @IsOptional({ message: 'La foto es opcional' })
-    photo: string
+    photo?: string
+}
 
-    @ApiProperty({ example: 'password123', description: 'Password of the user' })
-    @IsString({ message: 'La contraseña debe ser un string' })
-    @IsNotEmpty({ message: 'La contraseña no puede estar vacia' })
-    @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
-    @Transform(({ value }: { value: string }) => value.trim())
-    password: string
+export class UpdatePasswordDto {
+    @ApiProperty({ example: 'Password123@', description: 'New password of the user' })
+    @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres.' })
+    @IsNotEmpty()
+    @IsString()
+    newPassword: string;
+}
+
+export class UploadUserImageDto {
+    @ApiProperty({ example: imageBase64, description: 'Photo of the user' })
+    @IsString({ message: 'La foto debe ser un string' })
+    @IsBase64Image({ message: 'La imagen debe ser base64' })
+    @IsNotEmpty({ message: 'La foto no puede estar vacia' })
+    photo: string
 }

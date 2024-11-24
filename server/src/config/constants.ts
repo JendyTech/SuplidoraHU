@@ -13,6 +13,7 @@ export const TOKEN_DESTINATION = {
 
 export const MODELS_NAMES = {
   USERS: 'users',
+  USERS_IMAGES: 'users_images',
   INVOICES: 'invoices',
   INVOICE_ITEMS: 'invoice_items',
   PRODUCTS: 'products',
