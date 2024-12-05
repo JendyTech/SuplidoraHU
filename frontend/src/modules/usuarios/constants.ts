@@ -1,0 +1,6 @@
+export const CREATE_USER_STEPS = {
+  INFORMATION: 0,
+  UPLOAD_IMAGE: 1, 
+  SUMMARY: 2
+}
+

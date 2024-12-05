@@ -1,8 +1,11 @@
 import { STORAGES } from "@config/constants"
-import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
+
 
 export const readTokenServer = async () => {
+
+	const { cookies } = await import("next/headers")
+	const { redirect } = await import("next/navigation")
+
 	const cookiesManager = await cookies()
 
 	const token = cookiesManager.get(STORAGES.TOKEN)
@@ -44,6 +47,9 @@ export const readTokenServer = async () => {
 export const verifySession = async (
 	{ notRedirect }: { notRedirect?: boolean } = { notRedirect: false },
 ) => {
+	const { cookies } = await import("next/headers")
+	const { redirect } = await import("next/navigation")
+
 	const now = Math.floor(Date.now() / 1000)
 
 	const { get, delete: delelteCookie } = await cookies()
@@ -72,6 +78,9 @@ export const verifySession = async (
 }
 
 export const redirectSession = async () => {
+	const { cookies } = await import("next/headers")
+	const { redirect } = await import("next/navigation")
+
 	const now = Math.floor(Date.now() / 1000)
 
 	const { get } = await cookies()

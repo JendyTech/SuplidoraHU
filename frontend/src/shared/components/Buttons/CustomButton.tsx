@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@shared/styles/components/button.module.css";
+import css from "@shared/styles/components/button.module.css";
 
 type buttonStyle = "filled" | "outlined" | "icon" | "text";
 
@@ -12,15 +12,16 @@ interface ButtonProps {
   textColor?: string;
   maxWidth?: string;
   icon?: string;
+  styles?: React.CSSProperties
 }
 
 export default function CustomButton(props: ButtonProps) {
-  const { text, buttonType, textColor = '#ffffff', icon, maxWidth = '330px', style, backgroundColor = 'var(--primary-color)', onClick } = props;
+  const { text, buttonType, textColor = '#ffffff', icon, maxWidth = '330px', style, backgroundColor = 'var(--primary-color)', onClick, styles } = props;
   return (
     <button
       onClick={onClick}
-      style={{ color: textColor, maxWidth, backgroundColor, }}
-      className={styles.button} type={buttonType ?? "button"}>
+      style={{ color: textColor, maxWidth, backgroundColor, ...styles }}
+      className={css.button} type={buttonType ?? "button"}>
       {text}
     </button>
   );

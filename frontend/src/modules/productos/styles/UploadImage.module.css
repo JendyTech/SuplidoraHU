@@ -1,0 +1,27 @@
+.container {
+    text-align: center;
+}
+
+.uploadBox {
+    margin: 20px 0;
+    border: 2px dashed #ccc;
+    padding: 20px;
+}
+
+.preview {
+    max-width: 100%;
+    height: auto;
+}
+
+.fileInput {
+    display: block;
+    margin: 10px auto;
+}
+
+.button {
+    background-color: #008cba;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}

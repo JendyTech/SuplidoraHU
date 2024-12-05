@@ -1,37 +1,34 @@
 "use client";
-import dayjs from "dayjs";
 import DataTable from "react-data-table-component";
-import { GetProduct } from "@interfaces/Product/GetProduct.";
 import { Pagination, ParamsPaginationFilterOptions } from "@/contracts/API"
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { TableColumn, TableStyles } from "react-data-table-component";
-import { useProducts } from "@/modules/productos/hooks/useProducts"
+import styles from '@modules/productos/styles/productos.module.css'
+
 
 interface Props<T> {
-    result: Pagination<any>
+    result?: Pagination<any>
     setFilters: Dispatch<SetStateAction<Partial<ParamsPaginationFilterOptions>>>
-    headers: TableColumn<any>
+    headers: TableColumn<any>[]
 }
 
 
-export default function Table<T = any>(props: Props<any>) {
+export default function CustomTable<T = any>(props: Props<any>) {
     const {
-        result,
-        setFilters: _setFilters
-    } = props
-
-    const { pagination, setFilters } = useProducts(result)
-
-    const headers: TableColumn<any>[] = [
-        { name: "Nombre", selector: (row) => row.name },
-        { name: "Código", selector: (row) => row.code },
-        { name: "Descripción", selector: (row) => row.description },
-        { name: "Unidades por Paquete", selector: (row) => row.unitsPerPack },
-        {
-            name: "Fecha de Creación",
-            selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
+        result: pagination = {
+            data: [],
+            metadata: {
+                max: 10,
+                page: 1,
+                total: 0,
+                next: false,
+                previous: false,
+                totalPages: 0
+            }
         },
-    ];
+        setFilters,
+        headers,
+    } = props
 
 
     const handleChangePage = (newPage: number) => {
@@ -107,7 +104,8 @@ export default function Table<T = any>(props: Props<any>) {
 
 
     return (
-        <div>
+        <div className={styles.tableContainer} >
+
             <DataTable
                 paginationServer
                 selectableRows
@@ -121,6 +119,7 @@ export default function Table<T = any>(props: Props<any>) {
                 paginationTotalRows={pagination.metadata.total}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeMax}
+
             />
         </div>
     );

@@ -2,13 +2,10 @@
 
 import React from 'react'
 import { Stepper, StepperItem } from '@shared/components/Stepper'
-import { IconCheck, IconImageInPicture, IconInfoCircle } from '@tabler/icons-react'
+import { IconCheck, IconImageInPicture, IconInfoCircle, IconUser } from '@tabler/icons-react'
 import { useCreateProduct } from '@modules/productos/hooks/useCreateProduct'
-import GeneralInfo from '@/app/admin/productos/crear-producto/steps/GeneralInfo'
-import UploadImage from '@/app/admin/productos/crear-producto/steps/UploadImage'
-import Summary from '@/app/admin/productos/crear-producto/steps/Summary'
 
-export default function CreateProductsPage() {
+export default function CreateUsersPage() {
 
     const { currentStep, handleNextStep } = useCreateProduct()
 
@@ -21,24 +18,18 @@ export default function CreateProductsPage() {
                     console.log("Termino")
                 }}
                 activeColor='#287881' defaultColor='#e6f7f8' steps={[
-                    { title: "Información general", icon: IconInfoCircle },
+                    { title: "Información general", icon: IconUser },
                     { title: "Subir imagen", icon: IconImageInPicture },
                     { title: "Paso final", icon: IconCheck }
                 ]} >
                 <StepperItem>
-                    <GeneralInfo setProductData={undefined} />
-
+                    <h1>Información general</h1>
                 </StepperItem>
                 <StepperItem>
-                    <UploadImage setImage={undefined} />
-
+                    <h1>Subir imagen</h1>
                 </StepperItem>
                 <StepperItem>
-
-                    <Summary productData={undefined} image={undefined} onConfirm={undefined} />
-
-
-
+                    <h1>Paso final</h1>
                 </StepperItem>
             </Stepper>
 

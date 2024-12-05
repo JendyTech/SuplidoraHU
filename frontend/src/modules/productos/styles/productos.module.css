@@ -41,7 +41,7 @@
     border: .1px solid rgba(214, 214, 214, 0.24);
     box-shadow: var(--shadow-md);
     width: 100%;
-    min-height: 500px;
+
     border-radius: 8px;
     padding: 24px;
 }

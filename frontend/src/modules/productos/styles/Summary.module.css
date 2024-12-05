@@ -1,0 +1,28 @@
+.container {
+    padding: 20px;
+}
+
+.summaryBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.textSection {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.imageSection img {
+    max-width: 200px;
+    height: auto;
+    border: 1px solid #ccc;
+}
+
+.button {
+    background-color: #008cba;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}

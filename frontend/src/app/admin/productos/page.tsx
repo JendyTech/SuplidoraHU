@@ -1,40 +1,29 @@
-import { Icon, IconBuildingWarehouse, IconProps, IconShoppingCart } from '@tabler/icons-react'
+import { IconShoppingCart } from '@tabler/icons-react'
+import { getAllProducts } from "@/services/product"
 import styles from '@modules/productos/styles/productos.module.css'
-import Table from '@modules/productos/components/Table'
-export default function ProductsPage() {
-    return (
-        <div className={styles.main}>
-            <div className={styles.infoContainerGroup}>
-                <InfoContainer Icon={IconShoppingCart} title={200} subtitle='Productos en sistema' color='#287881' />
-                <InfoContainer Icon={IconBuildingWarehouse} title={124} subtitle='Productos en stock' color='#EF7B52' />
+import { InfoContainer } from '@modules/productos/components/InfoContainer'
+import { ErrorLoadServer } from "@shared/components/Error/ErrorLoadServer"
+import ProductTable from '@modules/productos/components/ProductTable'
+
+export default async function ProductsPage() {
+    try {
+        const response = await getAllProducts({}, true)
+
+        if (!response.ok) return <ErrorLoadServer />
+
+        return (
+            <div className={styles.main}>
+                <div className={styles.infoContainerGroup}>
+                    <InfoContainer Icon={IconShoppingCart} title={response.result.metadata.total} subtitle='Productos en sistema' color='#287881' />
+                </div>
+
+
+                <ProductTable initialState={response.result} />
+
             </div>
-
-            <div className={styles.tableContainer}>
-                <Table />
-            </div>
-        </div>
-    )
-}
-// Productos <Link href={'/admin/productos/crear-producto'}>Crear un producto</Link>
-
-interface InfoContainerProps {
-    Icon: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<Icon>>
-    title: string | number
-    subtitle: string
-    color: string
+        )
+    } catch (error) {
+        return <ErrorLoadServer />
+    }
 }
 
-export function InfoContainer(props: InfoContainerProps) {
-
-    const { Icon, title, subtitle, color } = props
-
-    return (
-        <div className={styles.infoContainer}>
-            <props.Icon className={styles.icon} strokeWidth={1.5} color={color} />
-            <div>
-                <p style={{ color }}>{title.toString()}</p>
-                <span>{subtitle.toString()}</span>
-            </div>
-        </div>
-    )
-}

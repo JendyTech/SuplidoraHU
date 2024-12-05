@@ -1,5 +1,4 @@
 import { ItemMenu } from "@interfaces/TopBar";
-import CustomButton from "@components/CustomButton";
 
 export const topBar: ItemMenu[] = [
   {
@@ -17,9 +16,9 @@ export const topBar: ItemMenu[] = [
     title: "Productos",
     items: [],
     header: 
-      <>
-        
-      </>
+    <>
+    
+    </>
   },
   {
     url: "/admin/productos/crear-producto",
@@ -29,6 +28,11 @@ export const topBar: ItemMenu[] = [
   {
     url: "/admin/usuarios",
     title: "Usuarios",
+    items: [],
+  },
+  {
+    url: "/admin/usuarios/crear-usuario",
+    title: "Crear usuario",
     items: [],
   },
   {

@@ -16,7 +16,6 @@ interface SessionContextType {
 export const SessionContext = createContext<SessionContextType>({
   setData: () => { },
   data: {} as IUserLoggeding,
-  firstName: "",
   token: "",
 })
 
@@ -37,7 +36,7 @@ export function SessionProvider({ children, payload, token }: Props) {
   const [data, setData] = useState(payload)
 
   if (typeof window !== 'undefined') {
-    (globalThis as any).token = token
+    window[GLOBAL_TOKEN] = token
   }
 
   const setDataToken = async (token: string) => {
