@@ -29,6 +29,34 @@ export class UsersService {
         }
     }
 
+    async getProfile(user: IUser) {
+        let foundUser
+
+        try {
+            foundUser = await UserRepository.findById(user._id.toString());
+
+            if (!foundUser) {
+                return errorResponse({
+                    message: USER.USER_NOT_FOUND,
+                    status: HttpStatus.NOT_FOUND,
+                });
+            }
+
+            return successResponse({
+                data: foundUser,
+                message: USER.PROFILE_FETCHED,
+            });
+        } catch (error) {
+            console.error(error);
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            });
+        }
+    }
+
+
     async createUser(dto: CreateUserDto, user: IUser) {
         let found, photoUrl: string | null = null, publicId: string | null
 
@@ -107,7 +135,7 @@ export class UsersService {
 
         if (id === user._id.toString()) {
             return errorResponse({
-                message: USER.CANNOT_UPDATE_OWN_PROFILE, 
+                message: USER.CANNOT_UPDATE_OWN_PROFILE,
                 status: HttpStatus.FORBIDDEN,
             });
         }

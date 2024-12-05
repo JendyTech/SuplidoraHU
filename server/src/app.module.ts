@@ -7,9 +7,10 @@ import { APP_GUARD } from '@nestjs/core'
 import { ProductsModule } from './modules/products/products.module';
 import { UsersModule } from './modules/users/users.module';
 import { InvoicesModule } from './modules/invoices/invoices.module';
+import { TaxModule } from './modules/tax/tax.module';
 
 @Module({
-  imports: [AuthModule, ProductsModule, UsersModule, InvoicesModule],
+  imports: [AuthModule, ProductsModule, UsersModule, InvoicesModule, TaxModule],
   controllers: [AppController],
   providers: [
     AppService,

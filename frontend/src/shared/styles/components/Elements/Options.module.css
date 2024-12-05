@@ -1,0 +1,105 @@
+.menu {
+  position: relative;
+}
+
+.container {
+  position: relative;
+}
+
+.blurBackground {
+  visibility: hidden;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 0;
+  pointer-events: none;
+  transition: background-color 0.3s ease-in-out;
+  filter: blur(5px);
+}
+
+.blurBackgroundActive {
+  visibility: visible;
+  pointer-events: all;
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.handleShow {
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  color: var(--color-font);
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+  color: var(--color-font);
+  background-color: transparent;
+  border: none;
+  padding: 0px;
+  padding: 10px 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.link,
+.button {
+  font-weight: normal;
+}
+
+.option:hover {
+  transition: all 0.3s ease-in-out;
+  opacity: 0.6;
+}
+
+.button:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}
+
+.list {
+  z-index: 1;
+  list-style: none;
+  max-width: 200px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  align-items: baseline;
+  animation: showMenu 0.3s ease-in-out;
+  border-radius: 5px;
+  padding: 0px;
+  position: fixed;
+}
+
+.listElement {
+  margin: 0px;
+  width: 100%;
+  font-size: 15px;
+}
+
+@keyframes showMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@media (max-width: 768px) {
+  .list {
+    max-width: 100%;
+  }
+}

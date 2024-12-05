@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
-import { IsString, IsNotEmpty, MinLength, IsDateString, IsInt, MinDate, IsMongoId, Min, IsArray, ArrayNotEmpty } from 'class-validator'
+import { IsString, IsNotEmpty, MinLength, IsDateString, IsInt, IsMongoId, Min, IsArray, ArrayNotEmpty } from 'class-validator'
 
 export class CreateInvoiceItemDto{
     @ApiProperty({ example: '60d9b7e1b5f0c9a4b4e1f1b0', description: 'Id de la factura' })

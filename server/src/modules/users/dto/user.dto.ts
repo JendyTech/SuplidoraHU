@@ -60,7 +60,7 @@ export class UpdateUserDto {
     @ApiProperty({ example: 'password123', description: 'Password of the user' })
     @IsString({ message: 'La contraseña debe ser un string' })
     @IsNotEmpty({ message: 'La contraseña no puede estar vacia' })
-    @MinLength(8, { message: 'El apellido debe tener al menos 8 caracteres' })
+    @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
     @Transform(({ value }: { value: string }) => value.trim())
     password: string
 }

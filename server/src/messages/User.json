@@ -14,6 +14,7 @@
     "EMAIL_IN_USE": "El correo electrónico ya está en uso",
     "ERROR_UPLOAD_IMAGE": "Error al subir la imagen",
     "CANNOT_UPDATE_OWN_PROFILE": "No puedes actualizar tu propio perfil",
-    "CANNOT_DELETE_OWN_PROFILE": "No puedes eliminar tu propio perfil"
+    "CANNOT_DELETE_OWN_PROFILE": "No puedes eliminar tu propio perfil",
+    "PROFILE_FETCHED": "Perfil obtenido exitosamente"
 
 }
