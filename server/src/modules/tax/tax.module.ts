@@ -3,6 +3,7 @@ import { TaxController } from './tax.controller';
 import { TaxService } from './tax.service';
 
 @Module({
+  exports: [TaxService],
   controllers: [TaxController],
   providers: [TaxService]
 })

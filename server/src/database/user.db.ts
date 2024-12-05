@@ -1,4 +1,4 @@
-import { IUser } from '@interfaces/User'
+import { IUser, IUserPhoto } from '@interfaces/User'
 import { model, Schema, Types } from 'mongoose'
 import { MODELS_NAMES } from '@config/constants'
 
@@ -7,6 +7,8 @@ const UserSchema = new Schema<IUser>(
     email: {
       type: String,
       unique: true,
+      required: true,
+      match: [/.+@.+\..+/, 'Debe ser un email válido'],
     },
     firstName: {
       type: String,
@@ -47,3 +49,32 @@ const UserSchema = new Schema<IUser>(
 )
 
 export const UserModel = model<IUser>(MODELS_NAMES.USERS, UserSchema)
+
+const userPhotoSchema = new Schema<IUserPhoto>(
+  {
+    publicId: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: Types.ObjectId,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+    uploadBy: {
+      type: Types.ObjectId,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+)
+
+export const UserPhotoModel = model<IUserPhoto>(
+  MODELS_NAMES.USERS_IMAGES,
+  userPhotoSchema,
+)

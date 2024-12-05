@@ -33,14 +33,15 @@ export class ProductsController {
     return this.productsService.createProduct(dto, user)
   }
 
-  @Post('/:id/upload-image')
-  uploadProductImage(@Body() dto: UploadProductImageDto, @User() user: IUser, @Param('id') id: string) {
-    return this.productsService.uploadImage(id, dto.image, user)
-  }
-
+  
   @Delete('/:id')
   deleteProduct(@Param('id') id: string) {
     return this.productsService.deleteProduct(id)
+  }
+  
+  @Post('/:id/upload-image')
+  uploadProductImage(@Body() dto: UploadProductImageDto, @User() user: IUser, @Param('id') id: string) {
+    return this.productsService.uploadImage(id, dto.image, user)
   }
 
   @Delete('/delete-image/:id')

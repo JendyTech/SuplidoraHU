@@ -7,9 +7,10 @@ import { HttpStatus } from '@nestjs/common'
 import { errorResponse, successResponse } from '@shared/functions/response'
 import { IUser } from '@interfaces/User';
 import { CreateUserDto, UpdateUserDto } from '@modules/users/dto/user.dto'
-import { uploadBase64 } from '@shared/functions/cloudinary'
+import { deleteResource, uploadBase64 } from '@shared/functions/cloudinary'
 import { validatePassword } from '@shared/helpers/password'
-import { UpdateUser } from '@contracts/repositories/User.repo'
+import { hashPassword } from '@shared/functions/hash'
+import { CloudinaryResult } from '@contracts/Cloudinary'
 
 @Injectable()
 export class UsersService {
@@ -27,6 +28,33 @@ export class UsersService {
                 status: HttpStatus.INTERNAL_SERVER_ERROR,
             })
         }
+    }
+
+    async getUserById(userId: string, photo: boolean = false) {
+        let user
+
+        try {
+            user = await (photo ? UserRepository.getUsersByIdWithPhotos(userId) : UserRepository.findById(userId))
+        } catch (error) {
+            console.error(error)
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            })
+        }
+
+        if (!user) {
+            return errorResponse({
+                message: USER.USER_NOT_FOUND,
+                status: HttpStatus.NOT_FOUND,
+            })
+        }
+
+        return successResponse({
+            data: user,
+            message: USER.USERS_FETCHED,
+        })
     }
 
     async getProfile(user: IUser) {
@@ -55,7 +83,6 @@ export class UsersService {
             });
         }
     }
-
 
     async createUser(dto: CreateUserDto, user: IUser) {
         let found, photoUrl: string | null = null, publicId: string | null
@@ -142,6 +169,13 @@ export class UsersService {
 
         try {
             foundUser = await UserRepository.findById(id)
+
+            if (!foundUser) {
+                return errorResponse({
+                    message: USER.USER_NOT_FOUND,
+                    status: HttpStatus.NOT_FOUND,
+                })
+            }
         } catch (error) {
             console.error(error)
             return errorResponse({
@@ -151,26 +185,18 @@ export class UsersService {
             })
         }
 
-        if (!foundUser) {
-            return errorResponse({
-                message: USER.USER_NOT_FOUND,
-                status: HttpStatus.NOT_FOUND,
-            })
-        }
+        const { firstName, lastName, photo } = dto
 
         try {
-            const userData = {
-                ...dto,
-                updatedBy: user._id,
-                createdBy: user._id,
-            }
+            const updateUser = await UserRepository.updateUser(id,
+            {
+                firstName,
+                lastName,
+                photo,
+                updatedBy: user._id
+            })
 
-            const updatedUser = await UserRepository.updateUser(
-                id,
-                userData,
-            )
-
-            if (!updatedUser) {
+            if (!updateUser) {
                 return errorResponse({
                     message: GENERAL.ERROR_DATABASE_MESSAGE,
                     status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -178,7 +204,7 @@ export class UsersService {
             }
 
             return successResponse({
-                data: updatedUser,
+                data: updateUser,
                 message: USER.USER_UPDATED,
             })
         } catch (error) {
@@ -189,6 +215,73 @@ export class UsersService {
             })
         }
     }
+
+    async updatePassword(id: string, newPassword: string, user: IUser) {
+        console.log('Inicio del método updatePassword');
+        let foundUser;
+    
+        if (id === user._id.toString()) {
+            console.warn('Estás cambiando tu propia contraseña');
+        }
+    
+        try {
+            console.log(`Buscando usuario con id: ${id}`);
+            foundUser = await UserRepository.findById(id);
+            
+            if (!foundUser) {
+                console.warn('Usuario no encontrado');
+                return errorResponse({
+                    message: USER.USER_NOT_FOUND,
+                    status: HttpStatus.NOT_FOUND,
+                });
+            }
+            console.log('Usuario encontrado:', foundUser);
+        } catch (error) {
+            console.error('Error al buscar el usuario:', error);
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+            });
+        }
+    
+        let hashedPassword: string;
+        try {
+            console.log(`Hasheando nueva contraseña para el usuario con id: ${id}`);
+            hashedPassword = await hashPassword(newPassword);
+            console.log('Contraseña hasheada correctamente');
+        } catch (error) {
+            console.error('Error al hashear la contraseña:', error);
+            return errorResponse({
+                message: USER.ERROR_HASH_PASSWORD,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+            });
+        }
+    
+        try {
+            console.log(`Actualizando la contraseña para el usuario con id: ${id}`);
+            const updatedUser = await UserRepository.updatePassword(id, hashedPassword);
+            if (!updatedUser) {
+                console.warn('No se pudo actualizar la contraseña en la base de datos');
+                return errorResponse({
+                    message: GENERAL.ERROR_DATABASE_MESSAGE,
+                    status: HttpStatus.INTERNAL_SERVER_ERROR,
+                });
+            }
+            console.log('Contraseña actualizada correctamente para el usuario:', updatedUser);
+    
+            return successResponse({
+                message: USER.PASSWORD_UPDATED,
+            });
+        } catch (error) {
+            console.error('Error al actualizar la contraseña:', error);
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+            });
+        }
+    }
+    
+    
 
     async deleteUser(id: string, user: IUser) {
 
@@ -215,6 +308,109 @@ export class UsersService {
 
             return successResponse({
                 message: USER.USER_DELETED,
+            })
+        } catch (error) {
+            console.error(error)
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            })
+        }
+    }
+
+    async uploadImage(userId: string, photo: string, user: IUser){
+        let result: CloudinaryResult, resultImageDatabase
+
+        try {
+            const user = await UserRepository.findById(userId)
+
+            if (!user) {
+                return errorResponse({
+                    message: USER.USER_NOT_FOUND,
+                    status: HttpStatus.NOT_FOUND,
+                })
+            }
+        } catch (error) {
+            console.error(error)
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            })
+        }
+
+        try {
+            result = await uploadBase64(photo)
+        } catch (error) {
+            console.error(error)
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            })
+        }
+
+        try {
+            resultImageDatabase = await UserRepository.addImage({
+                userId,
+                publicId: result.publicId,
+                url: result.secureUrl,
+                uploadBy: user._id
+            })
+        } catch (error) {
+            console.error(error)
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            })
+        }
+
+        return successResponse({
+            data: resultImageDatabase,
+            message: USER.IMAGE_UPLOADED,
+        })
+    }
+
+    async deleteImage(imageId: string) {
+        let image
+
+        try {
+            image = await UserRepository.findImageById(imageId)
+
+            if (!image) {
+                return errorResponse({
+                    message: USER.IMAGE_NOT_FOUND,
+                    status: HttpStatus.NOT_FOUND,
+                })
+            }
+        } catch (error) {
+            console.error(error)
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            })
+        }
+
+        try {
+            await deleteResource(image.publicId)
+        } catch (error) {
+            console.error(error)
+            return errorResponse({
+                message: USER.ERROR_DELETE_IMAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            })
+        }
+
+        try {
+            const deleteImage = await UserRepository.deleteImage(imageId)
+
+            return successResponse({
+                data: deleteImage,
+                message: USER.IMAGE_DELETED,
             })
         } catch (error) {
             console.error(error)
