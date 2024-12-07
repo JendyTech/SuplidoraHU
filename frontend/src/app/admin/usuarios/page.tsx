@@ -6,6 +6,7 @@ import { getAllUsers } from '@services/users'
 import { ErrorLoadServer } from '@shared/components/Error/ErrorLoadServer'
 
 export default async function UsersPage() {
+
   try {
     const response = await getAllUsers({}, true)
 

@@ -8,12 +8,17 @@ interface InputProps {
     maxWidth?: string;
     placeholder?: string;
     required?: boolean
+    pattern?: string
+    value?: string | number
+    onChange?: React.ChangeEventHandler<HTMLInputElement>
+    height?: string
+    isMoneyInput?: boolean;
 }
 
 export default function CustomInput(props: InputProps) {
     const [error, setError] = useState<string | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const { type, placeholder, name, maxWidth = '330px', required = true } = props;
+    const { type, placeholder, name, maxWidth = '330px', required = true, pattern, value, onChange, height, isMoneyInput = false, } = props;
 
     const handleShowPass = () => {
         setShowPassword((prev) => !prev)
@@ -24,6 +29,11 @@ export default function CustomInput(props: InputProps) {
         const { type } = e.target as HTMLInputElement;
         if (type === 'email') {
             setError('Correo no valido')
+            return
+        }
+
+        if (type === 'number') {
+            setError('El valor debe ser numerico')
             return
         }
 
@@ -39,18 +49,32 @@ export default function CustomInput(props: InputProps) {
 
 
     return (
-        <div className={styles.container} style={{ maxWidth }}>
+        <div
+            className={`${styles.container} ${isMoneyInput ? styles.moneyContainer : ""}`}
+            style={{ maxWidth }}
+        >
+            {isMoneyInput && <span className={styles.moneyLabel}>RD$</span>}
             <input
+                style={{ height }}
+                onChange={onChange}
                 onInvalid={handleInvalid}
                 className={`${styles.input} ${error && styles.inputError}`}
-                type={showPassword ? 'text' : type}
+                type={showPassword ? "text" : type}
                 name={name}
                 placeholder={placeholder}
                 required={required}
                 onInput={handleInput}
+                pattern={pattern}
+                value={value}
             />
             {type === "password" && (
-                <button type='button' className={styles.eyeButton} onClick={handleShowPass}> {showPassword ? <IconEyeOff strokeWidth={1} /> : <IconEye strokeWidth={1} />} </button>
+                <button
+                    type="button"
+                    className={styles.eyeButton}
+                    onClick={handleShowPass}
+                >
+                    {showPassword ? <IconEyeOff strokeWidth={1} /> : <IconEye strokeWidth={1} />}
+                </button>
             )}
             {error && <span className={styles.errorMessage}>{error}</span>}
         </div>

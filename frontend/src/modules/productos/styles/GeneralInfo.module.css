@@ -1,10 +1,12 @@
 .container {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .label {
     margin-bottom: 10px;
-    background-color: red;
     display: flex;
     flex-direction: column;
 }
@@ -21,4 +23,84 @@
     padding: 10px 15px;
     border: none;
     cursor: pointer;
+}
+
+.inputContainer {
+    position: relative;
+    width: 280px;
+}
+
+.textAreaContainer {
+    position: relative;
+    width: 590px;
+}
+
+.inputContainer input {
+    height: 50px;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+    font-size: 16px;
+    border: 1px solid #c0c0c0;
+    border-radius: 8px;
+    background: #F4F5F9;
+    outline: none;
+    transition: border-color 0.3s ease;
+    transition: .3s;
+}
+
+.inputContainer input:focus {
+    background-color: white;
+}
+
+.textAreaContainer textarea:focus {
+    background-color: white;
+}
+
+.textAreaContainer textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100px;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+    font-size: 16px;
+    border: 1px solid #c0c0c0;
+    border-radius: 8px;
+    background: #F4F5F9;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.inputContainer input:focus+label,
+.inputContainer input:not(:placeholder-shown)+label {
+    top: -20px;
+    font-size: 14px;
+}
+
+.inputContainer .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.inputContainer input:focus~.underline {
+    width: 100%;
+}
+
+
+
+.textAreaContainer .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.textAreaContainer input:focus~.underline {
+    width: 100%;
 }

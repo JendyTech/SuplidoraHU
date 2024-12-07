@@ -18,6 +18,7 @@ interface StepperProps {
   active: number
   onChange?: (newIndex: number) => void
   onFinish?: () => void
+  lastStepLabel?: string
 }
 
 export function Stepper(props: StepperProps) {
@@ -29,7 +30,8 @@ export function Stepper(props: StepperProps) {
     children,
     active,
     onChange,
-    onFinish
+    onFinish,
+    lastStepLabel = "Finalizar"
   } = props
 
 
@@ -40,7 +42,8 @@ export function Stepper(props: StepperProps) {
   const childrenActive = childrens[active] ?? <h1>Implementar</h1>
 
 
-  const handleNextStep = () => {
+  const handleNextStep = (e: any) => {
+    e.preventDefault();
     const newStep = active + 1
     const isLastStep = newStep > (steps.length - 1)
 
@@ -75,7 +78,7 @@ export function Stepper(props: StepperProps) {
         }
       </header>
 
-      <section className={styles.stepItemContainer} >
+      <form className={styles.stepItemContainer} onSubmit={handleNextStep} >
         {childrenActive}
         <div className={styles.actionsContainer}>
           {
@@ -86,12 +89,13 @@ export function Stepper(props: StepperProps) {
               styles={{ width: "200px" }} />
           }
           <CustomButton
-            onClick={handleNextStep}
-            text={active === steps.length - 1 ? "Finalizar" : "Siguiente"}
+            buttonType='submit'
+
+            text={active === steps.length - 1 ? lastStepLabel : "Siguiente"}
             style="filled"
             styles={{ width: "200px" }} />
         </div>
-      </section>
+      </form>
     </>
   )
 }

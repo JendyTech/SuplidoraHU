@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@modules/productos/styles/Summary.module.css";
 
-const Summary = ({ productData, image, onConfirm }: { productData: any, image: any, onConfirm: any }) => {
+const Summary = ({ productData, image }: { productData: AddProductModel, image: string | null }) => {
     return (
         <div className={styles.container}>
             <h2>Resumen del Producto</h2>
@@ -14,12 +14,9 @@ const Summary = ({ productData, image, onConfirm }: { productData: any, image: a
                     <p><strong>Unidades por Paquete:</strong> {productData.unitsPerPack}</p>
                 </div>
                 <div className={styles.imageSection}>
-                    {image && <img src={URL.createObjectURL(image)} alt="Producto" />}
+                    {image && <img src={image} alt="Producto" />}
                 </div>
             </div>
-            <button type="button" className={styles.button} onClick={onConfirm}>
-                Confirmar
-            </button>
         </div>
     );
 };

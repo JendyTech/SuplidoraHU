@@ -30,3 +30,16 @@ export const getAllUsers = async (params?: ParamsPaginationFilter, server: boole
 
     return response
 }
+
+export const addNewUser = async ( addUserData : AddUserModel ) => {
+	const token = await getToken()
+	const { POST } = useClient(token)
+
+	const response = await POST({
+		endpoint: "/users",
+		body : addUserData
+	})
+    
+	return response
+}
+

@@ -32,3 +32,17 @@ export const getAllProducts = async (params?: ParamsPaginationFilter, server: bo
     
 	return response
 }
+
+
+export const addNewProduct = async ( addProductData : AddProductModel ) => {
+	const token = await getToken()
+	const { POST } = useClient(token)
+
+	const response = await POST<Pagination<IProduct>>({
+		endpoint: "/products",
+		body : addProductData
+	})
+    
+	return response
+}
+

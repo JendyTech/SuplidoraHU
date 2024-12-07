@@ -22,4 +22,3 @@ export interface IProductPhoto {
   createdAt: Date
   updatedAt: Date
 }
-

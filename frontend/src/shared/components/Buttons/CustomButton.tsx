@@ -13,16 +13,19 @@ interface ButtonProps {
   maxWidth?: string;
   icon?: string;
   styles?: React.CSSProperties
+
 }
 
 export default function CustomButton(props: ButtonProps) {
-  const { text, buttonType, textColor = '#ffffff', icon, maxWidth = '330px', style, backgroundColor = 'var(--primary-color)', onClick, styles } = props;
+  const { text, buttonType, textColor = '#ffffff', icon, maxWidth = '330px', backgroundColor = 'var(--primary-color)', onClick, styles } = props;
   return (
     <button
+
       onClick={onClick}
       style={{ color: textColor, maxWidth, backgroundColor, ...styles }}
-      className={css.button} type={buttonType ?? "button"}>
+      className={css.button} type={buttonType ?? "button"}  >
       {text}
+
     </button>
   );
 }

@@ -2,34 +2,36 @@
 
 import React from 'react'
 import { Stepper, StepperItem } from '@shared/components/Stepper'
-import { IconCheck, IconImageInPicture, IconInfoCircle, IconUser } from '@tabler/icons-react'
+import { IconCheck, IconImageInPicture, IconUser } from '@tabler/icons-react'
 import { useCreateProduct } from '@modules/productos/hooks/useCreateProduct'
+import { useCreateUser } from '@modules/usuarios/hooks/useCreateUser'
+import UserGeneralInfo from '@/app/admin/usuarios/crear-usuario/steps/GeneralInfo'
+import UserUploadImage from '@/app/admin/usuarios/crear-usuario/steps/UploadImage'
+import UserSummary from '@/app/admin/usuarios/crear-usuario/steps/Summary'
 
 export default function CreateUsersPage() {
 
-    const { currentStep, handleNextStep } = useCreateProduct()
+    const { currentStep, handleNextStep, setFormData, formData, setImageUrl, imageUrl, createUser } = useCreateUser()
 
     return (
         <div>
             <Stepper
                 active={currentStep}
                 onChange={handleNextStep}
-                onFinish={() => {
-                    console.log("Termino")
-                }}
+                onFinish={createUser}
                 activeColor='#287881' defaultColor='#e6f7f8' steps={[
                     { title: "Información general", icon: IconUser },
                     { title: "Subir imagen", icon: IconImageInPicture },
                     { title: "Paso final", icon: IconCheck }
-                ]} >
-                <StepperItem>
-                    <h1>Información general</h1>
+                ]}>
+            <StepperItem>
+                    <UserGeneralInfo setUserData={setFormData} userData={formData} />
                 </StepperItem>
                 <StepperItem>
-                    <h1>Subir imagen</h1>
+                    <UserUploadImage setImage={setImageUrl} actualImage={imageUrl} />
                 </StepperItem>
                 <StepperItem>
-                    <h1>Paso final</h1>
+                    <UserSummary userData={formData} image={imageUrl} />
                 </StepperItem>
             </Stepper>
 

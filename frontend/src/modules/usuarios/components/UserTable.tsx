@@ -6,6 +6,7 @@ import { Pagination } from "@/contracts/API"
 import { TableColumn } from 'react-data-table-component'
 import { IUser } from '@interfaces/User/User'
 import { useUsers } from '@modules/usuarios/hooks/useUsers'
+import { Options } from '@shared/components/Elements/Options'
 
 
 interface Props {
@@ -25,6 +26,30 @@ export default function UsersTable(props: Props) {
         {
             name: "Fecha de Creación",
             selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
+        },
+        {
+            name: "", cell: (row) => <div style={{ width: "100%", }}>
+                <Options
+                    data={{ id: 1 }}
+                    options={[
+                        {
+                            type: "button",
+                            text: "Editar",
+                            handler: () => alert('Hola mundo')
+                        },
+                        {
+                            type: "button",
+                            text: "Eliminar",
+                            handler: () => alert('Hola mundo')
+                        },
+                        {
+                            type: "button",
+                            text: "Ver detalles",
+                            handler: () => alert('Hola mundo')
+                        }
+                    ]}
+                />
+            </div>, maxWidth: "10px"
         },
     ];
 

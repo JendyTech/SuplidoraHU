@@ -10,35 +10,30 @@ import Summary from '@/app/admin/productos/crear-producto/steps/Summary'
 
 export default function CreateProductsPage() {
 
-    const { currentStep, handleNextStep } = useCreateProduct()
+    const { currentStep, handleNextStep, setFormData, formData, setImagesUrl, imagesUrl, createProduct } = useCreateProduct()
 
     return (
         <div>
             <Stepper
                 active={currentStep}
                 onChange={handleNextStep}
-                onFinish={() => {
-                    console.log("Termino")
-                }}
+                onFinish={
+                    createProduct
+                }
+                lastStepLabel='Crear Producto'
                 activeColor='#287881' defaultColor='#e6f7f8' steps={[
                     { title: "Información general", icon: IconInfoCircle },
                     { title: "Subir imagen", icon: IconImageInPicture },
                     { title: "Paso final", icon: IconCheck }
                 ]} >
                 <StepperItem>
-                    <GeneralInfo setProductData={undefined} />
-
+                    <GeneralInfo setProductData={setFormData} productData={formData} />
                 </StepperItem>
                 <StepperItem>
-                    <UploadImage setImage={undefined} />
-
+                    <UploadImage setImage={setImagesUrl} actualImage={imagesUrl} />
                 </StepperItem>
                 <StepperItem>
-
-                    <Summary productData={undefined} image={undefined} onConfirm={undefined} />
-
-
-
+                    <Summary productData={formData} image={imagesUrl[0]} />
                 </StepperItem>
             </Stepper>
 

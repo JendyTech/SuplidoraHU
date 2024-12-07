@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useLoader } from "@/contexts/Loader"
 import { Pagination, ParamsPaginationFilter } from '@/contracts/API'
 import { IProduct } from "@interfaces/Product/Product"
-import { getAllProducts } from "@/services/product"
+import { getAllProducts } from "@services/product"
 import { useDelay } from "@/hooks/useDelay"
 import { toast } from "sonner"
 

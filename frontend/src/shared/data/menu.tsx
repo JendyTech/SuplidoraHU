@@ -27,6 +27,10 @@ export const topBar: ItemMenu[] = [
     url: "/admin/productos/crear-producto",
     title: "Crear producto",
     items: [],
+    header:
+      <LinkButton to="/admin/productos">
+        &nbsp;&nbsp;&nbsp;&nbsp;Regresar&nbsp;&nbsp;&nbsp;&nbsp;
+      </LinkButton>
   },
   {
     url: "/admin/usuarios",
@@ -41,6 +45,10 @@ export const topBar: ItemMenu[] = [
     url: "/admin/usuarios/crear-usuario",
     title: "Crear Usuario",
     items: [],
+    header:
+      <LinkButton to="/admin/usuarios">
+        &nbsp;&nbsp;&nbsp;&nbsp;Regresar&nbsp;&nbsp;&nbsp;&nbsp;
+      </LinkButton>
   },
   {
     url: "/admin/configuracion",
