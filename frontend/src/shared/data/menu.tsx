@@ -13,6 +13,19 @@ export const topBar: ItemMenu[] = [
     url: "/admin/facturacion",
     title: "Facturación",
     items: [],
+    header:
+      <LinkButton to="/admin/facturacion/nueva-factura">
+        Nueva Factura
+      </LinkButton>
+  },
+  {
+    url: "/admin/facturacion/nueva-factura",
+    title: "Nueva Factura",
+    items: [],
+    header:
+      <LinkButton to="/admin/facturacion">
+        &nbsp;&nbsp;&nbsp;&nbsp;Regresar&nbsp;&nbsp;&nbsp;&nbsp;
+      </LinkButton>
   },
   {
     url: "/admin/productos",

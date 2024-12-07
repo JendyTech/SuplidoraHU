@@ -12,6 +12,11 @@ export const topBar: ItemMenu[] = [
     items: [],
   },
   {
+    url: "/admin/facturacion/nueva-factura",
+    title: "Crear producto",
+    items: [],
+  },
+  {
     url: "/admin/productos",
     title: "Productos",
     items: [],

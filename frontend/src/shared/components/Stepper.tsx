@@ -53,7 +53,6 @@ export function Stepper(props: StepperProps) {
 
   }
 
-
   const handleBackStep = () => {
     const tryStep = active - 1
     if (tryStep < 0) return

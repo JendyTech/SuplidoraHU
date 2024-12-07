@@ -68,7 +68,7 @@ export class ProductsService {
         status: HttpStatus.INTERNAL_SERVER_ERROR,
       });
     }
-
+    
     const imagesResult: UploadProductImage = []
 
       if (dto.images) {

@@ -1,0 +1,209 @@
+.billingPage {
+  box-shadow: var(--shadow-md);
+  width: 100%
+  height: 100px;
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 8px;
+  border: 0.1px solid rgba(214, 214, 214, 0.24);
+  background-color: white;
+  margin-bottom: 20px;
+
+}
+
+.formContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.productButton{
+    display: flex;
+    justify-content: end;
+    padding-top: 20px;
+}
+
+.formContainer .inputsContainer{
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+.heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.inputField {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+.InvoicesContainer{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.invoiceSummary {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f9f9f9, #ffffff);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    place-self: flex-end;
+
+}
+
+.productContainer{
+    width: 100%;
+    height: 100px;
+}
+
+.invoiceRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.invoiceRow:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.label {
+    font-size: 16px;
+    color: #555;
+}
+
+.amount {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.totalRow .amount {
+    font-size: 18px;
+    color: #287881;
+}
+
+.totalRow {
+    margin-top: 20px;
+    border-top: 2px solid #287881;
+    padding-top: 15px;
+}
+
+.productContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+}
+
+.productDetails {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.productImage {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.productInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.productTitle {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.productPrice {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0 0;
+}
+
+.productActions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.quantityControl {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantityButton {
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quantityValue {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+.totalPrice {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.deleteIcon {
+    color: #ff4d4f;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
