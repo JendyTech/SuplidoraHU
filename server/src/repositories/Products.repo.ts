@@ -5,6 +5,7 @@ import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { HttpException, HttpStatus } from '@nestjs/common'
 import { MODELS_NAMES } from '@config/constants'
 import { Types } from 'mongoose'
+import { IProductPhoto } from '@interfaces/Product'
 
 export class ProductRepository {
   static async getProducts(pagination: PaginationDTO) {
@@ -45,6 +46,12 @@ export class ProductRepository {
     ])
 
     return product
+  }
+
+  static async saveProductImages(data: Array<Pick<IProductPhoto, 'productId'  | 'uploadBy' | 'url' | 'publicId'>>) {
+    const result = await ProductPhotoModel.insertMany(data)
+
+    return result.map((image) => image.toObject())
   }
 
   static async createProduct(data: CreateProducts) {
@@ -114,7 +121,6 @@ export class ProductRepository {
     
     return product.toObject()
   }
-
 
   static async getProductsByIds (ids: string[]) {
     const result = await ProductModel.find({_id: { $in: ids } })

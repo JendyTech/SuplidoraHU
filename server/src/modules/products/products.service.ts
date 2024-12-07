@@ -9,6 +9,8 @@ import { HttpStatus } from '@nestjs/common'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { uploadBase64, deleteResource } from '@shared/functions/cloudinary'
 import { CloudinaryResult } from '@contracts/Cloudinary'
+import { IProductPhoto } from '@interfaces/Product'
+import { SaveImageProduct, UploadProductImage } from '@contracts/repositories/Products.repo'
 
 @Injectable()
 export class ProductsService {
@@ -29,43 +31,75 @@ export class ProductsService {
   }
 
   async createProduct(dto: CreateProductDto, user: IUser) {
-    let found
+    let found, imageUrl: string | null = null, imagePublicId: string | null = null, product
 
     try {
-      found = await ProductRepository.findByName(dto.name)
+      found = await ProductRepository.findByName(dto.name);
     } catch (error) {
+      console.error('Error al verificar el nombre del producto en la base de datos:', error);
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
-      })
+      });
     }
 
     if (found) {
       return errorResponse({
         message: PRODUCT.PRODUCT_NAME_IN_USE,
         status: HttpStatus.CONFLICT,
-      })
+      });
     }
 
     try {
       const productData = {
         ...dto,
         createdBy: user._id,
-      }
+        imagesId: imagePublicId,
+        images: imageUrl,
+      };
 
-      const newProduct = await ProductRepository.createProduct(productData)
+      product = await ProductRepository.createProduct(productData);
 
-      return successResponse({
-        data: newProduct,
-        message: PRODUCT.PRODUCT_CREATED,
-      })
+    } catch (error) {
+      console.error('Error al crear el producto en la base de datos:', error);
+      return errorResponse({
+        message: GENERAL.ERROR_DATABASE_MESSAGE,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+      });
+    }
+
+    const imagesResult: UploadProductImage = []
+
+      if (dto.images) {
+      await Promise.all(dto.images.map(async (image) => {
+
+        try {
+          const result = await uploadBase64(image);
+
+          imagesResult.push({
+            productId: product._id,
+            publicId: result.publicId,
+            url: result.secureUrl,
+            uploadBy: user._id,
+          })
+        } catch { }
+      }))
+    }
+
+    try {
+      await ProductRepository.saveProductImages(imagesResult)
     } catch (error) {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
-      })
+      });
     }
+
+    return successResponse({
+      data: product,
+      message: PRODUCT.PRODUCT_CREATED,
+    });
   }
 
   async updatedProduct(dto: CreateProductDto, id: string, user: IUser) {
@@ -166,7 +200,6 @@ export class ProductsService {
       })
     }
 
-
     return successResponse({
       data: product,
       message: PRODUCT.PRODUCTS_FETCHED,
@@ -225,7 +258,6 @@ export class ProductsService {
     })
   }
 
-
   async deleteImage(imageId: string) {
     let image
 
@@ -271,7 +303,7 @@ export class ProductsService {
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
-      })  
+      })
     }
   }
 }

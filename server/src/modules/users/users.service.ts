@@ -87,9 +87,7 @@ export class UsersService {
     async createUser(dto: CreateUserDto, user: IUser) {
         let found, photoUrl: string | null = null, publicId: string | null
 
-
         const passwordValidation = validatePassword({ password: dto.password })
-
 
         if (!passwordValidation.success) {
             return errorResponse({
@@ -97,7 +95,6 @@ export class UsersService {
                 status: HttpStatus.BAD_REQUEST
             })
         }
-
 
         try {
             found = await UserRepository.findByEmail(dto.email)

@@ -8,6 +8,8 @@ import {
   MinLength,
   IsInt,
   Min,
+  IsOptional,
+  IsArray,
 } from 'class-validator'
 
 export class CreateProductDto {
@@ -47,6 +49,11 @@ export class CreateProductDto {
   @IsInt()
   @Min(1, { message: 'Las unidades por paquete debe ser mayor a 0' })
   unitsPerPack: number
+
+  @ApiProperty({ example: [imageBase64], description: 'Imagen del producto'})
+  @IsOptional()
+  @IsArray()
+  images?: string[];
 }
 
 export class UploadProductImageDto {

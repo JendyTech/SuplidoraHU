@@ -14,6 +14,7 @@ extends Pick<IUser, 'lastName' | 'firstName'>
   updatedBy: string
 }
 
+
 export type SaveImageUser = Pick<IUserPhoto, 'publicId' | 'uploadBy' | 'url' | 'userId'>;
 
 export interface GetUsersByIdWithImagesResult extends IUser {
