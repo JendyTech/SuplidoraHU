@@ -11,6 +11,7 @@ interface InputProps {
     pattern?: string
     value?: string | number
     onChange?: React.ChangeEventHandler<HTMLInputElement>
+    onFocus?: () => void;
     height?: string
     isMoneyInput?: boolean;
 }
@@ -18,7 +19,7 @@ interface InputProps {
 export default function CustomInput(props: InputProps) {
     const [error, setError] = useState<string | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const { type, placeholder, name, maxWidth = '330px', required = true, pattern, value, onChange, height, isMoneyInput = false, } = props;
+    const { type, placeholder, name, maxWidth = '330px', required = true, pattern, value, onChange, onFocus, height, isMoneyInput = false, } = props;
 
     const handleShowPass = () => {
         setShowPassword((prev) => !prev)
@@ -66,6 +67,7 @@ export default function CustomInput(props: InputProps) {
                 onInput={handleInput}
                 pattern={pattern}
                 value={value}
+                onFocus={onFocus}
             />
             {type === "password" && (
                 <button

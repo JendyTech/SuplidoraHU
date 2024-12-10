@@ -4,16 +4,24 @@ import React from "react";
 import CustomInput from "@shared/components/Form/Input";
 import CustomButton from "@shared/components/Buttons/CustomButton";
 import styles from "@modules/facturas/styles/facturas.module.css";
+import InvoiceView from "@modules/facturas/components/InvoiceView";
+import usePrintContent from "@modules/facturas/hooks/usePrintContent";
 import { IconTrash } from "@tabler/icons-react";
 
 export default function BillingPage() {
-    const products = [
-        { id: 1, name: "Producto Falso 1", unitPrice: 20000, quantity: 15 },
-        { id: 2, name: "Producto Falso 3", unitPrice: 15000, quantity: 1 },
-    ];
+    const printContent = usePrintContent();
+
+    const handleViewReceipt = () => {
+        printContent(<InvoiceView />, "Factura");
+    }
 
     const formatCurrency = (value: number) =>
         value.toLocaleString("es-DO", { style: "currency", currency: "DOP" });
+    
+
+    const products = [
+        { id: 1, name: "Producto Falso 1", unitPrice: 20000, quantity: 15 },
+    ];
 
     return (
         <div className={styles.billingPage}>
@@ -22,9 +30,9 @@ export default function BillingPage() {
                 <div className={styles.inputsContainer}>
                     <div className={styles.inputContainer} style={{ width: "100%" }}>
                         <CustomInput
-                            type="search"
+                            type="text"
                             name="clientName"
-                            placeholder="Buscar Cliente"
+                            placeholder="Nombre del Cliente"
                             maxWidth="600px"
                             required
                         />
@@ -110,7 +118,7 @@ export default function BillingPage() {
                         </div>
                     </div>
                     <div style={{ placeSelf: "flex-end", paddingTop: "16px" }}>
-                        <CustomButton text="Generar Factura" buttonType="submit" />
+                        <CustomButton onClick={() => handleViewReceipt()} text="Generar Factura" buttonType="submit" />
                     </div>
                 </div>
             </form>

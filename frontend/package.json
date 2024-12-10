@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fileforge/react-print": "^0.1.150",
+    "@onedoc/client": "^0.1.33",
+    "@onedoc/react-print": "^0.1.133",
     "@tabler/icons-react": "3.21.0",
     "dayjs": "1.11.13",
     "next": "15.0.3",
