@@ -1,0 +1,9 @@
+@page {
+  size: A3;
+  margin: 20mm;
+}
+.invoiceContainer {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}

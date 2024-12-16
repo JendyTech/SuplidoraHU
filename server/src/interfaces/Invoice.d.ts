@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose"
 
 export interface IInvoice {
     _id: string
+    invoiceNumber: string;
     ncfNumber: string 
     rncNumber: string
     expirationDate: Date

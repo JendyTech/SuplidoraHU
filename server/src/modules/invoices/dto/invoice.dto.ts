@@ -15,6 +15,11 @@ export class CreateInvoiceItemDto{
 }
 
 export class CreateInvoiceDto {
+    @ApiProperty({ example: 'FA-0001', description: 'Número de la factura' })
+    @IsString({ message: 'El número de la factura debe ser un string' })
+    @IsNotEmpty({ message: 'El número de la factura no puede estar vacío' })
+    invoiceNumber: string
+
     @ApiProperty({ example: '26525256256325265', description: 'Nombre de la factura' })
     @IsString({ message: 'El NCF debe ser un string' })
     @IsNotEmpty({ message: 'El NCF no puede estar vacío' })

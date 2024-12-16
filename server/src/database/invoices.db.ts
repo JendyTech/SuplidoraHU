@@ -4,6 +4,10 @@ import { MODELS_NAMES } from '@config/constants';
 
 const invoiceSchema = new Schema<IInvoice>(
     {
+        invoiceNumber: {
+            type: String,
+            required: true,
+        },
         ncfNumber: {
             type: String,
             required: true,
