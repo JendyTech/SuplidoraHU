@@ -43,7 +43,6 @@ export const useCreateProduct = () => {
     toast.error("Error al conectar al servidor")
    }finally {
     setLoading(false)
-
    }
 
 };
