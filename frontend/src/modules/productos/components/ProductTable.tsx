@@ -7,7 +7,7 @@ import { Pagination } from "@/contracts/API"
 import { IProduct } from "@interfaces/Product/Product"
 import { TableColumn } from 'react-data-table-component'
 import { Options } from '@shared/components/Elements/Options'
-import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 
 interface Props {
@@ -15,6 +15,9 @@ interface Props {
 }
 
 export default function ProductTable(props: Props) {
+
+    const router = useRouter();
+
     const {
         initialState
     } = props
@@ -41,21 +44,15 @@ export default function ProductTable(props: Props) {
                         {
                             type: "button",
                             text: "Eliminar",
-                            handler: () => toast('Event has been created', {
-                                action: {
-                                    label: 'No',
-
-                                    onClick: () => console.log('Undo')
-                                }, cancel: {
-                                    label: "Si,Eliminar",
-                                    onClick: () => { }
-                                }
-                            },)
+                            handler: () => alert('Hola mundo')
                         },
                         {
                             type: "button",
                             text: "Ver detalles",
-                            handler: () => alert('Hola mundo')
+                            handler: () => {
+                                router.push(`productos/${row._id}`)
+                            }
+
                         }
                     ]}
                 />

@@ -6,4 +6,5 @@ export interface GetProduct {
     description: string
     unitsPerPack: number
     createdAt: string
+    images : string[]
 }

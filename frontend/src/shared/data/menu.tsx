@@ -68,4 +68,5 @@ export const topBar: ItemMenu[] = [
     title: "Configuración",
     items: [],
   },
+  
 ];

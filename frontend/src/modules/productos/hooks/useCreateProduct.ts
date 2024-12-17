@@ -37,13 +37,12 @@ export const useCreateProduct = () => {
 
       toast.success(response.message)
 
-      router.replace('/admin/productos')
-    } catch (error) {
-      toast.error("Error al conectar al servidor")
-    } finally {
-      setLoading(false)
-
-    }
+    router.replace('/admin/productos')
+   } catch (error) {
+    toast.error("Error al conectar al servidor")
+   }finally {
+    setLoading(false)
+   }
 
   };
 
