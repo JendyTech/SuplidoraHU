@@ -104,7 +104,7 @@ function InvoiceView({ invoice }: Props) {
                                                     DESCRIPCION
                                                 </th>
                                                 <th className="px-6 py-2 text-right font-semibold">
-                                                    PRECIO
+                                                    PRECIO POR UNIDAD
                                                 </th>
                                                 <th className="px-6 py-2 text-right font-semibold">
                                                     IMPORTE
