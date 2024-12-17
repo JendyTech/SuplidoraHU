@@ -16,7 +16,7 @@ import { CreateInvoiceItem } from '@contracts/repositories/Invoices.repo';
 export class InvoicesService {
     constructor(
         private readonly taxService: TaxService,
-    ) {}
+    ) { }
     async getInvoices(pagination: PaginationDTO) {
         try {
             const result = await InvoicesRepository.getInvoices(pagination)
@@ -41,12 +41,18 @@ export class InvoicesService {
         const itemsInvoice: CreateInvoiceItem[] = []
         const ids: string[] = []
         const currentDate = new Date()
-        const dateExpirationInvoice = new Date(dto.expirationDate)
+        const dateExpirationInvoice = dto.expirationDate
+            ? new Date(dto.expirationDate)
+            : (() => {
+                const date = new Date()
+                date.setMonth(date.getMonth() + 1)
+                return date
+            })()
 
         if (currentDate > dateExpirationInvoice) {
             return errorResponse({
                 message: INVOICE.INVOICE_DATE_VALIDATION,
-                status: HttpStatus.CONFLICT
+                status: HttpStatus.BAD_REQUEST,
             })
         }
 
@@ -86,30 +92,30 @@ export class InvoicesService {
                 productId: id,
                 quantity,
                 description: product.description,
-                total:  product.price * quantity,
+                total: product.price * quantity,
                 unitPrice: product.unitsPerPack
             })
         }
 
         let nextInvoiceNumber: string;
-    try {
-        const lastInvoiceNumber = await InvoicesRepository.getLastInvoiceNumber();
+        try {
+            const lastInvoiceNumber = await InvoicesRepository.getLastInvoiceNumber();
 
-        if (lastInvoiceNumber) {
-            const numericPart = parseInt(lastInvoiceNumber.replace(/\D/g, ''), 10); 
-            nextInvoiceNumber = `FA-${(numericPart + 1).toString().padStart(6, '0')}`;
-        } else {
-            nextInvoiceNumber = 'FA-000001'; 
+            if (lastInvoiceNumber) {
+                const numericPart = parseInt(lastInvoiceNumber.replace(/\D/g, ''), 10);
+                nextInvoiceNumber = `FA-${(numericPart + 1).toString().padStart(6, '0')}`;
+            } else {
+                nextInvoiceNumber = 'FA-000001';
+            }
+        } catch (error) {
+            console.log(error);
+
+            return errorResponse({
+                message: GENERAL.ERROR_DATABASE_MESSAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                error,
+            });
         }
-    } catch (error) {
-        console.log(error);
-
-        return errorResponse({
-            message: GENERAL.ERROR_DATABASE_MESSAGE,
-            status: HttpStatus.INTERNAL_SERVER_ERROR,
-            error,
-        });
-    }
 
         try {
 

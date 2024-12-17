@@ -10,10 +10,16 @@ export const useCreateInvoice = () => {
     const { setLoading } = useLoader()
     const router = useRouter()
 
+    const getDefaultExpirationDate = () => {
+        const date = new Date();
+        date.setMonth(date.getMonth() + 1);
+        return date.toISOString().split("T")[0]; 
+    };
+
     const [formData, setFormData] = useState<AddInvoiceModel>({
         ncfNumber : "B0100001719",
         rncNumber : "132-38173-4",
-        expirationDate : "2050-05-25",
+        expirationDate : getDefaultExpirationDate(),
         clientName : "",
         clientRnc : "",
         paymentCondition : "",

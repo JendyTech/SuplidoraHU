@@ -29,7 +29,7 @@ export const getAllInvoices = async (params?: ParamsPaginationFilter, server: bo
         endpoint: "/invoices",
         query
     })
-
+    
     return response
 }
 

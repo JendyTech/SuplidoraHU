@@ -8,9 +8,11 @@ function usePrintContent() {
                     <title>${title}</title>
                     <style>
                         body {
-                            margin: 0;
-                            font-family: Arial, sans-serif;
-                        }
+                        margin: 0;
+                        font-family: Arial, sans-serif;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
                     </style>
                 </head>
                 <body>
@@ -20,7 +22,10 @@ function usePrintContent() {
         `;
 
         const iframe = document.createElement("iframe");
-        iframe.setAttribute("style", "position:absolute;visibility:hidden;height:0;width:0;");
+        iframe.setAttribute(
+            "style",
+            "position:absolute;visibility:hidden;height:0;width:0;"
+        );
         document.body.appendChild(iframe);
 
         const doc = iframe.contentWindow?.document;
@@ -34,7 +39,7 @@ function usePrintContent() {
         doc.close();
 
         const checkImagesLoaded = () => {
-            const images = doc.getElementsByTagName('img');
+            const images = doc.getElementsByTagName("img");
             let loadedCount = 0;
 
             const totalImages = images.length;
@@ -55,10 +60,10 @@ function usePrintContent() {
                 img.onerror = () => {
                     loadedCount++;
                     if (loadedCount === totalImages) {
-                        iframe.contentWindow?.print(); 
+                        iframe.contentWindow?.print();
                     }
                 };
-                img.src = img.src; 
+                img.src = img.src;
             }
         };
 
