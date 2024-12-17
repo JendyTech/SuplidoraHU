@@ -39,7 +39,7 @@ export class InvoicesRepository {
         }
     }
 
-    static async getInvoicesWithItems(id: string): Promise<null | GetInvoiceByIdWithItemsResults>{
+    static async getInvoicesWithItems(id: string): Promise<null | GetInvoiceByIdWithItemsResults> {
         const [invoice = null] = await InvoiceModel.aggregate([
             {
                 $match: {
@@ -61,7 +61,7 @@ export class InvoicesRepository {
         return invoice
     }
 
-    
+
 
     static async findById(id: string) {
         const result = await InvoiceModel.findById(id)
@@ -77,6 +77,14 @@ export class InvoicesRepository {
         if (!result) return null
 
         return result.toObject()
+    }
+
+    static async getLastInvoiceNumber(): Promise<string | null> {
+        const lastInvoice = await InvoiceModel.findOne({})
+            .sort({ createdAt: -1 })
+            .select('invoiceNumber')
+
+        return lastInvoice?.invoiceNumber || null
     }
 }
 

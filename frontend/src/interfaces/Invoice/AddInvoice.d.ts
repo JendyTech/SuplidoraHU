@@ -1,16 +1,16 @@
 interface AddInvoiceModel {
-    invoiceNumber: string;
+    invoiceNumber?: string;
     ncfNumber : string
     rncNumber : string
-    expirationDate : Date
+    expirationDate : string
     clientName : string
     clientRnc : string
     paymentCondition : string
     supplierName : string
+    items: AddInvoiceItemModel[]; 
 }
 
 interface AddInvoiceItemModel {
-    invoiceId : string
     productId : string
     quantity : number
     description : string

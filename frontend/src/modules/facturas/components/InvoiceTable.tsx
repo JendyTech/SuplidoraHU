@@ -2,22 +2,40 @@
 
 import dayjs from 'dayjs'
 import CustomTable from '@shared/components/CustomTable'
+import CustomButton from "@shared/components/Buttons/CustomButton";
+import InvoiceView from "@modules/facturas/components/InvoiceView";
+import usePrintContent from "@modules/facturas/hooks/usePrintContent";
 import { useInvoices } from '@modules/facturas/hooks/useInvoices'
 import { Pagination } from "@/contracts/API"
 import { IInvoice } from "@interfaces/Invoice/Invoice"
 import { TableColumn } from 'react-data-table-component'
-import { Options } from '@shared/components/Elements/Options'
-import { toast } from 'sonner'
-
+import { getInvoiceById } from '@services/invoice';
+import { toast } from 'sonner';
 
 interface Props {
     initialState: Pagination<IInvoice>
 }
 
-export default function ProductTable(props: Props) {
+export default function InvoiceTable(props: Props) {
     const {
         initialState
     } = props
+
+    const printContent = usePrintContent();
+
+
+    const handleViewReceipt = async (invoice: IInvoice) => {
+        try {
+            const response = await getInvoiceById(invoice._id, true)
+            if (response.ok && response.result) {
+                printContent(<InvoiceView invoice={response.result} />, "Factura");
+            } else {
+                toast.error("No se pudo cargar la factura con los ítems")
+            }
+        } catch (error) {
+            toast.error("Error al buscar la factura")
+        }
+    };
 
     const headers: TableColumn<IInvoice>[] = [
         { name: "Cliente", selector: (row) => row.clientName },
@@ -29,37 +47,16 @@ export default function ProductTable(props: Props) {
             selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
         },
         {
-            name: "", cell: (row) => <div style={{ width: "100%", }}>
-                <Options
-                    data={{ id: 1 }}
-                    options={[
-                        {
-                            type: "button",
-                            text: "Editar",
-                            handler: () => alert('Hola mundo')
-                        },
-                        {
-                            type: "button",
-                            text: "Eliminar",
-                            handler: () => toast('Event has been created', {
-                                action: {
-                                    label: 'No',
+            name: 'Acción',
+            cell: row => (
+                <CustomButton
+                    onClick={() => handleViewReceipt(row)}
+                    text="ver PDF"
+                    buttonType="submit"
+                    styles={{ padding: "10px 10px", fontSize: "14px", textAlign: "center" }}
 
-                                    onClick: () => console.log('Undo')
-                                }, cancel: {
-                                    label: "Si,Eliminar",
-                                    onClick: () => { }
-                                }
-                            },)
-                        },
-                        {
-                            type: "button",
-                            text: "Ver detalles",
-                            handler: () => alert('Hola mundo')
-                        }
-                    ]}
                 />
-            </div>, maxWidth: "10px"
+            ),
         },
 
     ];

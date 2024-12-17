@@ -11,6 +11,7 @@ export interface IInvoice {
     createdBy: string;
     createdAt: Date;
     updatedAt: Date;
+    items: IInvoiceItem[];
 }
 
 export interface IInvoiceItem {

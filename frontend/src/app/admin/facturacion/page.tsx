@@ -1,4 +1,4 @@
-import { IconShoppingCart } from '@tabler/icons-react'
+import { IconInvoice } from '@tabler/icons-react'
 import { getAllInvoices } from "@services/invoice"
 import { InfoContainer } from '@modules/productos/components/InfoContainer'
 import { ErrorLoadServer } from "@shared/components/Error/ErrorLoadServer"
@@ -14,7 +14,7 @@ export default async function BillingPage() {
     return (
       <div className={styles.main}>
         <div className={styles.infoContainerGroup}>
-          <InfoContainer Icon={IconShoppingCart} title={response.result.metadata.total} subtitle='Facturas en sistema' color='#287881' />
+          <InfoContainer Icon={IconInvoice} title={response.result.metadata.total} subtitle='Facturas en sistema' color='#287881' />
         </div>
 
 

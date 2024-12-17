@@ -14,12 +14,13 @@ interface InputProps {
     onFocus?: () => void;
     height?: string
     isMoneyInput?: boolean;
+    disabled?: boolean
 }
 
 export default function CustomInput(props: InputProps) {
     const [error, setError] = useState<string | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const { type, placeholder, name, maxWidth = '330px', required = true, pattern, value, onChange, onFocus, height, isMoneyInput = false, } = props;
+    const { type, placeholder, name, maxWidth = '330px', required = true, pattern, value, onChange, onFocus, height, disabled = false, isMoneyInput = false, } = props;
 
     const handleShowPass = () => {
         setShowPassword((prev) => !prev)
@@ -68,6 +69,7 @@ export default function CustomInput(props: InputProps) {
                 pattern={pattern}
                 value={value}
                 onFocus={onFocus}
+                disabled={disabled}
             />
             {type === "password" && (
                 <button

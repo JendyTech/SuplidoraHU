@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
-import { IsString, IsNotEmpty, MinLength, IsDateString, IsInt, IsMongoId, Min, IsArray, ArrayNotEmpty } from 'class-validator'
+import { IsString, IsNotEmpty, MinLength, IsDateString, IsInt, IsMongoId, Min, IsArray, ArrayNotEmpty, IsOptional } from 'class-validator'
 
 export class CreateInvoiceItemDto{
     @ApiProperty({ example: '60d9b7e1b5f0c9a4b4e1f1b0', description: 'Id de la factura' })
@@ -17,7 +17,7 @@ export class CreateInvoiceItemDto{
 export class CreateInvoiceDto {
     @ApiProperty({ example: 'FA-0001', description: 'Número de la factura' })
     @IsString({ message: 'El número de la factura debe ser un string' })
-    @IsNotEmpty({ message: 'El número de la factura no puede estar vacío' })
+    @IsOptional()
     invoiceNumber: string
 
     @ApiProperty({ example: '26525256256325265', description: 'Nombre de la factura' })

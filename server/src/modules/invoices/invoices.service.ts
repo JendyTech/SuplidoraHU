@@ -36,7 +36,6 @@ export class InvoicesService {
 
     async createInvoice(dto: CreateInvoiceDto, user: IUser) {
         let products
-        let taxes
 
         const itemsMap: Record<string, { productId: string, quantity: number }> = {}
         const itemsInvoice: CreateInvoiceItem[] = []
@@ -59,9 +58,9 @@ export class InvoicesService {
 
         try {
             products = await ProductRepository.getProductsByIds(ids)
-            taxes = await this.taxService.getTaxes({ page: 1, max: 1000 })
         } catch (error) {
             console.log(error)
+
             return errorResponse({
                 message: GENERAL.ERROR_DATABASE_MESSAGE,
                 status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -83,26 +82,40 @@ export class InvoicesService {
 
             const { quantity } = itemsMap[id]
 
-            const applicableTaxes = taxes.data.filter((tax) => !tax.isExempt)
-
-            let totalTaxes = 0;
-            applicableTaxes.forEach((tax) => {
-                totalTaxes += product.price * tax.rate; 
-            });
-
             itemsInvoice.push({
                 productId: id,
                 quantity,
                 description: product.description,
-                total: product.price * quantity + totalTaxes,
+                total:  product.price * quantity,
                 unitPrice: product.unitsPerPack
             })
         }
+
+        let nextInvoiceNumber: string;
+    try {
+        const lastInvoiceNumber = await InvoicesRepository.getLastInvoiceNumber();
+
+        if (lastInvoiceNumber) {
+            const numericPart = parseInt(lastInvoiceNumber.replace(/\D/g, ''), 10); 
+            nextInvoiceNumber = `FA-${(numericPart + 1).toString().padStart(6, '0')}`;
+        } else {
+            nextInvoiceNumber = 'FA-000001'; 
+        }
+    } catch (error) {
+        console.log(error);
+
+        return errorResponse({
+            message: GENERAL.ERROR_DATABASE_MESSAGE,
+            status: HttpStatus.INTERNAL_SERVER_ERROR,
+            error,
+        });
+    }
 
         try {
 
             const newInvoice = await InvoicesRepository.createInvoice({
                 ...dto,
+                invoiceNumber: nextInvoiceNumber,
                 createdBy: user._id,
                 expirationDate: dateExpirationInvoice,
                 items: itemsInvoice

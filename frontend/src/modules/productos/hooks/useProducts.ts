@@ -6,7 +6,6 @@ import { getAllProducts } from "@services/product"
 import { useDelay } from "@/hooks/useDelay"
 import { toast } from "sonner"
 
-
 export const useProducts = (initialState: Pagination<IProduct>) => {
   const [pagination, setPagination] = useState(initialState)
   const [firstLoad, setFirstLoad] = useState(true)
@@ -41,7 +40,6 @@ export const useProducts = (initialState: Pagination<IProduct>) => {
         setLoading(false)
       }
     }
-
 
     void getProducts()
 

@@ -33,7 +33,6 @@ export const getAllInvoices = async (params?: ParamsPaginationFilter, server: bo
     return response
 }
 
-
 export const addNewInvoice = async (addInvoiceData: AddInvoiceModel) => {
     const token = await getToken()
     const { POST } = useClient(token)
@@ -45,4 +44,26 @@ export const addNewInvoice = async (addInvoiceData: AddInvoiceModel) => {
 
     return response
 }
+
+export const getInvoiceById = async (id: string, includeItems: boolean = true) => {
+    const token = await getToken();
+    const { GET } = useClient(token);
+
+    const query: Record<string, string> = {}
+    if (includeItems) {
+        query.items = 'true'
+    }
+
+    try {
+        const response = await GET<IInvoice>({
+            endpoint: `/invoices/${id}`,
+            query
+        })
+        return response
+    } catch (error) {
+        console.error('Error fetching invoice:', error)
+        throw new Error('Failed to fetch invoice')
+    }
+};
+
 
