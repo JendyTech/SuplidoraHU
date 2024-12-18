@@ -10,7 +10,10 @@ import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { uploadBase64, deleteResource } from '@shared/functions/cloudinary'
 import { CloudinaryResult } from '@contracts/Cloudinary'
 import { IProductPhoto } from '@interfaces/Product'
-import { SaveImageProduct, UploadProductImage } from '@contracts/repositories/Products.repo'
+import {
+  SaveImageProduct,
+  UploadProductImage,
+} from '@contracts/repositories/Products.repo'
 
 @Injectable()
 export class ProductsService {
@@ -31,24 +34,30 @@ export class ProductsService {
   }
 
   async createProduct(dto: CreateProductDto, user: IUser) {
-    let found, imageUrl: string | null = null, imagePublicId: string | null = null, product
+    let found,
+      imageUrl: string | null = null,
+      imagePublicId: string | null = null,
+      product
 
     try {
-      found = await ProductRepository.findByName(dto.name);
+      found = await ProductRepository.findByName(dto.name)
     } catch (error) {
-      console.error('Error al verificar el nombre del producto en la base de datos:', error);
+      console.error(
+        'Error al verificar el nombre del producto en la base de datos:',
+        error,
+      )
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
-      });
+      })
     }
 
     if (found) {
       return errorResponse({
         message: PRODUCT.PRODUCT_NAME_IN_USE,
         status: HttpStatus.CONFLICT,
-      });
+      })
     }
 
     try {
@@ -57,34 +66,34 @@ export class ProductsService {
         createdBy: user._id,
         imagesId: imagePublicId,
         images: imageUrl,
-      };
+      }
 
-      product = await ProductRepository.createProduct(productData);
-
+      product = await ProductRepository.createProduct(productData)
     } catch (error) {
-      console.error('Error al crear el producto en la base de datos:', error);
+      console.error('Error al crear el producto en la base de datos:', error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
-      });
+      })
     }
-    
+
     const imagesResult: UploadProductImage = []
 
-      if (dto.images) {
-      await Promise.all(dto.images.map(async (image) => {
+    if (dto.images) {
+      await Promise.all(
+        dto.images.map(async (image) => {
+          try {
+            const result = await uploadBase64(image)
 
-        try {
-          const result = await uploadBase64(image);
-
-          imagesResult.push({
-            productId: product._id,
-            publicId: result.publicId,
-            url: result.secureUrl,
-            uploadBy: user._id,
-          })
-        } catch { }
-      }))
+            imagesResult.push({
+              productId: product._id,
+              publicId: result.publicId,
+              url: result.secureUrl,
+              uploadBy: user._id,
+            })
+          } catch {}
+        }),
+      )
     }
 
     try {
@@ -93,21 +102,29 @@ export class ProductsService {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
-      });
+      })
     }
 
     return successResponse({
       data: product,
       message: PRODUCT.PRODUCT_CREATED,
-    });
+    })
   }
 
   async updatedProduct(dto: CreateProductDto, id: string, user: IUser) {
     let product
 
+    console.log('[START] Updating product')
+    console.log('DTO received:', dto)
+    console.log('Product ID:', id)
+    console.log('User performing update:', user)
+
     try {
+      console.log('[STEP 1] Fetching product by ID...')
       product = await ProductRepository.findById(id)
+      console.log('[STEP 1] Product fetched:', product)
     } catch (error) {
+      console.error('[ERROR] Failed to fetch product:', error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -116,6 +133,7 @@ export class ProductsService {
     }
 
     if (!product) {
+      console.warn('[WARN] Product not found with ID:', id)
       return errorResponse({
         message: PRODUCT.PRODUCT_NOT_FOUND,
         status: HttpStatus.NOT_FOUND,
@@ -123,29 +141,36 @@ export class ProductsService {
     }
 
     try {
+      console.log('[STEP 2] Preparing product data for update...')
       const productData = {
         ...dto,
         updatedBy: user._id,
         createdBy: user._id,
       }
+      console.log('[STEP 2] Product data prepared:', productData)
 
+      console.log('[STEP 3] Updating product...')
       const updatedProduct = await ProductRepository.updatedProduct(
         id,
         productData,
       )
+      console.log('[STEP 3] Product updated:', updatedProduct)
 
       if (!updatedProduct) {
+        console.error('[ERROR] Failed to update product')
         return errorResponse({
           message: GENERAL.ERROR_DATABASE_MESSAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
         })
       }
 
+      console.log('[SUCCESS] Product updated successfully')
       return successResponse({
         data: updatedProduct,
         message: PRODUCT.PRODUCT_UPDATED,
       })
     } catch (error) {
+      console.error('[ERROR] Failed during product update:', error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -157,7 +182,7 @@ export class ProductsService {
     let product
 
     try {
-      product = await ProductRepository.findById(id)
+      product = await ProductRepository.getProductByIdWithImages(id)
 
       if (!product) {
         return errorResponse({
@@ -166,12 +191,33 @@ export class ProductsService {
         })
       }
 
+      const images = product.images || []
+
+      if (images.length > 0) {
+        await Promise.all(
+          images.map(async (image) => {
+            try {
+              await deleteResource(image.publicId)
+
+              await ProductRepository.deleteImage(image._id)
+            } catch (error) {
+              console.error(
+                `[ERROR] Failed to delete image with ID: ${image._id} and publicId: ${image.publicId}:`,
+                error,
+              )
+            }
+          }),
+        )
+      } else {
+      }
+
       await ProductRepository.deleteProduct(id)
 
       return successResponse({
         message: PRODUCT.PRODUCT_DELETED,
       })
     } catch (error) {
+      console.error(`[ERROR] Failed to delete product with ID: ${id}:`, error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -184,7 +230,9 @@ export class ProductsService {
     let product
 
     try {
-      product = await (images ? ProductRepository.getProductByIdWithImages(productId) : ProductRepository.findById(productId))
+      product = await (images
+        ? ProductRepository.getProductByIdWithImages(productId)
+        : ProductRepository.findById(productId))
     } catch (error) {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
@@ -215,15 +263,14 @@ export class ProductsService {
       if (!product) {
         return errorResponse({
           message: PRODUCT.PRODUCT_NOT_FOUND,
-          status: HttpStatus.NOT_FOUND
+          status: HttpStatus.NOT_FOUND,
         })
       }
-
     } catch (error) {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
-        error
+        error,
       })
     }
 
@@ -233,7 +280,7 @@ export class ProductsService {
       return errorResponse({
         message: PRODUCT.ERROR_UPLOAD_IMAGE,
         error,
-        status: HttpStatus.INTERNAL_SERVER_ERROR
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
       })
     }
 
@@ -242,19 +289,19 @@ export class ProductsService {
         productId,
         publicId: result.publicId,
         url: result.secureUrl,
-        uploadBy: user._id
+        uploadBy: user._id,
       })
     } catch (error) {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
-        error
+        error,
       })
     }
 
     return successResponse({
       message: PRODUCT.SUCCESS_UPLOAD_IMAGE,
-      data: resultImageDatabase
+      data: resultImageDatabase,
     })
   }
 
@@ -267,22 +314,19 @@ export class ProductsService {
       if (!image) {
         return errorResponse({
           message: PRODUCT.PRODUCT_IMAGE_NOT_FOUND,
-          status: HttpStatus.NOT_FOUND
+          status: HttpStatus.NOT_FOUND,
         })
       }
-
     } catch (error) {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
       })
-
     }
 
     try {
       await deleteResource(image.publicId)
-
     } catch (error) {
       return errorResponse({
         message: PRODUCT.ERROR_DELETE_IMAGE,
@@ -296,7 +340,7 @@ export class ProductsService {
 
       return successResponse({
         message: PRODUCT.SUCCESS_DELETE_IMAGE,
-        data: imageDeleted
+        data: imageDeleted,
       })
     } catch (error) {
       return errorResponse({

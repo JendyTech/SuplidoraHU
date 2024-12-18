@@ -27,6 +27,14 @@ export const useCreateInvoice = () => {
         items: []
     });
 
+    const handleFormDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
+
     const createInvoice = async () => {
         setLoading(true)
 
@@ -55,6 +63,7 @@ export const useCreateInvoice = () => {
     return {
         formData,
         setFormData,
-        createInvoice
+        createInvoice,
+        handleFormDataChange,
     }
 }
