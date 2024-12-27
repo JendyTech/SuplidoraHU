@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react";
 import { getAllProducts } from "@services/product";
 import { IProduct } from "@interfaces/Product/Product";
@@ -41,7 +43,7 @@ export const useProductSearch = (searchTerm: string) => {
           const filteredProducts = response.result.data.filter((product) =>
             product.name.toLowerCase().startsWith(debouncedSearchTerm.toLowerCase())
           );
-          const limitedProducts = filteredProducts.slice(0, 2);
+          const limitedProducts = filteredProducts.slice(0, 3);
           setProducts(limitedProducts);
         } else {
           setProducts([]);

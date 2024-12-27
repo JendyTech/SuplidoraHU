@@ -86,5 +86,13 @@ export class InvoicesRepository {
 
         return lastInvoice?.invoiceNumber || null
     }
+
+    static async getLastNCF(): Promise<string | null> {
+        const lastInvoice = await InvoiceModel.findOne({})
+        .sort({ createdAt: -1 })
+        .select('ncfNumber')
+
+        return lastInvoice?.ncfNumber || null
+    }
 }
 

@@ -1,0 +1,56 @@
+.tabsHeader {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  border-bottom: 2px solid #e0e0e0;
+  background: #ffffff;
+  padding: 5px 0px;
+}
+
+.tabButton {
+  padding: 10px 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.tabButton:hover {
+  color: #287881;
+}
+
+.tabButton::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #287881;
+  transition: width 0.3s ease;
+}
+
+.tabButton:hover::after {
+  width: 100%;
+}
+
+.activeTab {
+  color: #287881;
+  font-weight: bold;
+}
+
+.activeTab::after {
+  width: 100%;
+}
+
+.emptyTab {
+  color: #999;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  font-style: italic;
+}

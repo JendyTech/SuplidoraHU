@@ -214,7 +214,6 @@ export class UsersService {
     }
 
     async updatePassword(id: string, newPassword: string, user: IUser) {
-        console.log('Inicio del método updatePassword');
         let foundUser;
     
         if (id === user._id.toString()) {
@@ -222,7 +221,6 @@ export class UsersService {
         }
     
         try {
-            console.log(`Buscando usuario con id: ${id}`);
             foundUser = await UserRepository.findById(id);
             
             if (!foundUser) {
@@ -232,7 +230,6 @@ export class UsersService {
                     status: HttpStatus.NOT_FOUND,
                 });
             }
-            console.log('Usuario encontrado:', foundUser);
         } catch (error) {
             console.error('Error al buscar el usuario:', error);
             return errorResponse({
@@ -243,9 +240,7 @@ export class UsersService {
     
         let hashedPassword: string;
         try {
-            console.log(`Hasheando nueva contraseña para el usuario con id: ${id}`);
             hashedPassword = await hashPassword(newPassword);
-            console.log('Contraseña hasheada correctamente');
         } catch (error) {
             console.error('Error al hashear la contraseña:', error);
             return errorResponse({
@@ -255,7 +250,6 @@ export class UsersService {
         }
     
         try {
-            console.log(`Actualizando la contraseña para el usuario con id: ${id}`);
             const updatedUser = await UserRepository.updatePassword(id, hashedPassword);
             if (!updatedUser) {
                 console.warn('No se pudo actualizar la contraseña en la base de datos');
@@ -264,7 +258,6 @@ export class UsersService {
                     status: HttpStatus.INTERNAL_SERVER_ERROR,
                 });
             }
-            console.log('Contraseña actualizada correctamente para el usuario:', updatedUser);
     
             return successResponse({
                 message: USER.PASSWORD_UPDATED,

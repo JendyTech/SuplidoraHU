@@ -17,7 +17,7 @@ export const useCreateInvoice = () => {
     };
 
     const [formData, setFormData] = useState<AddInvoiceModel>({
-        ncfNumber : "B0100001719",
+        ncfNumber : "00000000000",
         rncNumber : "132-38173-4",
         expirationDate : getDefaultExpirationDate(),
         clientName : "",

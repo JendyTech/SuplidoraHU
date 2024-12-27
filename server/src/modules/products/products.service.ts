@@ -114,15 +114,8 @@ export class ProductsService {
   async updatedProduct(dto: CreateProductDto, id: string, user: IUser) {
     let product
 
-    console.log('[START] Updating product')
-    console.log('DTO received:', dto)
-    console.log('Product ID:', id)
-    console.log('User performing update:', user)
-
     try {
-      console.log('[STEP 1] Fetching product by ID...')
       product = await ProductRepository.findById(id)
-      console.log('[STEP 1] Product fetched:', product)
     } catch (error) {
       console.error('[ERROR] Failed to fetch product:', error)
       return errorResponse({
@@ -141,20 +134,15 @@ export class ProductsService {
     }
 
     try {
-      console.log('[STEP 2] Preparing product data for update...')
       const productData = {
         ...dto,
         updatedBy: user._id,
         createdBy: user._id,
       }
-      console.log('[STEP 2] Product data prepared:', productData)
-
-      console.log('[STEP 3] Updating product...')
       const updatedProduct = await ProductRepository.updatedProduct(
         id,
         productData,
       )
-      console.log('[STEP 3] Product updated:', updatedProduct)
 
       if (!updatedProduct) {
         console.error('[ERROR] Failed to update product')
@@ -164,7 +152,6 @@ export class ProductsService {
         })
       }
 
-      console.log('[SUCCESS] Product updated successfully')
       return successResponse({
         data: updatedProduct,
         message: PRODUCT.PRODUCT_UPDATED,
