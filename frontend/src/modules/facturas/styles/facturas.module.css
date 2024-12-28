@@ -320,3 +320,36 @@
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
   }
   
+  .infoContainerGroup {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.infoContainer {
+    box-shadow: var(--shadow-md);
+    width: 280px;
+    height: 100px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    border: .1px solid rgba(214, 214, 214, 0.24);
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+.infoContainer p {
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 24px;
+
+}
+
+.infoContainer span {
+    line-height: 0;
+    font-size: 14;
+}
+

@@ -1,0 +1,244 @@
+.formContainer {
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .formTitle {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 1rem;
+  }
+  
+  .inputGroup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4a5568;
+  }
+  
+  .input,
+  .textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #2d3748;
+  }
+  
+  .input:focus,
+  .textarea:focus {
+    outline: none;
+    border-color: #319795;
+    box-shadow: 0 0 0 3px rgba(49, 151, 149, 0.2);
+  }
+  
+  .sectionTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 0.875rem;
+    color: #4a5568;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .table th {
+    background: #edf2f7;
+    font-weight: 600;
+  }
+  
+  .table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .inputSmall {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+  }
+  
+  .inputSmall:focus {
+    outline: none;
+    border-color: #319795;
+  }
+  
+  .removeButton {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  
+  .addButton {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: #319795;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .addButton:hover {
+    background: #2c7a7b;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  .submitButton {
+    padding: 0.75rem 1.5rem;
+    background: #319795;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .submitButton:hover {
+    background: #2c7a7b;
+  }
+  
+  .cancelButton {
+    padding: 0.75rem 1.5rem;
+    background: #e2e8f0;
+    color: #2d3748;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .cancelButton:hover {
+    background: #cbd5e0;
+  }
+  
+
+  .dropdown {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+  
+  .dropdownItem {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .dropdownItem:hover {
+    background: #f0f0f0;
+  }
+  
+  .loadingText,
+  .noResultsText {
+    padding: 10px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .containerTable{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .popover {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: 300px;
+    z-index: 1000;
+    border-radius: 0.5rem;
+  }
+  
+  .popover h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  
+  .popover ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .popover li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .popover li:last-child {
+    border-bottom: none;
+  }
+  
+  .popover input {
+    margin-bottom: 1rem;
+  }
+
+  .quantityInput {
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .quantityInput:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
+  
+  .quantityInput:disabled {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+  }
+  

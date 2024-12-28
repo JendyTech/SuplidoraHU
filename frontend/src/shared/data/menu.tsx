@@ -1,7 +1,9 @@
-import { ItemMenu } from "@interfaces/TopBar";
-import CustomButton from "@shared/components/Buttons/CustomButton";
-import { LinkButton } from "@shared/components/Link/LinkButton";
 import React from "react";
+import CustomButton from "@shared/components/Buttons/CustomButton";
+import { ItemMenu } from "@interfaces/TopBar";
+import { LinkButton } from "@shared/components/Link/LinkButton";
+import { Tabs } from '@shared/components/Screen/Tabs'
+
 
 export const topBar: ItemMenu[] = [
   {
@@ -16,6 +18,15 @@ export const topBar: ItemMenu[] = [
     header:
       <LinkButton to="/admin/facturacion/nueva-factura">
         Nueva Factura
+      </LinkButton>
+  },
+  {
+    url: "/admin/notas-credito",
+    title: "Notas de Creditos",
+    items: [],
+    header:
+      <LinkButton to="/admin/facturacion/nueva-factura">
+        Nueva Nota de Crédito
       </LinkButton>
   },
   {

@@ -15,11 +15,19 @@ import { useProductSearch } from "@modules/facturas/hooks/useProductSearch";
 
 export default function BillingPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { createInvoice, formData, setFormData, handleFormDataChange  } = useCreateInvoice();
-  const { selectedProducts, addProductToCart, increaseQuantity, decreaseQuantity, removeProductFromCart, calculateTotals } = useCart();
+  const { createInvoice, formData, setFormData, handleFormDataChange } =
+    useCreateInvoice();
+  const {
+    selectedProducts,
+    addProductToCart,
+    increaseQuantity,
+    decreaseQuantity,
+    removeProductFromCart,
+    calculateTotals,
+  } = useCart();
   const { products, loading, error } = useProductSearch(searchTerm);
   const { subtotal, itbis, total } = calculateTotals();
-  
+
   const { data } = useSession();
   const userName = useShortFormatName(`${data.firstName} ${data.lastName}`);
 
@@ -62,36 +70,96 @@ export default function BillingPage() {
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <div className={styles.inputsContainer}>
           <div className={styles.inputContainer} style={{ width: "100%" }}>
-            <CustomInput type="text" value={formData.rncNumber} name="rncNumber" placeholder="132-38173-4" maxWidth="600px" disabled={true} />
+            <label htmlFor="rncNumber">RNC</label>
+            <CustomInput
+              type="text"
+              value={formData.rncNumber}
+              name="rncNumber"
+              placeholder="132-38173-4"
+              maxWidth="600px"
+              disabled={true}
+            />
           </div>
           <div className={styles.inputContainer} style={{ width: "100%" }}>
-            <CustomInput type="text" name="ncfNumber" value={formData.ncfNumber} placeholder="B0100001719" maxWidth="600px" disabled={true} />
+            <label htmlFor="supplierName">Suplidor</label>
+            <CustomInput
+              type="text"
+              name="supplierName"
+              value={formData.supplierName}
+              placeholder={`Vendedor: ${userName}`}
+              maxWidth="600px"
+              disabled={true}
+            />
           </div>
         </div>
         <div className={styles.inputsContainer}>
           <div className={styles.inputContainer} style={{ width: "100%" }}>
-            <CustomInput type="text" name="clientName" value={formData.clientName} placeholder="Nombre del Cliente" maxWidth="600px" required onChange={handleFormDataChange} />
+            <label htmlFor="clientName">Cliente</label>
+            <CustomInput
+              type="text"
+              name="clientName"
+              value={formData.clientName}
+              placeholder="Nombre del Cliente"
+              maxWidth="600px"
+              required
+              onChange={handleFormDataChange}
+            />
           </div>
           <div className={styles.inputContainer} style={{ width: "100%" }}>
-            <CustomInput type="text" name="clientRnc" value={formData.clientRnc} placeholder="RNC Cliente" maxWidth="600px" required onChange={handleFormDataChange} />
+            <label htmlFor="clientRnc">RNC Cliente</label>
+            <CustomInput
+              type="text"
+              name="clientRnc"
+              value={formData.clientRnc}
+              placeholder="RNC Cliente"
+              maxWidth="600px"
+              required
+              onChange={handleFormDataChange}
+            />
           </div>
         </div>
         <div className={styles.inputsContainer}>
           <div className={styles.inputContainer} style={{ width: "100%" }}>
-            <CustomSelect name="paymentCondition" value={formData.paymentCondition} placeholder="Condición de Pago" maxWidth="600px"
+            <label htmlFor="paymentCondition">Condición de Pago</label>
+            <CustomSelect
+              name="paymentCondition"
+              value={formData.paymentCondition}
+              placeholder="Condición de Pago"
+              maxWidth="600px"
               options={[
                 { label: "Contado", value: "Contado" },
                 { label: "Crédito", value: "Crédito" },
-              ]} required onChange={handleFormDataChange} />
+              ]}
+              required
+              onChange={handleFormDataChange}
+            />
           </div>
           <div className={styles.inputContainer} style={{ width: "100%" }}>
-            <CustomInput type="text" name="supplierName" value={formData.supplierName} placeholder={`Vendedor: ${userName}`} maxWidth="600px" disabled={true} />
+            <label htmlFor="expirationDate">Fecha de Expiración</label>
+            <CustomInput
+              type="text"
+              name="expirationDate"
+              value={formData.expirationDate}
+              maxWidth="600px"
+              disabled={true}
+            />
           </div>
         </div>
         <div className={styles.billingSection}>
           <h2>Productos</h2>
-          <div className={styles.inputSearchContainer} style={{ width: "100%" }} >
-            <CustomInput type="search" name="product" placeholder="Buscar Producto" maxWidth="100%" required={false} value={searchTerm} onChange={handleSearchChange} />
+          <div
+            className={styles.inputSearchContainer}
+            style={{ width: "100%" }}
+          >
+            <CustomInput
+              type="search"
+              name="product"
+              placeholder="Buscar Producto"
+              maxWidth="100%"
+              required={false}
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
           </div>
           {loading ? (
             <div className={styles.suggestionContainer}>
@@ -133,16 +201,25 @@ export default function BillingPage() {
                 </p>
               </div>
               <div className={styles.productActions}>
-                <button className={styles.quantityButton} onClick={() => decreaseQuantity(product._id)} >
+                <button
+                  className={styles.quantityButton}
+                  onClick={() => decreaseQuantity(product._id)}
+                >
                   -
                 </button>
                 <span className={styles.quantityDisplay}>
                   {product.quantity}
                 </span>
-                <button className={styles.quantityButton} onClick={() => increaseQuantity(product._id)}  >
+                <button
+                  className={styles.quantityButton}
+                  onClick={() => increaseQuantity(product._id)}
+                >
                   +
                 </button>
-                <button className={styles.removeButton} onClick={() => removeProductFromCart(product._id)}>
+                <button
+                  className={styles.removeButton}
+                  onClick={() => removeProductFromCart(product._id)}
+                >
                   <IconTrash />
                 </button>
               </div>
@@ -152,7 +229,11 @@ export default function BillingPage() {
 
         <InvoiceSummary subtotal={subtotal} itbis={itbis} total={total} />
         <div style={{ placeSelf: "flex-end", paddingTop: "16px" }}>
-          <CustomButton text="Crear Factura" buttonType="submit" onClick={createInvoice} />
+          <CustomButton
+            text="Crear Factura"
+            buttonType="submit"
+            onClick={createInvoice}
+          />
         </div>
       </form>
     </div>

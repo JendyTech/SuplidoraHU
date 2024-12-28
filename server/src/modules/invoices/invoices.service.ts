@@ -97,15 +97,25 @@ export class InvoicesService {
             })
         }
 
-        let nextInvoiceNumber: string;
+
+
+        let nextInvoiceNumber, nextNCF
         try {
             const lastInvoiceNumber = await InvoicesRepository.getLastInvoiceNumber();
-
+            const lastNCF = await InvoicesRepository.getLastNCF();
+            
             if (lastInvoiceNumber) {
                 const numericPart = parseInt(lastInvoiceNumber.replace(/\D/g, ''), 10);
                 nextInvoiceNumber = `FA-${(numericPart + 1).toString().padStart(6, '0')}`;
             } else {
                 nextInvoiceNumber = 'FA-000001';
+            }
+
+            if (lastNCF) {
+                const numericPart = parseInt(lastNCF.slice(-8), 10);
+                nextNCF = `B010${(numericPart + 1).toString().padStart(8, '0')}`;
+            } else {
+                nextNCF = 'B01000000001';
             }
         } catch (error) {
             console.log(error);
@@ -114,7 +124,7 @@ export class InvoicesService {
                 message: GENERAL.ERROR_DATABASE_MESSAGE,
                 status: HttpStatus.INTERNAL_SERVER_ERROR,
                 error,
-            });
+            })
         }
 
         try {
@@ -122,15 +132,16 @@ export class InvoicesService {
             const newInvoice = await InvoicesRepository.createInvoice({
                 ...dto,
                 invoiceNumber: nextInvoiceNumber,
+                ncfNumber: nextNCF,
+                items: itemsInvoice,
                 createdBy: user._id,
                 expirationDate: dateExpirationInvoice,
-                items: itemsInvoice
-            })
+            });
 
             return successResponse({
                 data: newInvoice,
                 message: INVOICE.INVOICE_CREATED,
-            })
+            });
         } catch (error) {
             return errorResponse({
                 message: GENERAL.ERROR_DATABASE_MESSAGE,
