@@ -1,0 +1,53 @@
+.tableContainer {
+    background-color: white;
+    border: .1px solid rgba(214, 214, 214, 0.24);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.imagesContainer {
+    display: flex;
+    gap: 20px;
+}
+
+.imageContainer {
+    position: relative;
+    cursor: pointer;
+}
+
+.imageContainer img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+
+
+    transition: border-color 0.3s ease;
+}
+
+.imageContainer:hover img {
+    border-color: #f00;
+}
+
+.imageContainer:hover::before {
+    content: "X";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 95%;
+    cursor: pointer;
+    background: rgba(255, 0, 0, 0.5);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+
+}

@@ -1,14 +1,11 @@
-export interface GetProduct {
-    _id: string
-    name: string
-    price: number
-    code: string
-    description: string
-    unitsPerPack: number
-    createdAt: string
-    images : Image[]
+export interface UpdateProduct {
+    name:         string;
+    price:        number;
+    description:  string;
+    code:         string;
+    unitsPerPack: number;
+    images:       Image[];
 }
-
 export interface Image {
     _id:       string;
     publicId:  string;

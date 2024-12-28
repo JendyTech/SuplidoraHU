@@ -37,6 +37,24 @@ export const topBar: ItemMenu[] = [
       </LinkButton>
   },
   {
+    url: "/admin/productos/detalle/:id",
+    title: "Detalle de Producto",
+    items: [],
+    header:
+      <LinkButton to="/admin/productos">
+        &nbsp;&nbsp;&nbsp;&nbsp;Regresar&nbsp;&nbsp;&nbsp;&nbsp;
+      </LinkButton>
+  },
+  {
+    url: "/admin/productos/editar/:id",
+    title: "Editar Producto",
+    items: [],
+    header:
+      <LinkButton to="/admin/productos">
+        &nbsp;&nbsp;&nbsp;&nbsp;Regresar&nbsp;&nbsp;&nbsp;&nbsp;
+      </LinkButton>
+  },
+  {
     url: "/admin/productos/crear-producto",
     title: "Crear producto",
     items: [],
@@ -68,5 +86,9 @@ export const topBar: ItemMenu[] = [
     title: "Configuración",
     items: [],
   },
-  
+  {
+    url: "/admin/productos/:id",
+    title: "Detalle de producto",
+    items: []
+  }
 ];

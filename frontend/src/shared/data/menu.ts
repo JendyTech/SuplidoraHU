@@ -20,10 +20,16 @@ export const topBar: ItemMenu[] = [
     url: "/admin/productos",
     title: "Productos",
     items: [],
-    header: 
-    <>
-    
-    </>
+  },
+  {
+    url: "/admin/productos/detalle/:id",
+    title: "Detalle de producto",
+    items: [],
+  },
+  {
+    url: "/admin/productos/editar/:id",
+    title: "Editar producto",
+    items: [],
   },
   {
     url: "/admin/productos/crear-producto",

@@ -21,12 +21,10 @@ const UploadImage = ({ setImage, actualImage = [] }: { setImage: React.Dispatch<
                 {previewImages.length > 0 ? (
 
                     previewImages?.map((image, index) => (
-                        <div className={styles.imageContainer} onClick={() => {
+                        <div key={index} className={styles.imageContainer} onClick={() => {
                             const newImages = actualImage.filter((item) => item != image);
                             setImage(newImages)
                             setPreviewImages(newImages)
-
-
                         }}>
                             <img key={index} src={image} alt="Vista previa" className={styles.preview} />
                         </div>
