@@ -5,6 +5,7 @@ interface DeleteProductModalProps {
     productName: string | undefined;
     onClose: () => void;
     onConfirm: () => void;
+    type: 'product' | 'user'
 }
 
 const DeleteProductModal: React.FC<DeleteProductModalProps> = ({
@@ -12,24 +13,38 @@ const DeleteProductModal: React.FC<DeleteProductModalProps> = ({
     productName,
     onClose,
     onConfirm,
+    type
 }) => {
+    const texts = {
+        product: {
+            title: 'Eliminar Producto',
+            content: `¿Estás seguro de que deseas eliminar el producto`,
+            buttonText: 'Eliminar'
+        },
+        user: {
+            title: 'Eliminar Usuario',
+            content: '¿Estás seguro de que deseas eliminar el usuario',
+            buttonText: 'Eliminar'
+        }
+    }
+
     if (!isOpen) return null;
 
     return (
         <div style={styles.overlay}>
             <div style={styles.modal}>
                 <div style={styles.header}>
-                    <h2 style={styles.title}>Eliminar Producto</h2>
+                    <h2 style={styles.title}>{texts[type].title}</h2>
                 </div>
                 <p style={styles.content}>
-                    ¿Estás seguro de que deseas eliminar <strong>{productName}</strong>? Esta acción no se puede deshacer.
+                    {texts[type].content} <strong>{productName}</strong>? Esta acción no se puede deshacer.
                 </p>
                 <div style={styles.actions}>
                     <button onClick={onClose} style={styles.cancelButton}>
                         Cancelar
                     </button>
                     <button onClick={onConfirm} style={styles.confirmButton}>
-                        Eliminar
+                        {texts[type].buttonText}
                     </button>
                 </div>
             </div>

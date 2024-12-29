@@ -41,8 +41,8 @@
 }
 
 .input:disabled {
-    background-color:rgb(199, 199, 199);
-    color: #9E9E9E
+    background-color: rgb(199, 199, 199);
+    color: #9E9E9E;
     cursor: not-allowed;
     border-color: #C6C6C6
 }

@@ -1,6 +1,6 @@
 import { getProductById } from "@services/product";
 import { PageParams } from "@/interfaces/Page"
-import { GetProduct } from "@interfaces/Product/GetProduct.";
+import { GetProduct } from "@interfaces/Product/GetProduct";
 
 export default async function ProductDetail(props: PageParams) {
     const { id } = await props.params

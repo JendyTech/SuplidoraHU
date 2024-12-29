@@ -18,6 +18,7 @@ interface InputProps {
     isMoneyInput?: boolean;
     disabled?: boolean
     min?: number;
+    defaultValue?: string;
 }
 
 export default function CustomInput(props: InputProps) {
@@ -74,6 +75,7 @@ export default function CustomInput(props: InputProps) {
                 onFocus={onFocus}
                 disabled={disabled}
                 min={props.min}
+                defaultValue={props.defaultValue}
             />
             {type === "password" && (
                 <button

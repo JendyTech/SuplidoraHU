@@ -1,9 +1,6 @@
 import React from "react";
-import CustomButton from "@shared/components/Buttons/CustomButton";
 import { ItemMenu } from "@interfaces/TopBar";
 import { LinkButton } from "@shared/components/Link/LinkButton";
-import { Tabs } from '@shared/components/Screen/Tabs'
-
 
 export const topBar: ItemMenu[] = [
   {
@@ -81,6 +78,24 @@ export const topBar: ItemMenu[] = [
     header:
       <LinkButton to="/admin/usuarios/crear-usuario">
         Añadir usuario
+      </LinkButton>
+  },
+  {
+    url: "/admin/usuarios/detalle/:id",
+    title: "Detalle de Usuario",
+    items: [],
+    header:
+      <LinkButton to="/admin/usuarios">
+        &nbsp;&nbsp;&nbsp;&nbsp;Regresar&nbsp;&nbsp;&nbsp;&nbsp;
+      </LinkButton>
+  },
+  {
+    url: "/admin/usuarios/editar/:id",
+    title: "Editar Usuario",
+    items: [],
+    header:
+      <LinkButton to="/admin/usuarios">
+        &nbsp;&nbsp;&nbsp;&nbsp;Regresar&nbsp;&nbsp;&nbsp;&nbsp;
       </LinkButton>
   },
   {

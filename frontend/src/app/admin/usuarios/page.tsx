@@ -16,7 +16,6 @@ export default async function UsersPage() {
       <div className={styles.main}>
         <div className={styles.infoContainerGroup}>
           <InfoContainer Icon={IconUser} title={response.result.metadata.total} subtitle='Usarios en sistema' color='#287881' />
-          <InfoContainer Icon={IconUserCheck} title={124} subtitle='Usuarios activos' color='#EF7B52' />
         </div>
 
 

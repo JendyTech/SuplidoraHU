@@ -116,7 +116,7 @@ export default function ProductTable(props: Props) {
 
                 router.refresh();
             } else {
-                toast.success(`Error al editar el producto.`);
+                toast.success(`Error al eliminar el producto.`);
             }
 
             setLoading(false)
@@ -138,7 +138,7 @@ export default function ProductTable(props: Props) {
             <DeleteProductModal
                 isOpen={isModalOpen}
                 productName={productToDelete?.name}
-
+                type='product'
                 onClose={closeModal}
                 onConfirm={handleDelete}
             /></>

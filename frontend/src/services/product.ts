@@ -3,7 +3,7 @@ import { ParamsPaginationFilter } from "@contracts/API"
 import { getToken } from "@/utils/tokenClient"
 import { Pagination } from "@/contracts/API"
 import { IProduct } from "@interfaces/Product/Product"
-import { GetProduct } from "@interfaces/Product/GetProduct."
+import { GetProduct } from "@interfaces/Product/GetProduct"
 import { Update } from "vite"
 import { UpdateProduct } from "@interfaces/Product/UpdateProduct"
 
@@ -65,7 +65,7 @@ export const updateProduct = async (id: string, updateProductData : UpdateProduc
 	const token = await getToken()
 	const { PATCH } = useClient(token)
 
-	const response = await PATCH<Pagination<IProduct>>({
+	const response = await PATCH<IProduct>({
 		endpoint: `/products/${id}`,
 		body : updateProductData
 	})
@@ -77,7 +77,7 @@ export const deleteProduct = async (id: string) => {
 	const token = await getToken()
 	const { DELETE } = useClient(token)
 
-	const response = await DELETE<Pagination<IProduct>>({
+	const response = await DELETE<IProduct>({
 		endpoint: `/products/${id}`
 	})
 

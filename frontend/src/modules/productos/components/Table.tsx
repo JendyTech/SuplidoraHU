@@ -1,7 +1,7 @@
 "use client";
 import dayjs from "dayjs";
 import DataTable from "react-data-table-component";
-import { GetProduct } from "@interfaces/Product/GetProduct.";
+import { GetProduct } from "@interfaces/Product/GetProduct";
 import { Pagination, ParamsPaginationFilterOptions } from "@/contracts/API"
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { TableColumn, TableStyles } from "react-data-table-component";

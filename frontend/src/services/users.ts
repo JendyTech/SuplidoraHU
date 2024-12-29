@@ -2,6 +2,8 @@ import { useClient } from "@/hooks/useClient";
 import { readTokenServer } from "@/utils/session";
 import { getToken } from "@/utils/tokenClient";
 import { Pagination, ParamsPaginationFilter } from "@contracts/API";
+import { GetUser } from "@interfaces/User/GetUser";
+import { UpdateUser } from "@interfaces/User/UpdateUser";
 import { IUser } from "@interfaces/User/User";
 
 export const getAllUsers = async (params?: ParamsPaginationFilter, server: boolean = false) => {
@@ -40,6 +42,40 @@ export const addNewUser = async ( addUserData : AddUserModel ) => {
 		body : addUserData
 	})
     
+	return response
+}
+
+export const getUserById = async (id: string, server: boolean = false) => {
+	const token = await getToken(server)
+	const { GET } = useClient(token)
+
+	const response = await GET<GetUser>({
+		endpoint: `/users/${id}`,	
+	})
+	
+	return response
+}
+
+export const updateUser = async (id: string, updateUserData : UpdateUser) => {
+	const token = await getToken()
+	const { PATCH } = useClient(token)
+
+	const response = await PATCH<IUser>({
+		endpoint: `/users/${id}`,
+		body : updateUserData
+	})
+	
+	return response
+}
+
+export const deleteUser = async (id: string) => {
+	const token = await getToken()
+	const { DELETE } = useClient(token)
+
+	const response = await DELETE<IUser>({
+		endpoint: `/users/${id}`
+	})
+
 	return response
 }
 

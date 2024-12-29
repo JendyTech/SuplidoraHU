@@ -4,7 +4,7 @@ export interface UpdateProduct {
     description:  string;
     code:         string;
     unitsPerPack: number;
-    images:       Image[];
+    images:       string[];
 }
 export interface Image {
     _id:       string;
