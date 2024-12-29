@@ -12,6 +12,8 @@
   "PRODUCTS_FOUND": "Productos encontrados",
   "PRODUCTS_FETCHED": "Productos obtenidos exitosamente",
   "SUCCESS_UPLOAD_IMAGE": "Imagen subida exitosamente",
-  "SUCCESS_DELETE_IMAGE": "Imagen eliminada exitosamente"
+  "SUCCESS_DELETE_IMAGE": "Imagen eliminada exitosamente",
+  "REQUIRE_CATEGORY_NAME_OR_ID": "El nombre o id de la categoria es requierido",
+  "ONLY_CATEGORY_NAME_OR_CATEGORY_ID": "Solo se acepta el id o el nombre de la categoria"
 }
 

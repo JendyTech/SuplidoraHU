@@ -8,9 +8,11 @@ import { ProductsModule } from './modules/products/products.module';
 import { UsersModule } from './modules/users/users.module';
 import { InvoicesModule } from './modules/invoices/invoices.module';
 import { TaxModule } from './modules/tax/tax.module';
+import { CatalogModule } from './modules/catalog/catalog.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
-  imports: [AuthModule, ProductsModule, UsersModule, InvoicesModule, TaxModule],
+  imports: [AuthModule, ProductsModule, UsersModule, InvoicesModule, TaxModule, CatalogModule, CategoryModule],
   controllers: [AppController],
   providers: [
     AppService,

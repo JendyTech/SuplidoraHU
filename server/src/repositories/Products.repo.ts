@@ -3,15 +3,38 @@ import { ProductModel, ProductPhotoModel } from '@database/products.db'
 import { mongoosePagination } from '@shared/functions/pagination'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { HttpException, HttpStatus } from '@nestjs/common'
+import { IProduct } from '@interfaces/Product'
 import { MODELS_NAMES } from '@config/constants'
-import { Types } from 'mongoose'
 import { IProductPhoto } from '@interfaces/Product'
+import { Types, FilterQuery } from 'mongoose'
 
 export class ProductRepository {
   static async getProducts(pagination: PaginationDTO) {
+    const filters: FilterQuery<IProduct> = {}
+
+    if (pagination.search) {
+      filters.$or = [
+        {
+          name: { $regex: new RegExp(pagination.search, 'i') }
+        },
+        {
+          code: { $regex: new RegExp(pagination.search, 'i') }
+        },
+      ]
+    }
+
+    const pricing = Number(pagination.search)
+    
+    if (!isNaN(pricing)) {
+      filters.$or.push({
+        price: pricing
+      })
+    }
+
     return mongoosePagination({
       ...pagination,
       Model: ProductModel,
+      filter: filters
     })
   }
 
@@ -48,7 +71,7 @@ export class ProductRepository {
     return product
   }
 
-  static async saveProductImages(data: Array<Pick<IProductPhoto, 'productId'  | 'uploadBy' | 'url' | 'publicId'>>) {
+  static async saveProductImages(data: Array<Pick<IProductPhoto, 'productId' | 'uploadBy' | 'url' | 'publicId'>>) {
     const result = await ProductPhotoModel.insertMany(data)
 
     return result.map((image) => image.toObject())
@@ -118,12 +141,12 @@ export class ProductRepository {
     const product = await ProductModel.findById(id)
 
     if (!product) return null
-    
+
     return product.toObject()
   }
 
-  static async getProductsByIds (ids: string[]) {
-    const result = await ProductModel.find({_id: { $in: ids } })
+  static async getProductsByIds(ids: string[]) {
+    const result = await ProductModel.find({ _id: { $in: ids } })
     return result.map((item) => item.toObject())
   }
 

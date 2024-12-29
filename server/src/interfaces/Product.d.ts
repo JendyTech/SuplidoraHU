@@ -3,7 +3,9 @@ import { ObjectId } from 'mongoose'
 export interface IProduct {
   _id: string
   name: string
+  slug: string
   price: number
+  category: string | ObjectId
   description: string
   code: string
   unitsPerPack: number

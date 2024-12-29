@@ -1,6 +1,6 @@
 import { IsBase64Image } from '@shared/decorators/Validator'
-import { ApiProperty } from '@nestjs/swagger'
 import { imageBase64 } from '@shared/data/imageBase64'
+import { ApiProperty } from '@nestjs/swagger'
 import {
   IsString,
   IsNumber,
@@ -10,6 +10,7 @@ import {
   Min,
   IsOptional,
   IsArray,
+  IsMongoId
 } from 'class-validator'
 
 export class CreateProductDto {
@@ -54,6 +55,21 @@ export class CreateProductDto {
   @IsOptional()
   @IsArray()
   images?: string[];
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString({ message: 'El nombre de la categoria debe ser un string' })
+  @IsNotEmpty({ message: 'El nombre de la categoria no puede estar vacío' })
+  categoryName?: string
+
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString({ message: 'El id de la categoria debe ser un string' })
+  @IsMongoId({ message: 'El id de la categoria debe ser valido' })
+  categoryId?: string
+
+
 }
 
 export class UpdateProductDto{
@@ -113,6 +129,18 @@ export class UpdateProductDto{
   @IsOptional()
   @IsArray()
   imagesToAdd?: string[];
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString({ message: 'El nombre de la categoria debe ser un string' })
+  @IsNotEmpty({ message: 'El nombre de la categoria no puede estar vacío' })
+  categoryName?: string
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString({ message: 'El id de la categoria debe ser un string' })
+  @IsMongoId({ message: 'El id de la categoria debe ser valido' })
+  categoryId?: string
 }
 
 

@@ -1,0 +1,17 @@
+{
+    "ERROR_CREATING_CATALOG": "Error al crear el catálogo",
+    "ERROR_UPLOAD_IMAGE": "Error al subir la imagen del catálogo",
+    "ERROR_DELETE_IMAGE": "Error al eliminar la imagen del catálogo",
+    "CATALOG_NAME_IN_USE": "El nombre del catálogo ya está en uso",
+    "CATALOG_CREATED": "Catálogo creado exitosamente",
+    "CATALOG_UPDATED": "Catálogo actualizado exitosamente",
+    "CATALOG_DELETED": "Catálogo eliminado exitosamente",
+    "CATALOG_NOT_FOUND": "Catálogo no encontrado",
+    "CATALOG_IMAGE_NOT_FOUND": "Imagen del catálogo no encontrada",
+    "CATALOGS_NOT_FOUND": "Catálogos no encontrados",
+    "CATALOGS_FOUND": "Catálogos encontrados",
+    "CATALOGS_FETCHED": "Catálogos obtenidos exitosamente",
+    "SUCCESS_UPLOAD_IMAGE": "Imagen del catálogo subida exitosamente",
+    "SUCCESS_DELETE_IMAGE": "Imagen del catálogo eliminada exitosamente"
+  }
+  

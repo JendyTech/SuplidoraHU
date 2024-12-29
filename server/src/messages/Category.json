@@ -1,0 +1,16 @@
+{
+    "ERROR_CREATING_CATEGORY": "Error al crear la categoría",
+    "ERROR_UPLOAD_IMAGE": "Error al subir la imagen de la categoría",
+    "ERROR_DELETE_IMAGE": "Error al eliminar la imagen de la categoría",
+    "CATEGORY_NAME_IN_USE": "El nombre de la categoría ya está en uso",
+    "CATEGORY_CREATED": "Categoría creada exitosamente",
+    "CATEGORY_UPDATED": "Categoría actualizada exitosamente",
+    "CATEGORY_DELETED": "Categoría eliminada exitosamente",
+    "CATEGORY_NOT_FOUND": "Categoría no encontrada",
+    "CATEGORY_IMAGE_NOT_FOUND": "Imagen de la categoría no encontrada",
+    "CATEGORIES_NOT_FOUND": "Categorías no encontradas",
+    "CATEGORIES_FOUND": "Categorías encontradas",
+    "CATEGORIES_FETCHED": "Categorías obtenidas exitosamente",
+    "SUCCESS_UPLOAD_IMAGE": "Imagen de la categoría subida exitosamente",
+    "SUCCESS_DELETE_IMAGE": "Imagen de la categoría eliminada exitosamente"
+}

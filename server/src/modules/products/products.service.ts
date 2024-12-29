@@ -1,14 +1,17 @@
 import PRODUCT from '@messages/Product.json'
+import CATEGORY from '@messages/Category.json'
 import GENERAL from '@messages/General.json'
 import { Injectable } from '@nestjs/common'
 import { CreateProductDto, UpdateProductDto } from '@modules/products/dto/product.dto'
 import { IUser } from '@interfaces/User'
+import { generateSlug } from '@shared/utils/generateSlug'
 import { ProductRepository } from '@repositories/Products.repo'
 import { successResponse, errorResponse } from '@shared/functions/response'
 import { HttpStatus } from '@nestjs/common'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { uploadBase64, deleteResource } from '@shared/functions/cloudinary'
 import { CloudinaryResult } from '@contracts/Cloudinary'
+import { CategoryRepository } from '@repositories/Category.repo'
 import {
   UploadProductImage,
 } from '@contracts/repositories/Products.repo'
@@ -35,7 +38,58 @@ export class ProductsService {
     let found,
       imageUrl: string | null = null,
       imagePublicId: string | null = null,
-      product
+      product,
+      category
+
+
+    if (!dto.categoryId && !dto.categoryName) {
+      return errorResponse({
+        message: PRODUCT.REQUIRE_CATEGORY_NAME_OR_ID,
+        status: HttpStatus.BAD_REQUEST,
+      })
+    }
+
+    if (dto.categoryId && dto.categoryName) {
+      return errorResponse({
+        message: PRODUCT.ONLY_CATEGORY_NAME_OR_CATEGORY_ID,
+        status: HttpStatus.BAD_REQUEST,
+      })
+    }
+
+
+    if (dto.categoryId) {
+      category = await CategoryRepository.getCategoryById(dto.categoryId)
+    }
+
+    if (dto.categoryName) {
+
+      try {
+        const foundName = CategoryRepository.getCategoryByName(dto.categoryName)
+
+        if (foundName) {
+          return errorResponse({
+            message: CATEGORY.CATEGORIES_FOUND,
+            status: HttpStatus.CONFLICT
+          })
+        }
+
+        category = await CategoryRepository.createCategory({ name: dto.categoryName })
+
+      } catch (error) {
+        return errorResponse({
+          error,
+          message: GENERAL.ERROR_DATABASE_MESSAGE,
+          status: HttpStatus.INTERNAL_SERVER_ERROR
+        })
+      }
+    }
+
+    if (!category) {
+      return errorResponse({
+        message: CATEGORY.CATEGORY_NOT_FOUND,
+        status: HttpStatus.NOT_FOUND
+      })
+    }
 
     try {
       found = await ProductRepository.findByName(dto.name)
@@ -58,12 +112,16 @@ export class ProductsService {
       })
     }
 
+    const slug = generateSlug(dto.name)
+
     try {
       const productData = {
         ...dto,
+        slug,
         createdBy: user._id,
         imagesId: imagePublicId,
         images: imageUrl,
+        category: category._id
       }
 
       product = await ProductRepository.createProduct(productData)
@@ -110,7 +168,7 @@ export class ProductsService {
   }
 
   async updatedProduct(dto: UpdateProductDto, id: string, user: IUser) {
-    let product;
+    let product, category
   
     try {
       product = await ProductRepository.findById(id);
@@ -129,6 +187,46 @@ export class ProductsService {
         message: PRODUCT.PRODUCT_NOT_FOUND,
         status: HttpStatus.NOT_FOUND,
       });
+    }
+
+    if (!dto.categoryId && !dto.categoryName) {
+      return errorResponse({
+        message: PRODUCT.REQUIRE_CATEGORY_NAME_OR_ID,
+        status: HttpStatus.BAD_REQUEST,
+      })
+    }
+
+    if (dto.categoryId && dto.categoryName) {
+      return errorResponse({
+        message: PRODUCT.ONLY_CATEGORY_NAME_OR_CATEGORY_ID,
+        status: HttpStatus.BAD_REQUEST,
+      })
+    }
+
+    try {
+      category = await CategoryRepository.getCategoryById(dto.categoryId);
+
+      if (!category) {
+        return errorResponse({
+          message: CATEGORY.CATEGORY_NOT_FOUND,
+          status: HttpStatus.NOT_FOUND,
+        });
+      }
+
+      if(dto.categoryName){
+        const foundCategory = await CategoryRepository.getCategoryByName(dto.categoryName)
+
+        if (foundCategory) {
+          return errorResponse({
+            message: CATEGORY.CATEGORIES_FOUND,
+            status: HttpStatus.CONFLICT
+          })
+        }
+
+        category = await CategoryRepository.createCategory({ name: dto.categoryName })
+      }
+    } catch (error) {
+      
     }
   
     const { imagesToDelete = [], imagesToAdd = [] } = dto;
@@ -183,9 +281,16 @@ export class ProductsService {
     try {
       const updatedProductData = {
         ...dto,
+        slug: product.slug,
         updatedBy: user._id,
         createdBy: product.createdBy,
+        category: category._id
       };
+
+      if (dto.name && dto.name !== product.name){
+        updatedProductData.slug = generateSlug(dto.name);
+      }
+
       const updatedProduct = await ProductRepository.updatedProduct(id, updatedProductData);
   
       if (!updatedProduct) {

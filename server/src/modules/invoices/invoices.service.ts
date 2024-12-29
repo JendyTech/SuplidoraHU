@@ -3,7 +3,6 @@ import GENERAL from '@messages/General.json'
 import { Injectable } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common'
 import { TaxService } from '@modules/tax/tax.service'
-import { TaxModule } from '@modules/tax/tax.module'
 import { successResponse, errorResponse } from '@shared/functions/response'
 import { InvoicesRepository } from '@repositories/Invoices.repo';
 import { ProductRepository } from '@repositories/Products.repo'

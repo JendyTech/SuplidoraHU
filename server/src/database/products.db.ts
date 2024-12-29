@@ -9,6 +9,11 @@ const productSchema = new Schema<IProduct>(
       required: true,
       unique: true,
     },
+    slug: {  
+      type: String,
+      required: true,
+      unique: true, 
+    },
     price: {
       type: Number,
       required: true,
@@ -17,6 +22,10 @@ const productSchema = new Schema<IProduct>(
       type: String,
       required: true,
       unique: true,
+    },
+    category: {
+      type: Types.ObjectId,
+      required: true,
     },
     description: {
       type: String,
