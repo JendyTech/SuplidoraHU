@@ -79,7 +79,8 @@ export default function ProductTable(props: Props) {
 
     const {
         pagination,
-        setFilters
+        setFilters,
+        reload
     } = useProducts(initialState);
 
 
@@ -112,7 +113,9 @@ export default function ProductTable(props: Props) {
             const response = await deleteProduct(productToDelete._id);
 
             if (response.ok) {
-                toast.success(`Producto ${productToDelete} eliminado correctamente.`)
+                toast.success(`Producto eliminado correctamente.`)
+
+                reload();
 
                 router.refresh();
             } else {

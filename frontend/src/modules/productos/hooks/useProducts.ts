@@ -11,6 +11,8 @@ export const useProducts = (initialState: Pagination<IProduct>) => {
   const [firstLoad, setFirstLoad] = useState(true)
   const [filters, setFilters] = useState<ParamsPaginationFilter>({})
 
+  const [refresh, setRefresh] = useState<boolean>(false)
+
   const { setLoading } = useLoader()
 
   useEffect(() => {
@@ -21,6 +23,9 @@ export const useProducts = (initialState: Pagination<IProduct>) => {
     }
 
     const getProducts = async () => {
+      if (!refresh) {
+        return
+      }
       setLoading(true)
 
       await useDelay(500)
@@ -38,16 +43,25 @@ export const useProducts = (initialState: Pagination<IProduct>) => {
         toast.error("Error al buscar los productos")
       } finally {
         setLoading(false)
+
+        if (refresh) {
+          setRefresh(false)
+        }
       }
     }
 
     void getProducts()
 
-  }, [filters])
+  }, [filters, refresh])
+
+  const reload = () => {
+    setRefresh(true)
+  }
 
 
   return {
     pagination, 
-    setFilters
+    setFilters,
+    reload
   }
 }

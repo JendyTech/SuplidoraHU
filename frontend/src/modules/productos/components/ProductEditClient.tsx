@@ -9,15 +9,20 @@ import { updateProduct } from '@services/product';
 import { useLoader } from '@/contexts/Loader';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { GetProduct } from '@interfaces/Product/GetProduct';
+import { GetProduct, Image } from '@interfaces/Product/GetProduct';
+import { pre } from 'framer-motion/client';
 
 interface ProductEditClientProps {
     productData: GetProduct;
 }
 
 const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) => {
-    const [product, setProduct] = useState<GetProduct<string>>(() => ({ ...productData, images: productData.images.map((el) => el.url) }));
-    const [previewImages, setPreviewImages] = useState<string[]>(productData.images.map((el) => el.url));
+    const [product, setProduct] = useState<GetProduct<Image>>(() => ({ ...productData, images: productData.images.map((el) => el) }));
+    const [previewImages, setPreviewImages] = useState<Image[]>(productData.images.map((el) => el));
+
+    const [willDeleteImagesIds, setWillDeleteImagesIds] = useState<string[]>([]);
+    const [willAddImages, setWillAddImages] = useState<string[]>([]);
+
     const router = useRouter();
     if (!product) return <div>Producto no encontrado</div>;
 
@@ -34,32 +39,59 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
     };
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
+        const fileInput = e.target;
+        const file = fileInput.files?.[0];
         if (!file) return;
 
         const result = await useTranformFileToBase64(file);
 
-        const newImages = [...previewImages, result];
+        const newImage: Image = {
+            _id: "",
+            url: result,
+            productId: product._id,
+            uploadBy: "",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            __v: 0,
+            publicId: ""
+        };
 
-
-        setPreviewImages((prev) => [...prev, result]);
+        const newImages = [...previewImages, newImage];
+        setPreviewImages((prev) => [...prev, newImage]);
         setProduct((prev) => ({
             ...prev!,
             images: newImages,
         }));
+
+        fileInput.value = "";
+
+        // const isInWillDelete: boolean = willDeleteImagesIds.some((image: string) => image === result);
+        // console.log(isInWillDelete)
+
+        const isInProduct: boolean = productData.images.some((image: Image) => image.url === result);
+        if (!isInProduct) {
+            setWillAddImages((prev) => [...prev, result]);
+        }
     };
 
-    const handleRemoveImage = (index: number) => {
+
+    const handleRemoveImage = (index: number, id: string, url: string) => {
         const newImages = previewImages.filter((_, i) => i !== index);
         setPreviewImages(newImages);
         setProduct((prev) => ({
             ...prev!,
             images: newImages,
         }));
+
+        const isInProduct: boolean = productData.images.some((image: Image) => image._id === id);
+        if (isInProduct) {
+            setWillDeleteImagesIds((prev) => [...prev, id]);
+        }
+
+        setWillAddImages((prev) => prev.filter((image: string) => image !== url));
     };
 
     const { setLoading } = useLoader()
-
 
     return (
         <div className={styles.tableContainer}>
@@ -123,9 +155,9 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             <div
                                 key={index}
                                 className={styles.imageContainer}
-                                onClick={() => handleRemoveImage(index)} // Llamada a la función para eliminar
+                                onClick={() => handleRemoveImage(index, image._id, image.url)} // Llamada a la función para eliminar
                             >
-                                <img src={image} alt="Vista previa" className={styles.preview} />
+                                <img src={image.url} alt="Vista previa" className={styles.preview} />
                             </div>
                         ))
                     ) : (
@@ -154,19 +186,23 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             setLoading(true)
 
                             try {
-                                const response = await updateProduct(productData._id, product);
+                                console.log(willDeleteImagesIds, willAddImages)
 
-                                if (response.ok) {
-                                    toast.success(`Producto ${productData.name} editado correctamente.`);
-                                } else {
-                                    toast.error(`Error al editar el producto.`);
-                                }
-                                console.log(productData)
-                                setLoading(false)
-                                router.push('/admin/productos')
+                                // const response = await updateProduct(productData._id, product);
+
+                                // if (response.ok) {
+                                //     toast.success(`Producto ${productData.name} editado correctamente.`);
+                                // } else {
+                                //     toast.error(`Error al editar el producto.`);
+                                // }
+                                // console.log(productData)
+                                // setLoading(false)
+                                // router.push('/admin/productos')
                             } catch (error) {
                                 console.error("Ocurrió un error al intentar eliminar el producto:", error);
 
+                                setLoading(false)
+                            } finally {
                                 setLoading(false)
                             }
                         }}
