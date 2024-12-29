@@ -19,6 +19,9 @@ export default async function RootLayout({
   return (
     <html lang="es" className={poppins.className}>
       <body>
+        <div
+          id="top"
+        />
         <LoaderProvider>
           {children}
           <LoadAppScreen />

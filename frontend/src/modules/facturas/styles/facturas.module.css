@@ -1,354 +1,354 @@
 .billingPage {
-    box-shadow: var(--shadow-md);
-    width: 100%;
-    height: 100px;
-    padding: 24px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border-radius: 8px;
-    border: 0.1px solid rgba(214, 214, 214, 0.24);
-    background-color: white;
-    margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  height: 100px;
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 8px;
+  border: 0.1px solid rgba(214, 214, 214, 0.24);
+  background-color: white;
+  margin-bottom: 20px;
 
 }
 
 .formContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .productButton {
-    display: flex;
-    justify-content: end;
+  display: flex;
+  justify-content: end;
 }
 
 .formContainer .inputsContainer {
-    display: flex;
-    justify-content: space-between;
-    gap: 100px;
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
 }
 
 .heading {
-    font-size: 24px;
-    margin-bottom: 20px;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .inputField {
-    padding: 10px;
-    font-size: 16px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .button {
-    padding: 12px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .button:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 .InvoicesContainer {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
 .invoiceSummary {
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #f9f9f9, #ffffff);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    place-self: flex-end;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f9f9f9, #ffffff);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  place-self: flex-end;
 
 }
 
 .productContainer {
-    width: 100%;
-    height: 100px;
+  width: 100%;
+  height: 100px;
 }
 
 .invoiceRow {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
 }
 
 
 .invoiceRow:last-child {
-    margin-bottom: 0;
-    border-bottom: none;
+  margin-bottom: 0;
+  border-bottom: none;
 }
 
 .label {
-    font-size: 16px;
-    color: #555;
+  font-size: 16px;
+  color: #555;
 }
 
 .amount {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
 }
 
 .totalRow .amount {
-    font-size: 18px;
-    color: #287881;
+  font-size: 18px;
+  color: #287881;
 }
 
 .totalRow {
-    margin-top: 20px;
-    border-top: 2px solid #287881;
-    padding-top: 15px;
+  margin-top: 20px;
+  border-top: 2px solid #287881;
+  padding-top: 15px;
 }
 
 .productContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin: 10px 0;
-    background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
 }
 
 .productDetails {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .productImage {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .productInfo {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .productTitle {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
 }
 
 .productPrice {
-    font-size: 14px;
-    color: #555;
-    margin: 5px 0 0;
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0 0;
 }
 
 .productActions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .quantityControl {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .quantityButton {
-    padding: 5px 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    background-color: #eee;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .quantityValue {
-    font-size: 16px;
-    font-weight: bold;
-    padding: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 10px;
 }
 
 .totalPrice {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
 }
 
 .deleteIcon {
-    color: #ff4d4f;
-    cursor: pointer;
-    font-size: 24px;
+  color: #ff4d4f;
+  cursor: pointer;
+  font-size: 24px;
 }
 
 .productList {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .inputSearchContainer {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .billingSection {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 10px;
 }
 
 .productItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin: 10px 0;
-    background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
 }
 
 .selectedProductsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    background-color: #f9f9f9;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .selectedProductItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 
 .productDetails {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .productName {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .productPrice {
-    font-size: 0.875rem;
-    color: #777;
+  font-size: 0.875rem;
+  color: #777;
 }
 
 .productActions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .quantityButton {
-    background-color: #287881;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.2s;
+  background-color: #287881;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
 }
 
 .quantityDisplay {
-    font-size: 1rem;
-    font-weight: 500;
-    min-width: 2rem;
-    text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  min-width: 2rem;
+  text-align: center;
 }
 
 .removeButton {
-    background-color: transparent;
-    color: #ff4d4f;
-    border: none;
-    font-size: 1.25rem;
-    cursor: pointer;
-    transition: color 0.2s;
+  background-color: transparent;
+  color: #ff4d4f;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
 .customSelect {
-    height: 46px;
-    width: 100%;
-    border-radius: 8px;
-    border: 1px solid #DBDCDE;
-    background-color: #F4F5F9;
-    padding: 0 16px;
-    color: #727272;
-    font-size: 14px;
-    appearance: none;
-    outline: none;
-    cursor: pointer;
+  height: 46px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #DBDCDE;
+  background-color: #F4F5F9;
+  padding: 0 16px;
+  color: #727272;
+  font-size: 14px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
 }
 
 .customSelect:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
 }
 
 .infoContainerGroup {
-    display: flex;
-    gap: 16px;
-    width: 100%;
-    margin-top: 20px;
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .infoContainer {
-    box-shadow: var(--shadow-md);
-    width: 280px;
-    height: 100px;
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-radius: 8px;
-    border: .1px solid rgba(214, 214, 214, 0.24);
-    background-color: white;
-    margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  width: 280px;
+  height: 100px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  border: .1px solid rgba(214, 214, 214, 0.24);
+  background-color: white;
+  margin-bottom: 20px;
 }
 
 .infoContainer p {
-    font-weight: 500;
-    font-size: 36px;
-    line-height: 24px;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 24px;
 
 }
 
 .infoContainer span {
-    line-height: 0;
-    font-size: 14;
+  line-height: 0;
+  font-size: 14;
 }
