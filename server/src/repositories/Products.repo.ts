@@ -1,4 +1,4 @@
-import { CreateProducts, GetProductByIdWithImagesResult, SaveImageProduct } from '@contracts/repositories/Products.repo'
+import { CreateProducts, GetProductByIdWithImagesResult, SaveImageProduct, UpdateProducts } from '@contracts/repositories/Products.repo'
 import { ProductModel, ProductPhotoModel } from '@database/products.db'
 import { mongoosePagination } from '@shared/functions/pagination'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
@@ -60,7 +60,7 @@ export class ProductRepository {
     return result.toObject()
   }
 
-  static async updatedProduct(id: string, data: CreateProducts) {
+  static async updatedProduct(id: string, data: UpdateProducts) {
     const result = await ProductModel.findByIdAndUpdate(id, data, {
       new: true,
     })
@@ -107,7 +107,7 @@ export class ProductRepository {
   }
 
   static async deleteImage(id: string) {
-    const deletedImage = await ProductModel.findByIdAndDelete(id)
+    const deletedImage = await ProductPhotoModel.findByIdAndDelete(id)
 
     if (!deletedImage) return null
 

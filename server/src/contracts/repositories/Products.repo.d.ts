@@ -5,6 +5,12 @@ export type CreateProducts = Omit<
   '_id' | 'createdAt' | 'updatedAt' | 'updatedBy'
 >
 
+export type UpdateProducts = Partial<
+  Omit<IProduct, '_id' | 'createdAt' | 'updatedAt'>
+> & {
+  updatedBy: string;
+};
+
 export type UploadProductImage = Array<Pick<IProductPhoto, 'productId' | 'uploadBy' | 'url' | 'publicId'>>
 
 export type SaveImageProduct = Pick<IProductPhoto, 'publicId' | 'uploadBy' | 'url' | 'productId'>

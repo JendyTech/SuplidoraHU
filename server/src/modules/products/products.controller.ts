@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { ProductsService } from '@modules/products/products.service'
-import { CreateProductDto, UploadProductImageDto } from '@modules/products/dto/Product.dto'
+import { CreateProductDto, UpdateProductDto, UploadProductImageDto } from '@modules/products/dto/Product.dto'
 import { User } from '@shared/decorators/Session'
 import { IUser } from '@interfaces/User'
 
@@ -52,7 +52,7 @@ export class ProductsController {
   @Patch('/:id')
   updatedProduct(
     @Param('id') id: string,
-    @Body() dto: CreateProductDto,
+    @Body() dto: UpdateProductDto,
     @User() user: IUser,
   ) {
     return this.productsService.updatedProduct(dto, id, user)

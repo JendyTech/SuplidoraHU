@@ -1,7 +1,7 @@
 import PRODUCT from '@messages/Product.json'
 import GENERAL from '@messages/General.json'
 import { Injectable } from '@nestjs/common'
-import { CreateProductDto } from '@modules/products/dto/product.dto'
+import { CreateProductDto, UpdateProductDto } from '@modules/products/dto/product.dto'
 import { IUser } from '@interfaces/User'
 import { ProductRepository } from '@repositories/Products.repo'
 import { successResponse, errorResponse } from '@shared/functions/response'
@@ -9,9 +9,7 @@ import { HttpStatus } from '@nestjs/common'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { uploadBase64, deleteResource } from '@shared/functions/cloudinary'
 import { CloudinaryResult } from '@contracts/Cloudinary'
-import { IProductPhoto } from '@interfaces/Product'
 import {
-  SaveImageProduct,
   UploadProductImage,
 } from '@contracts/repositories/Products.repo'
 
@@ -111,59 +109,106 @@ export class ProductsService {
     })
   }
 
-  async updatedProduct(dto: CreateProductDto, id: string, user: IUser) {
-    let product
-
+  async updatedProduct(dto: UpdateProductDto, id: string, user: IUser) {
+    let product;
+  
     try {
-      product = await ProductRepository.findById(id)
+      product = await ProductRepository.findById(id);
     } catch (error) {
-      console.error('[ERROR] Failed to fetch product:', error)
+      console.error('[ERROR] Failed to fetch product:', error);
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
-      })
+      });
     }
-
+  
     if (!product) {
-      console.warn('[WARN] Product not found with ID:', id)
+      console.warn('[WARN] Product not found with ID:', id);
       return errorResponse({
         message: PRODUCT.PRODUCT_NOT_FOUND,
         status: HttpStatus.NOT_FOUND,
-      })
+      });
     }
-
+  
+    const { imagesToDelete = [], imagesToAdd = [] } = dto;
+  
+    if (imagesToDelete.length > 0) {
+      try {
+        await Promise.all(
+          imagesToDelete.map(async (imageId) => {
+            const image = await ProductRepository.findImageById(imageId);
+            if (image) {
+              await deleteResource(image.publicId);
+              await ProductRepository.deleteImage(imageId);
+            }
+          })
+        );
+      } catch (error) {
+        console.error('[ERROR] Failed to delete images:', error);
+        return errorResponse({
+          message: PRODUCT.ERROR_DELETE_IMAGE,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error,
+        });
+      }
+    }
+  
+    const newImages: UploadProductImage = [];
+    if (imagesToAdd.length > 0) {
+      try {
+        await Promise.all(
+          imagesToAdd.map(async (base64Image) => {
+            const result = await uploadBase64(base64Image);
+            newImages.push({
+              productId: id,
+              publicId: result.publicId,
+              url: result.secureUrl,
+              uploadBy: user._id,
+            });
+          })
+        );
+  
+        await ProductRepository.saveProductImages(newImages);
+      } catch (error) {
+        console.error('[ERROR] Failed to upload new images:', error);
+        return errorResponse({
+          message: PRODUCT.ERROR_UPLOAD_IMAGE,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error,
+        });
+      }
+    }
+  
     try {
-      const productData = {
+      const updatedProductData = {
         ...dto,
         updatedBy: user._id,
-        createdBy: user._id,
-      }
-      const updatedProduct = await ProductRepository.updatedProduct(
-        id,
-        productData,
-      )
-
+        createdBy: product.createdBy,
+      };
+      const updatedProduct = await ProductRepository.updatedProduct(id, updatedProductData);
+  
       if (!updatedProduct) {
-        console.error('[ERROR] Failed to update product')
         return errorResponse({
           message: GENERAL.ERROR_DATABASE_MESSAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
-        })
+        });
       }
-
+  
       return successResponse({
         data: updatedProduct,
         message: PRODUCT.PRODUCT_UPDATED,
-      })
+      });
     } catch (error) {
-      console.error('[ERROR] Failed during product update:', error)
+      console.error('[ERROR] Failed during product update:', error);
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
-      })
+        error,
+      });
     }
   }
+  
 
   async deleteProduct(id: string) {
     let product
