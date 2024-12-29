@@ -1,0 +1,22 @@
+.container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 24px 0px;
+}
+
+
+@media (max-width: 1500px) {
+  .container {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 998px) {
+  .container {
+    padding: 16px 24px;
+  }
+}

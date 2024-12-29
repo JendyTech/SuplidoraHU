@@ -1,0 +1,15 @@
+.link {
+  padding: 0.75rem 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+  text-decoration: none;
+
+}
+
+.link:hover {
+  opacity: 0.8;
+}

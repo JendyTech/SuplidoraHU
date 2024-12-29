@@ -1,0 +1,25 @@
+:root {
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --border: 1px solid #e5e7eb;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+.main {
+  margin-bottom: 100px;
+}
+
+
+.notFoudMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 24px;
+  flex-direction: column;
+}

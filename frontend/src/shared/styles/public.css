@@ -1,0 +1,45 @@
+html,
+body {
+  margin: 0;
+  height: 100vh;
+}
+
+body {
+  background-color: #F9FAFB;
+}
+
+
+.center-box-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+@supports selector(::-webkit-scrollbar) {
+  @media (hover: hover) {
+    ::-webkit-scrollbar {
+      width: 10px;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #888;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+      background-color: #666;
+    }
+
+  }
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: #888 transparent;
+    scrollbar-width: thin;
+  }
+}

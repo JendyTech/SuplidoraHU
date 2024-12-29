@@ -1,10 +1,7 @@
 "use client"
 
 import { Options } from '@shared/components/Elements/Options'
-
-
 export default function AdminPage() {
-
   return (
     <>
       <Options

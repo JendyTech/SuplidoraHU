@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+  padding: 50px 32px;
+  border-radius: 8px;
+  border: var(--border);
+  transition: box-shadow 0.3s ease;
+}
+
+.container:hover {
+  box-shadow: var(--shadow);
+}
+
+.icon {
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: var(--primary-color);
+  background-color: #28788120;
+}
+
+.title {
+  font-weight: 600;
+  color: #111827;
+}

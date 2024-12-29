@@ -7,28 +7,28 @@ import { topBar } from '@shared/data/menu'
 import { getItemBarMenuItem } from '@/utils/getItemBarMenuItem'
 
 export default function Navbar() {
-    const path = usePathname()
+  const path = usePathname()
 
-    const item = getItemBarMenuItem(path, topBar)
+  const item = getItemBarMenuItem(path, topBar)
 
-    if (!item) return (
-        <h2 style={{ color: "red" }}>
-            Agregar a los items del top bar
-        </h2>
-    )
+  if (!item) return (
+    <h2 >
+      Pagina no encontrada
+    </h2>
+  )
 
-    const { header: Actions = <></> } = item
+  const { header: Actions = <></> } = item
 
-    return (
-        <nav
-            className={styles.nav}
-        >
-            <h2 className={styles.title}>{item.title}</h2>
-            <div
-                className={styles.items}
-            >
-                {Actions}
-            </div>
-        </nav>
-    )
+  return (
+    <nav
+      className={styles.nav}
+    >
+      <h2 className={styles.title}>{item.title}</h2>
+      <div
+        className={styles.items}
+      >
+        {Actions}
+      </div>
+    </nav>
+  )
 }
