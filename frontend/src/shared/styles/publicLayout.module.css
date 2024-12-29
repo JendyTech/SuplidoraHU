@@ -1,8 +1,3 @@
-:root {
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --border: 1px solid #e5e7eb;
-}
-
 .container {
   display: flex;
   flex-direction: column;
