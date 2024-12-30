@@ -11,6 +11,8 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { GetProduct, Image } from '@interfaces/Product/GetProduct';
 import { pre } from 'framer-motion/client';
+import { UpdateProduct } from '@interfaces/Product/UpdateProduct';
+import { useDelay } from '@/hooks/useDelay';
 
 interface ProductEditClientProps {
     productData: GetProduct;
@@ -35,7 +37,6 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
             }));
         }
 
-        console.log(product)
     };
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,21 +56,21 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
             __v: 0,
             publicId: ""
         };
+        const isInWillAddImages: boolean = willAddImages.some((image: string) => image === result);
 
-        const newImages = [...previewImages, newImage];
-        setPreviewImages((prev) => [...prev, newImage]);
-        setProduct((prev) => ({
-            ...prev!,
-            images: newImages,
-        }));
+        if (!isInWillAddImages) {
+            const newImages = [...previewImages, newImage];
+            setPreviewImages((prev) => [...prev, newImage]);
+            setProduct((prev) => ({
+                ...prev!,
+                images: newImages,
+            }));
+        }
 
         fileInput.value = "";
 
-        // const isInWillDelete: boolean = willDeleteImagesIds.some((image: string) => image === result);
-        // console.log(isInWillDelete)
-
         const isInProduct: boolean = productData.images.some((image: Image) => image.url === result);
-        if (!isInProduct) {
+        if (!isInProduct && !isInWillAddImages) {
             setWillAddImages((prev) => [...prev, result]);
         }
     };
@@ -102,7 +103,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             name="name"
                             type="text"
                             placeholder="Nombre del Producto"
-                            value={product.name}
+                            defaultValue={product.name}
                             maxWidth="280px" onChange={handleChange}
                         />
                     </div>
@@ -111,7 +112,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             name="price"
                             type="text"
                             placeholder="Precio del Producto"
-                            value={product.price}
+                            defaultValue={product.price}
                             maxWidth="280px" onChange={handleChange}
                         />
                     </div>
@@ -122,7 +123,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             name="code"
                             type="text"
                             placeholder="Código del Producto"
-                            value={product.code}
+                            defaultValue={product.code}
                             maxWidth="280px" onChange={handleChange}
                         />
                     </div>
@@ -131,7 +132,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             name="unitsPerPack"
                             type="text"
                             placeholder="Unidades por Paquete"
-                            value={product.unitsPerPack}
+                            defaultValue={product.unitsPerPack}
                             maxWidth="280px" onChange={handleChange}
                         />
                     </div>
@@ -184,22 +185,32 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                         onClick={async () => {
 
                             setLoading(true)
+                            await useDelay(2000)
 
                             try {
-                                console.log(willDeleteImagesIds, willAddImages)
 
-                                // const response = await updateProduct(productData._id, product);
+                                const model: UpdateProduct = {
+                                    ...product,
+                                    price: Number(product.price),
+                                    imagesToDelete: willDeleteImagesIds,
+                                    imagesToAdd: willAddImages,
 
-                                // if (response.ok) {
-                                //     toast.success(`Producto ${productData.name} editado correctamente.`);
-                                // } else {
-                                //     toast.error(`Error al editar el producto.`);
-                                // }
-                                // console.log(productData)
-                                // setLoading(false)
-                                // router.push('/admin/productos')
+                                }
+
+                                console.log(model)
+
+                                const response = await updateProduct(productData._id, model);
+
+                                if (response.ok) {
+                                    toast.success(`Producto ${productData.name} editado correctamente.`);
+                                } else {
+                                    toast.error(response.messages[0].message);
+                                    return
+                                }
+
+                                setLoading(false)
+                                router.push('/admin/productos')
                             } catch (error) {
-                                console.error("Ocurrió un error al intentar eliminar el producto:", error);
 
                                 setLoading(false)
                             } finally {

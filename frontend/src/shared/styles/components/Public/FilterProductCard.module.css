@@ -6,6 +6,8 @@
   border: var(--border);
   max-width: 350px;
   height: fit-content;
+  position: sticky;
+  top: 80px;
 }
 
 .inputWrapper {

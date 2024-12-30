@@ -16,7 +16,7 @@ const GeneralInfo = ({
     setProductData((prevData) => ({
       ...prevData,
       [name]:
-        name === "price" || name === "unitsPerPack" ? Number(value) : value, // Convierte valores numéricos
+        name === "price" || name === "unitsPerPack" ? Number(value) : value,
     }));
   };
   return (
@@ -42,6 +42,9 @@ const GeneralInfo = ({
         </div>
         <div style={{ display: "flex", justifyContent: "start", gap: "30px" }}>
 
+          <div style={{ width: "280px" }}>
+            <CustomInput name="code" type="text" placeholder="Código" value={productData.code} maxWidth="280px" onChange={handleInputChange} />
+          </div>
           <div style={{ width: "280px" }}>
             <CustomInput name="code" type="text" placeholder="Código" value={productData.code} maxWidth="280px" onChange={handleInputChange} />
           </div>

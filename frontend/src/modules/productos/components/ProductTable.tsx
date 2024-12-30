@@ -13,6 +13,9 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { deleteProduct } from '@services/product'
 import { useLoader } from '@/contexts/Loader'
+import CustomButton from '@shared/components/Buttons/CustomButton'
+import styles from '@modules/productos/styles/productos.module.css'
+
 
 
 interface Props {
@@ -137,7 +140,15 @@ export default function ProductTable(props: Props) {
                 setFilters={setFilters}
                 headers={headers}
                 result={pagination}
-            />
+
+            ><div>
+                    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                        <input type="text" className={styles.searchBar} placeholder="Buscar por nombre" />
+                        <input type="text" className={styles.searchBar} placeholder="Buscar por código" />
+                        <div style={{ width: "170px" }}>
+                            <CustomButton text="Buscar" style="filled" buttonType="submit" />
+                        </div>
+                    </div>  <br /></div> </CustomTable>
             <DeleteProductModal
                 isOpen={isModalOpen}
                 productName={productToDelete?.name}

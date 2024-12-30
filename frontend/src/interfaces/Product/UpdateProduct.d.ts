@@ -4,6 +4,8 @@ export interface UpdateProduct {
     description:  string;
     code:         string;
     unitsPerPack: number;
+    imagesToDelete : string[];
+    imagesToAdd : string[];
     images:       Image[];
 }
 export interface Image {

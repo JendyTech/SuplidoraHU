@@ -116,5 +116,11 @@ export const topBar: ItemMenu[] = [
     url: "/admin/productos/:id",
     title: "Detalle de producto",
     items: []
-  }
+  },
+
+  {
+    url: "/admin/perfil",
+    title: "Mi Pefil",
+    items: [],
+  },
 ];

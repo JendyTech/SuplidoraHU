@@ -6,16 +6,20 @@
     box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 4px 0px;
     position: fixed;
     top: 0;
-    height: 100vh; /* Ocupa toda la altura de la vista */
+    height: 100vh;
+    /* Ocupa toda la altura de la vista */
     display: flex;
     flex-direction: column;
 }
 
 .siderbarContent {
-    flex: 1; /* Permite que el contenido principal se expanda */
+    flex: 1;
+    /* Permite que el contenido principal se expanda */
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-decoration: none;
+
 }
 
 .sidebarBottom {
@@ -23,7 +27,10 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: auto; /* Alinea esta sección al fondo */
+    margin-top: auto;
+    text-decoration: none;
+
+    /* Alinea esta sección al fondo */
 }
 
 
@@ -117,19 +124,33 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    text-decoration: none;
+}
+
+.sidebarBottomProfile:hover {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 8px 20px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .sidebarBottomProfile img {
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .sidebarBottomProfile p {
     margin-top: 12px;
     font-size: 12px;
     line-height: 4px;
+    color: black;
+    text-decoration: none;
 }
 
 .sidebarBottomProfile span {
     font-size: 10px;
     color: var(--primary-color);
+    text-decoration: none;
 }

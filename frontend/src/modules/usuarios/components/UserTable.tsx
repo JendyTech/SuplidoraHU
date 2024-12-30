@@ -13,7 +13,8 @@ import { useLoader } from '@/contexts/Loader'
 import { deleteUser } from '@services/users'
 import { toast } from 'sonner'
 import DeleteProductModal from '@shared/components/Modal'
-
+import CustomButton from '@shared/components/Buttons/CustomButton'
+import styles from '@modules/productos/styles/productos.module.css'
 
 interface Props {
     initialState: Pagination<IUser>
@@ -132,7 +133,16 @@ export default function UsersTable(props: Props) {
                 setFilters={setFilters}
                 headers={headers}
                 result={pagination}
-            />
+            ><div>
+
+                    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+
+                        <input type="text" className={styles.searchBar} placeholder="Buscar por nombre" />
+
+                        <div style={{ width: "170px" }}>
+                            <CustomButton text="Buscar" style="filled" buttonType="submit" />
+                        </div>
+                    </div> <br /></div></CustomTable>
 
             <DeleteProductModal
                 isOpen={isModalOpen}

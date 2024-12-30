@@ -5,12 +5,14 @@ import { GetProduct } from "@interfaces/Product/GetProduct";
 export default async function ProductDetail(props: PageParams) {
     const { id } = await props.params
 
-    console.log(id)
-
     try {
         const response = await getProductById(id, true);
 
+        console.log(response)
+
         if (!response.ok) {
+
+
             return (
                 <div>
                     error no encontrado
@@ -20,7 +22,7 @@ export default async function ProductDetail(props: PageParams) {
 
         const { result: product } = response
 
-        console.log(product.images)
+
 
         return (
             <div>

@@ -10,6 +10,7 @@ interface Props<T> {
     result?: Pagination<any>
     setFilters: Dispatch<SetStateAction<Partial<ParamsPaginationFilterOptions>>>
     headers: TableColumn<any>[]
+    children?: React.ReactNode
 }
 
 
@@ -106,6 +107,8 @@ export default function CustomTable<T = any>(props: Props<any>) {
     return (
         <div className={styles.tableContainer} >
 
+            {props.children}
+
             <DataTable
                 paginationServer
                 selectableRows
@@ -119,6 +122,7 @@ export default function CustomTable<T = any>(props: Props<any>) {
                 paginationTotalRows={pagination.metadata.total}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeMax}
+                noDataComponent={<div>No hay datos</div>}
 
             />
         </div>

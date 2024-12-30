@@ -18,7 +18,7 @@ interface InputProps {
     isMoneyInput?: boolean;
     disabled?: boolean
     min?: number;
-    defaultValue?: string;
+    defaultValue?: string | number;
 }
 
 export default function CustomInput(props: InputProps) {

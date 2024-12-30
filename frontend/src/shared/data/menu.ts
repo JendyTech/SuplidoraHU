@@ -51,4 +51,9 @@ export const topBar: ItemMenu[] = [
     title: "Configuración",
     items: [],
   },
+  {
+    url: "/admin/perfil",
+    title: "Mi Pefil",
+    items: [],
+  },
 ];

@@ -3,11 +3,10 @@
 import React, { Fragment } from 'react'
 import styles from '@shared/styles/sidebar.module.css'
 import Logo from '@/assets/logo.jpeg'
-import Yo from '@/assets/yo.jpg'
 import Link from 'next/link'
 import CustomButton from '@shared/components/Buttons/CustomButton'
 import { usePathname, useRouter } from 'next/navigation'
-import { IconHome, IconReceipt, IconShoppingCart, IconSettings, IconUser } from '@tabler/icons-react'
+import { IconHome, IconReceipt, IconShoppingCart, IconUser } from '@tabler/icons-react'
 import { logoutService } from '@services/auth'
 import { useSession } from '@/contexts/Session'
 import { useShortFormatName } from '@/hooks/useShortName'
@@ -48,12 +47,12 @@ export default function Sidebar() {
             Icon: IconUser,
             id: 'usuarios'
         },
-        {
-            url: "/admin/configuracion",
-            name: "Configuración",
-            Icon: IconSettings,
-            id: 'configuracion'
-        },
+        // {
+        //     url: "/admin/configuracion",
+        //     name: "Configuración",
+        //     Icon: IconSettings,
+        //     id: 'configuracion'
+        // },
     ]
 
 
@@ -100,33 +99,34 @@ export default function Sidebar() {
             </div>
 
             <div className={styles.sidebarBottom}>
-                <div className={styles.sidebarBottomProfile}>
-                    {data.photo ? (
-                        <img src={data.photo} alt={`Foto de ${data.firstName} ${data.lastName}`} width={40} height={40} />
-                    ) : (
-                        <div
-                            style={{
-                                height: "40px",
-                                width: "40px",
-                                borderRadius: "50%",
-                                backgroundColor: "#287881",
-                                display: "flex",
-                                color: "#FFF",
-                                fontSize: "16px",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                textAlign: "center"
-                            }}
-                        >
-                            {data.firstName.at(0)?.toUpperCase()}
-                        </div>
-                    )}
+                <Link href="/admin/perfil" style={{ textDecoration: "none" }}>
+                    <div className={styles.sidebarBottomProfile}>
+                        {data.photo ? (
+                            <img src={data.photo} alt={`Foto de ${data.firstName} ${data.lastName}`} width={40} height={40} />
+                        ) : (
+                            <div
+                                style={{
+                                    height: "40px",
+                                    width: "40px",
+                                    borderRadius: "50%",
+                                    backgroundColor: "#287881",
+                                    display: "flex",
+                                    color: "#FFF",
+                                    fontSize: "16px",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    textAlign: "center"
+                                }}
+                            >
+                                {data.firstName.at(0)?.toUpperCase()}
+                            </div>
+                        )}
 
-                    <div>
-                        <p>{userName}</p>
-                        <span>Administrador</span>
-                    </div>
-                </div>
+                        <div>
+                            <p>{userName}</p>
+                            <span>Administrador</span>
+                        </div>
+                    </div></Link>
                 <CustomButton
                     onClick={handleLogOut}
                     style="filled"
