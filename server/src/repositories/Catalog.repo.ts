@@ -1,7 +1,7 @@
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { ProductModel } from '@database/products.db'
 import { mongoosePagination } from '@shared/functions/pagination'
-import { Types, FilterQuery } from 'mongoose'
+import { FilterQuery } from 'mongoose'
 import { IProduct } from '@interfaces/Product'
 import { MODELS_NAMES } from '@config/constants'
 

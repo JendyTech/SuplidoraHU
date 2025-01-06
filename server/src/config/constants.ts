@@ -16,6 +16,8 @@ export const MODELS_NAMES = {
   USERS_IMAGES: 'users_images',
   INVOICES: 'invoices',
   INVOICE_ITEMS: 'invoice_items',
+  CREDIT_NOTES: 'credit_notes',
+  CREDIT_NOTE_ITEMS: 'credit_note_items',
   PRODUCTS: 'products',
   PRODUCTS_IMAGES: 'products_images',
   TAXES: 'taxes',

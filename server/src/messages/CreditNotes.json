@@ -1,0 +1,17 @@
+{
+    "ERROR_CREATING_CREDIT_NOTE": "Error al crear la Nota de Crédito",
+    "CREDIT_NOTE_NAME_IN_USE": "El RNC ya está en uso",
+    "CREDIT_NOTE_CREATED": "Nota de Crédito creada exitosamente",
+    "CREDIT_NOTE_UPDATED": "Nota de Crédito actualizada exitosamente",
+    "CREDIT_NOTE_DELETED": "Nota de Crédito eliminada exitosamente",
+    "CREDIT_NOTE_NOT_FOUND": "Nota de Crédito no encontrada",
+    "CREDIT_NOTES_NOT_FOUND": "Notas de Crédito no encontradas",
+    "CREDIT_NOTES_FOUND": "Notas de Crédito encontradas",
+    "CREDIT_NOTES_FETCHED": "Notas de Crédito obtenidas exitosamente",
+    "CREDIT_NOTE_ITEMS_REQUIRED": "Se requiere al menos un artículo para la Nota de Crédito",
+    "CREDIT_NOTE_ITEM_NOT_FOUND": "No se encontraron los items de la Nota de Crédito",
+    "CREDIT_NOTE_DATE_VALIDATION": "La fecha de la Nota de Crédito debe ser mayor a la fecha actual",
+    "CREDIT_NOTE_INVOICE_EXPIRED": "La factura de la Nota de Crédito ha expirado",
+    "CREDIT_NOTE_INVOICE_NOT_FOUND": "La factura de la Nota de Crédito no fue encontrada",
+    "CREDIT_NOTE_TOTAL_EXCEEDS_INVOICE": "El total de la Nota de Crédito excede el total de la factura"
+}

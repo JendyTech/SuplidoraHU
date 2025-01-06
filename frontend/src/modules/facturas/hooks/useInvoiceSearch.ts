@@ -31,7 +31,6 @@ export const useInvoiceSearch = (searchTerm: string) => {
             try {
                 const response = await getAllInvoices({
                     search: debouncedSearchTerm,
-                    max: 10000000,
                     page: 1,
                 });
 

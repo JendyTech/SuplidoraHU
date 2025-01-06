@@ -14,6 +14,9 @@ export class CategoryRepository {
             filters.$or = [
                 {
                     name: { $regex: new RegExp(pagination.search, 'i') }
+                },
+                {
+                    _id: { $regex: new RegExp(pagination.search, 'i') }
                 }
             ]
         }

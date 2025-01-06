@@ -185,40 +185,73 @@
   }
 
   .popover {
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    width: 300px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+    width: 400px;
     z-index: 1000;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
+    animation: fadeIn 0.3s ease-in-out;
   }
   
   .popover h3 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    color: #2d3748;
+  }
+  
+  .popover input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .popover input:focus {
+    outline: none;
+    border-color: #319795;
+    box-shadow: 0 0 0 3px rgba(49, 151, 149, 0.2);
   }
   
   .popover ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
   }
   
   .popover li {
-    padding: 0.5rem 0;
+    padding: 0.75rem;
     border-bottom: 1px solid #eaeaea;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
   }
   
-  .popover li:last-child {
-    border-bottom: none;
+  .popover li:hover {
+    background-color: #f7fafc;
   }
-  
+
   .popover input {
     margin-bottom: 1rem;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -45%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
   }
 
   .quantityInput {

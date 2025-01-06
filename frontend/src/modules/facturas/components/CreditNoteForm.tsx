@@ -1,16 +1,18 @@
 "use client";
 
-import { toast } from "sonner";
 import { useState } from "react";
+import { toast } from "sonner";
 import { IInvoice } from "@interfaces/Invoice/Invoice";
 import { FinalResult } from "@contracts/Client";
 import { getInvoiceById } from "@services/invoice";
 import { useInvoiceSearch } from "@modules/facturas/hooks/useInvoiceSearch";
 import { useProductSearch } from "@modules/facturas/hooks/useProductSearch";
 import { useFormatCurrency } from "@/hooks/useFormatCurrency";
+import { useCreateCreditNotes } from "@modules/notas_creditos/hooks/useCreateCreditNotes";
 import CustomInput from "@shared/components/Form/Input";
 import CustomButton from "@shared/components/Buttons/CustomButton";
 import styles from "@modules/facturas/styles/notas.module.css";
+import { desc } from "framer-motion/client";
 
 export default function CreditNoteForm() {
   const [invoiceSearch, setInvoiceSearch] = useState("");
@@ -18,6 +20,7 @@ export default function CreditNoteForm() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [invoiceItems, setInvoiceItems] = useState<any[]>([]);
   const [invoiceSelected, setInvoiceSelected] = useState(false);
+  const [reason, setReason] = useState("");
   const [ncfNumber, setNcfNumber] = useState<string>("");
   const [showPopover, setShowPopover] = useState(false);
 
@@ -26,6 +29,14 @@ export default function CreditNoteForm() {
     loading: invoicesLoading,
     error,
   } = useInvoiceSearch(invoiceSearch);
+
+  const {
+    products,
+    loading: productsLoading,
+    error: productsError,
+  } = useProductSearch(productSearch);
+
+  const { formData, setFormData, createCreditNote } = useCreateCreditNotes();
 
   const handleInvoiceSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
@@ -36,11 +47,6 @@ export default function CreditNoteForm() {
     } else {
       setShowDropdown(false);
     }
-  };
-
-  const handleProductSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    setProductSearch(query);
   };
 
   const handleInvoiceClick = async (invoice: IInvoice) => {
@@ -57,14 +63,23 @@ export default function CreditNoteForm() {
       if (invoiceWithItems.ok) {
         const items = invoiceWithItems.result.items;
         setNcfNumber(invoiceWithItems.result.ncfNumber);
+
         const formattedItems = items.map((item: any) => ({
-          description: item.description,
+          productId: item.productId,
           quantity: item.quantity,
-          unitPrice: useFormatCurrency(item.unitPrice),
-          total: useFormatCurrency(item.total),
+          description: item.description,
+          unitPrice: item.unitPrice,
+          total: item.total,
+          creditNoteId: item.creditNoteId,
         }));
 
         setInvoiceItems(formattedItems);
+
+        setFormData((prev) => ({
+          ...prev,
+          invoiceId: invoice._id,
+          items: formattedItems,
+        }));
       } else {
         toast.error("No se pudo cargar la factura con los ítems");
       }
@@ -73,8 +88,46 @@ export default function CreditNoteForm() {
     }
   };
 
-  const handleDeleteItem = (index: number) => {
-    setInvoiceItems(invoiceItems.filter((_, i) => i !== index));
+  const handleReasonChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setReason(value);
+
+    setFormData((prev) => ({
+      ...prev,
+      reason: value,
+    }));
+  };
+
+  const handleAddProductClick = () => {
+    setShowPopover((prevState) => !prevState);
+  };
+
+  const handleProductSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setProductSearch(query);
+  };
+
+  const handleProductSelect = (product: any) => {
+    const maxDescriptionLength = 100;
+    const newItem = {
+      productId: product._id,
+      quantity: 1,
+      unitPrice: useFormatCurrency(product.price),
+      total: useFormatCurrency(product.price),
+      description:
+        product.description.length > maxDescriptionLength
+          ? `${product.description.slice(0, maxDescriptionLength)}...`
+          : product.description,
+    };
+
+    const updatedItems = [...invoiceItems, newItem];
+    setInvoiceItems(updatedItems);
+    setShowPopover(false);
+
+    setFormData((prev) => ({
+      ...prev,
+      items: updatedItems,
+    }));
   };
 
   const handleQuantityChange = (index: number, newQuantity: number) => {
@@ -87,50 +140,46 @@ export default function CreditNoteForm() {
     if (isNaN(unitPriceValue)) return;
 
     updatedItems[index].quantity = newQuantity;
-    updatedItems[index].total = useFormatCurrency(unitPriceValue * newQuantity); 
+    updatedItems[index].total = useFormatCurrency(unitPriceValue * newQuantity);
     setInvoiceItems(updatedItems);
+
+    setFormData((prev) => ({
+      ...prev,
+      items: updatedItems,
+    }));
   };
 
-  const {
-    products,
-    loading: productsLoading,
-    error: productsError,
-  } = useProductSearch(productSearch);
+  const handleSaveCreditNote = async () => {
+    if (
+      !formData.invoiceId ||
+      !formData.reason ||
+      formData.items.length === 0
+    ) {
+      toast.error("Por favor completa todos los campos requeridos");
+      return;
+    }
 
-  const handleAddProductClick = () => {
-    setShowPopover((prevState) => !prevState);
-  };
-
-  const handleProductSelect = (product: any) => {
-    const newItem = {
-      description: product.name,
-      quantity: 1,
-      unitPrice: useFormatCurrency(product.price),
-      total: useFormatCurrency(product.price),
-    };
-    setInvoiceItems([...invoiceItems, newItem]);
-    setShowPopover(false);
+    await createCreditNote();
   };
 
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.formTitle}>Crear Nota de Crédito</h2>
+
       <div style={{ display: "flex", gap: "2rem" }}>
         <div className={styles.inputGroup}>
           <label htmlFor="invoiceSearch" className={styles.label}>
             Buscar Factura
           </label>
-          <div style={{ display: "flex", gap: "1rem" }}>
-            <CustomInput
-              name="invoiceSearch"
-              type="search"
-              value={invoiceSearch}
-              onChange={handleInvoiceSearch}
-              placeholder="Escribe para buscar..."
-              maxWidth="100%"
-              disabled={invoiceSelected}
-            />
-          </div>
+          <CustomInput
+            name="invoiceSearch"
+            type="search"
+            value={invoiceSearch}
+            onChange={handleInvoiceSearch}
+            placeholder="Escribe para buscar..."
+            maxWidth="100%"
+            disabled={invoiceSelected}
+          />
           {showDropdown && !invoiceSelected && (
             <div className={styles.dropdown}>
               {invoicesLoading ? (
@@ -166,6 +215,7 @@ export default function CreditNoteForm() {
           />
         </div>
       </div>
+
       <div className={styles.inputGroup}>
         <label htmlFor="creditReason" className={styles.label}>
           Razón de la Nota de Crédito
@@ -175,8 +225,11 @@ export default function CreditNoteForm() {
           placeholder="Escribe la razón..."
           rows={4}
           className={styles.textarea}
+          value={reason}
+          onChange={handleReasonChange}
         />
       </div>
+
       <div className={styles.containerTable}>
         <h3 className={styles.sectionTitle}>Productos Relacionados</h3>
         <table className={styles.table}>
@@ -193,7 +246,7 @@ export default function CreditNoteForm() {
             {invoiceItems.length > 0 ? (
               invoiceItems.map((item, index) => (
                 <tr key={index}>
-                  <td className={styles.quantityInput}>
+                  <td>
                     <CustomInput
                       name="quantity"
                       type="number"
@@ -212,65 +265,70 @@ export default function CreditNoteForm() {
                     <CustomButton
                       text="Eliminar"
                       buttonType="button"
-                      onClick={() => handleDeleteItem(index)}
+                      onClick={() => {
+                        const updatedItems = invoiceItems.filter(
+                          (_, i) => i !== index
+                        );
+                        setInvoiceItems(updatedItems);
+
+                        setFormData((prev) => ({
+                          ...prev,
+                          items: updatedItems,
+                        }));
+                      }}
                     />
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td
-                  colSpan={5}
-                  style={{ textAlign: "center" }}
-                  className={styles.noItemsText}
-                >
+                <td colSpan={3} className={styles.noItemsText}>
                   No se han encontrado productos para esta factura.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-        <div style={{ position: "relative" }}>
-          <CustomButton
-            text="Agregar Producto"
-            buttonType="button"
-            disabled={!invoiceSelected}
-            maxWidth="150px"
-            onClick={handleAddProductClick}
-          />
-          {showPopover && invoiceSelected && (
-            <div className={styles.popover}>
-              <h3>Buscar Producto</h3>
-              <CustomInput
-                name="productSearch"
-                type="search"
-                value={productSearch}
-                onChange={handleProductSearch}
-                placeholder="Buscar producto..."
-                maxWidth="100%"
-              />
-              {productsLoading ? (
-                <p>Cargando productos...</p>
-              ) : products.length > 0 ? (
-                <ul>
-                  {products.map((product) => (
-                    <li
-                      key={product._id}
-                      onClick={() => handleProductSelect(product)}
-                    >
-                      {product.name} - {product.price}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>{productsError || "No se encontraron productos"}</p>
-              )}
-            </div>
-          )}
-        </div>
+        <CustomButton
+          text="Agregar Producto"
+          buttonType="button"
+          disabled={!invoiceSelected}
+          onClick={handleAddProductClick}
+        />
+        {showPopover && invoiceSelected && (
+          <div className={styles.popover}>
+            <h3>Buscar Producto</h3>
+            <CustomInput
+              name="productSearch"
+              type="search"
+              value={productSearch}
+              onChange={handleProductSearch}
+              placeholder="Buscar producto..."
+            />
+            {productsLoading ? (
+              <p>Cargando productos...</p>
+            ) : products.length > 0 ? (
+              products.map((product) => (
+                <div
+                  key={product._id}
+                  onClick={() => handleProductSelect(product)}
+                >
+                  {product.name} - {useFormatCurrency(product.price)}
+                </div>
+              ))
+            ) : (
+              <p>{productsError || "No se encontraron productos"}</p>
+            )}
+          </div>
+        )}
       </div>
+
       <div className={styles.buttonGroup}>
-        <CustomButton text="Guardar Nota" buttonType="button" />
+        <CustomButton
+          text="Guardar Nota"
+          buttonType="button"
+          onClick={handleSaveCreditNote}
+        />
       </div>
     </div>
   );

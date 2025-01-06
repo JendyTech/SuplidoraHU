@@ -10,9 +10,10 @@ import { InvoicesModule } from './modules/invoices/invoices.module';
 import { TaxModule } from './modules/tax/tax.module';
 import { CatalogModule } from './modules/catalog/catalog.module';
 import { CategoryModule } from './modules/category/category.module';
+import { CreditNoteModule } from './modules/credit-note/credit-note.module';
 
 @Module({
-  imports: [AuthModule, ProductsModule, UsersModule, InvoicesModule, TaxModule, CatalogModule, CategoryModule],
+  imports: [AuthModule, ProductsModule, UsersModule, InvoicesModule, TaxModule, CatalogModule, CategoryModule, CreditNoteModule],
   controllers: [AppController],
   providers: [
     AppService,

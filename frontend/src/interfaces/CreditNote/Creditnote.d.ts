@@ -1,26 +1,28 @@
-import { ObjectId } from "mongoose"
 
-export interface IInvoice {
+export interface ICreditNote {
     _id: string
+    creditNoteNumber: string;
+    invoiceId: string;
     invoiceNumber: string;
     ncfNumber: string 
     rncNumber: string
     expirationDate: Date
+    affectedInvoice: string
     clientName: string
+    reason: string
     clientRnc: string
     paymentCondition: string
     supplierName: string
-    createdBy: ObjectId | string
+    createdBy: string
     createdAt: Date
     updatedAt: Date
-    items: IInvoiceItem[]
 }
 
 
-export interface IInvoiceItem{
+export interface ICreditNoteItem{
     _id: string
-    invoiceId: string | ObjectId
-    productId: string | ObjectId
+    creditNoteId: string
+    productId: string 
     quantity: number
     description: string
     unitPrice: number

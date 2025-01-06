@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { CategoryService } from '@modules/category/category.service';
 import { PaginationDTO } from '@shared/dto/Pagination.dto';
 
@@ -10,5 +10,10 @@ export class CategoryController {
     @Get('/')
     getCategories(@Query() dto: PaginationDTO) {
         return this.categoryService.getCategories(dto)
+    }
+
+    @Get('/:id')
+    getCategoryById(@Param('id') id: string) {
+        return this.categoryService.getCategoryById(id)
     }
 }
