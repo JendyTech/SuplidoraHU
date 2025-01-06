@@ -1,14 +1,37 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import styles from "@modules/productos/styles/GeneralInfo.module.css";
 import CustomInput from "@shared/components/Form/Input";
+import { AutoComplete, Option } from "@shared/components/Form/AutoComplete";
 
 const GeneralInfo = ({
   setProductData,
   productData,
+  getCategories
 }: {
   setProductData: Dispatch<SetStateAction<AddProductModel>>;
   productData: AddProductModel;
+  getCategories: () => Promise<Category[]>
 }) => {
+  const [categories, setCategories] = useState<Option[]>([]);
+  const [category, setCategory] = useState<string | null>(
+  );
+
+  const handleSeachCategory = async (value: string) => {
+    const categories = await getCategories()
+    if (!categories) return;
+    setCategories((prevState) => [
+      ...prevState,
+      ...categories
+        .map((category) => ({
+          label: String(category.name),
+          value: category._id,
+        }))
+        .filter((newCategory) =>
+          !prevState.some((existingCategory) => existingCategory.value === newCategory.value)
+        ).slice(0, 2),
+    ]);
+  }
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -17,6 +40,13 @@ const GeneralInfo = ({
       ...prevData,
       [name]:
         name === "price" || name === "unitsPerPack" ? Number(value) : value,
+    }));
+  };
+
+  const handleInputChange2 = (value: string, categoryKey: string) => {
+    setProductData((prevData) => ({
+      ...prevData,
+      [categoryKey]: value,
     }));
   };
   return (
@@ -43,10 +73,15 @@ const GeneralInfo = ({
         <div style={{ display: "flex", justifyContent: "start", gap: "30px" }}>
 
           <div style={{ width: "280px" }}>
-            <CustomInput name="code" type="text" placeholder="Código" value={productData.code} maxWidth="280px" onChange={handleInputChange} />
+            <CustomInput name="code" type="text" placeholder="Código" required value={productData.code} maxWidth="280px" onChange={handleInputChange} />
           </div>
           <div style={{ width: "280px" }}>
-            <CustomInput name="code" type="text" placeholder="Código" value={productData.code} maxWidth="280px" onChange={handleInputChange} />
+            <AutoComplete value={productData.categoryName} placeholder="Categoría" options={categories} freeOption onInput={handleSeachCategory} onSelect={(selected) => {
+              if (selected) {
+                setCategory("categoryName");
+                handleInputChange2(selected, "categoryName");
+              }
+            }} />
           </div>
 
 

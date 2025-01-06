@@ -1,13 +1,41 @@
+'use client'
+
 import styles from "@modules/public/styles/Catalog.module.css"
 import { ProductCardSkeleton } from '@shared/components/Public/ProductCardSkeleton'
 import { FilterProductCard } from '@shared/components/Public/FilterProductCard'
 import { ContentContainer } from '@shared/components/Public/ContentContainer'
 import { ProductCard } from '@shared/components/Public/ProductCard'
 import { Typography } from '@shared/components/Public/Typograpy'
-import { SAMPLE_PRODUCTS } from '@shared/data/public'
+import { useEffect, useState } from "react"
+import { CatalogProduct } from "@interfaces/catalog/CatalogProduct"
+import { getCatalog } from "@services/catalog"
+import { toast } from "sonner"
+import { useDelay } from "@/hooks/useDelay"
+import { div } from "framer-motion/client"
 
 
 export default function CalalogPage() {
+
+  const [products, setProducts] = useState<CatalogProduct[]>([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+    const fetchProducts = async () => {
+      await useDelay(1000)
+      const data = await getCatalog();
+      if (data.ok) {
+        setProducts(data.result.data)
+      } else {
+        toast.error(data.messages[0].message)
+      }
+      setLoading(false)
+    }
+
+    fetchProducts()
+
+  }, [])
+
   return (
     <ContentContainer>
       <header>
@@ -32,19 +60,30 @@ export default function CalalogPage() {
       >
         <FilterProductCard />
         <section>
-          {SAMPLE_PRODUCTS.map((product) => (
-            <ProductCard
-              id={product.id}
-              key={product.id}
-              title={product.title}
-              price={product.price}
-              rating={product.rating}
-              image={product.image}
-              description={product.description}
-              code={product.code}
-            />
+
+          {
+            loading ?
+              <div style={{ width: '100%' }}>
+                <ProductCardSkeleton />
+
+              </div>
+              : products.length === 0 ?
+                <p>No hay productos disponibles</p> : null
+          }
+
+          {products.map((product, i) => (
+            <div key={i}>
+              <ProductCard
+                id={product.id}
+                key={product.id}
+                title={product.name}
+                price={product.price}
+                image={product.image}
+                description={product.description}
+                code={product.code}
+              />
+            </div>
           ))}
-          <ProductCardSkeleton />
 
         </section>
       </section>
