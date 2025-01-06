@@ -2,7 +2,7 @@
 import styles from '@shared/styles/components/Form/AutoComplete.module.css'
 import { useState, useEffect, useRef } from 'react'
 
-interface Option {
+export interface Option {
   label: string
   value: string
 }
@@ -16,11 +16,6 @@ interface AutoCompleteProps {
   disabled?: boolean
   maxWidth?: string
   value?: string
-}
-
-interface Option {
-  label: string
-  value: string
 }
 
 interface AutoCompleteProps {

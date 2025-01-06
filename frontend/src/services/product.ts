@@ -45,6 +45,8 @@ export const addNewProduct = async ( addProductData : AddProductModel ) => {
 		endpoint: "/products",
 		body : addProductData
 	})
+
+	console.log(addProductData)
     
 	return response
 }
@@ -79,6 +81,17 @@ export const deleteProduct = async (id: string) => {
 
 	const response = await DELETE<IProduct>({
 		endpoint: `/products/${id}`
+	})
+
+	return response
+}
+
+export const getAllCategories = async () => {
+	const token = await getToken()
+	const { GET } = useClient(token)
+
+	const response = await GET<Pagination<Category>>({
+		endpoint: `/category`
 	})
 
 	return response

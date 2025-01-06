@@ -10,7 +10,7 @@ import Summary from '@/app/admin/productos/crear-producto/steps/Summary'
 
 export default function CreateProductsPage() {
 
-    const { currentStep, handleNextStep, setFormData, formData, setImagesUrl, imagesUrl, createProduct } = useCreateProduct()
+    const { currentStep, handleNextStep, setFormData, formData, setImagesUrl, imagesUrl, createProduct, getCategories } = useCreateProduct()
 
     return (
         <div>
@@ -27,7 +27,7 @@ export default function CreateProductsPage() {
                     { title: "Paso final", icon: IconCheck }
                 ]} >
                 <StepperItem>
-                    <GeneralInfo setProductData={setFormData} productData={formData} />
+                    <GeneralInfo setProductData={setFormData} productData={formData} getCategories={getCategories} />
                 </StepperItem>
                 <StepperItem>
                     <UploadImage setImage={setImagesUrl} actualImage={imagesUrl} />

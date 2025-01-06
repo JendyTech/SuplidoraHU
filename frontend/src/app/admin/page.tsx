@@ -17,6 +17,7 @@ import { IconInvoice, IconShoppingCart } from '@tabler/icons-react'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { TableColumn } from 'react-data-table-component'
+import { AutoComplete } from '@shared/components/Form/AutoComplete'
 
 export default function AdminPage() {
 
@@ -90,6 +91,8 @@ export default function AdminPage() {
           <InfoContainer Icon={IconInvoice} title={totalInvoices} subtitle='Facturas en sistema' color='#287881' />
           <InfoContainer Icon={IconShoppingCart} title={totalProducts} subtitle='Productos en sistema' color='#EF7B52' />
         </div>
+
+        <AutoComplete options={[{ label: 'test', value: 'test' }]} freeOption />
 
         <div style={{ display: "flex", gap: "20px", width: "100%" }}>
           <div className={styles.container}>

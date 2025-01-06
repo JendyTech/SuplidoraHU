@@ -31,13 +31,14 @@ export default function ProductTable(props: Props) {
     } = props
 
     const headers: TableColumn<IProduct>[] = [
-        { name: "Nombre", selector: (row) => row.name },
-        { name: "Código", selector: (row) => row.code },
-        { name: "Descripción", selector: (row) => row.description },
-        { name: "Unidades por Paquete", selector: (row) => row.unitsPerPack },
+        { name: "Nombre", selector: (row) => row.name, maxWidth: "250px" },
+        { name: "Código", selector: (row) => row.code, maxWidth: "170px" },
+        { name: "Descripción", selector: (row) => row.description.substring(0, 100) + "...", maxWidth: "300px" },
+        { name: "Unidades", selector: (row) => row.unitsPerPack, maxWidth: "130px" },
         {
             name: "Fecha de Creación",
             selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
+            maxWidth: "200px"
         },
         {
             name: "", cell: (row) => <div style={{ width: "100%", }}>

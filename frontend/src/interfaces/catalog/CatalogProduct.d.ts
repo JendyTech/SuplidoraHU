@@ -1,4 +1,5 @@
 export interface CatalogProduct {
+    id:          string;
     name:        string;
     slug:        string;
     price:       number;

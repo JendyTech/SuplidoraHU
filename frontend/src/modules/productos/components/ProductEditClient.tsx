@@ -112,7 +112,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             name="price"
                             type="text"
                             placeholder="Precio del Producto"
-                            defaultValue={product.price}
+                            defaultValue={product.price.toString()}
                             maxWidth="280px" onChange={handleChange}
                         />
                     </div>
@@ -132,11 +132,15 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             name="unitsPerPack"
                             type="text"
                             placeholder="Unidades por Paquete"
-                            defaultValue={product.unitsPerPack}
+                            defaultValue={product.unitsPerPack.toString()}
                             maxWidth="280px" onChange={handleChange}
                         />
                     </div>
+                    <div style={{ width: "280px" }}>
+
+                    </div>
                 </div>
+
                 <div style={{ width: "590px" }}>
                     <CustomInput
                         height="80px"
