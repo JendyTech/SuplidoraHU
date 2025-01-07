@@ -1,21 +1,11 @@
 import styles from '@/shared/styles/components/Public/FilterProductCard.module.css'
 import { IconSearch, IconAdjustmentsHorizontal } from '@tabler/icons-react'
-import { SAMPLE_CATEGORIES } from '@shared/data/public'
-
-interface ICategory {
-  name: string
-  id: string | number
-}
 
 interface Props {
-  categories: ICategory[]
+  categories: Category[]
 }
 
 export function FilterProductCard(pros: Partial<Props>) {
-  const {
-    categories = SAMPLE_CATEGORIES
-  } = pros
-
   return (
     <div className={styles.card}>
       <div className={styles.inputWrapper}>
@@ -51,12 +41,12 @@ export function FilterProductCard(pros: Partial<Props>) {
       <div className={styles.categoriesWrapper}>
         <h3 className={styles.categoryTitle}>Categorías</h3>
         <div>
-          {categories.map((category) => (
-            <label key={category.id} className={styles.categoryOption}>
+          {pros.categories?.map((category) => (
+            <label key={category._id} className={styles.categoryOption}>
               <input
                 type="radio"
                 name="category"
-                value={category.id}
+                value={category.name}
                 className={styles.categoryInput}
               />
               <span className={styles.categoryLabel}>{category.name}</span>

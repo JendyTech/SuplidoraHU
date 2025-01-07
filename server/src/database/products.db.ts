@@ -9,10 +9,10 @@ const productSchema = new Schema<IProduct>(
       required: true,
       unique: true,
     },
-    slug: {  
+    slug: {
       type: String,
       required: true,
-      unique: true, 
+      unique: true,
     },
     price: {
       type: Number,
@@ -25,6 +25,10 @@ const productSchema = new Schema<IProduct>(
     },
     category: {
       type: Types.ObjectId,
+      required: true,
+    },
+    categoryName: {
+      type: String,
       required: true,
     },
     description: {
@@ -71,7 +75,7 @@ const productPhotoSchema = new Schema<IProductPhoto>(
     uploadBy: {
       type: Types.ObjectId,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,

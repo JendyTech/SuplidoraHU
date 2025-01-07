@@ -92,7 +92,6 @@ export default function AdminPage() {
           <InfoContainer Icon={IconShoppingCart} title={totalProducts} subtitle='Productos en sistema' color='#EF7B52' />
         </div>
 
-        <AutoComplete options={[{ label: 'test', value: 'test' }]} freeOption />
 
         <div style={{ display: "flex", gap: "20px", width: "100%" }}>
           <div className={styles.container}>

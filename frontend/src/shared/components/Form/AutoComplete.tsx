@@ -1,4 +1,5 @@
 "use client"
+import { useCreateProduct } from '@modules/productos/hooks/useCreateProduct'
 import styles from '@shared/styles/components/Form/AutoComplete.module.css'
 import { useState, useEffect, useRef } from 'react'
 
@@ -7,21 +8,11 @@ export interface Option {
   value: string
 }
 
-interface AutoCompleteProps {
-  options: Option[]
-  onInput?: (value: string) => void
-  onSelect?: (value: string) => void
-  freeOption?: boolean
-  placeholder?: string
-  disabled?: boolean
-  maxWidth?: string
-  value?: string
-}
 
 interface AutoCompleteProps {
   options: Option[]
   onInput?: (value: string) => void
-  onSelect?: (value: string) => void
+  onSelect?: (value: string, label: string) => void
   freeOption?: boolean
   placeholder?: string
   disabled?: boolean
@@ -40,6 +31,7 @@ export function AutoComplete({
   value = ''
 }: AutoCompleteProps) {
   const [inputValue, setInputValue] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState<Option | null>(null)
   const [filteredOptions, setFilteredOptions] = useState<Option[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
@@ -96,7 +88,8 @@ export function AutoComplete({
     lastValidOption.current = option
     setHasSelectedOption(true)
     setIsOpen(false)
-    onSelect?.(option.value)
+    onSelect?.(option.value, option.label)
+    setSelectedCategory(option)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -149,13 +142,12 @@ export function AutoComplete({
     setIsOpen(true)
     setHasSelectedOption(false)
   }
-
   return (
     <div ref={containerRef} className={styles.container} style={{ maxWidth }}>
       <input
         type="text"
         className={styles.input}
-        value={inputValue}
+        value={selectedCategory ? selectedCategory.label : inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}

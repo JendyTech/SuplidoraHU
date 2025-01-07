@@ -33,7 +33,7 @@ export default function CreateProductsPage() {
                     <UploadImage setImage={setImagesUrl} actualImage={imagesUrl} />
                 </StepperItem>
                 <StepperItem>
-                    <Summary productData={formData} image={imagesUrl[0]} />
+                    <Summary productData={formData} image={imagesUrl} />
                 </StepperItem>
             </Stepper>
 

@@ -47,6 +47,7 @@ export const addNewProduct = async ( addProductData : AddProductModel ) => {
 	})
 
 	console.log(addProductData)
+	console.log(response)
     
 	return response
 }
@@ -94,5 +95,16 @@ export const getAllCategories = async () => {
 		endpoint: `/category`
 	})
 
+	return response
+}
+
+export const getCategoryNameById = async (id: string) => {
+	
+	const { GET } = useClient()
+
+	const response = await GET<Category>({
+		endpoint: `/category/${id}`,	
+	})
+    
 	return response
 }

@@ -123,6 +123,7 @@ export class ProductsService {
         imagesId: imagePublicId,
         images: imageUrl,
         category: category._id,
+        categoryName: category.name,
       }
 
       product = await ProductRepository.createProduct(productData)

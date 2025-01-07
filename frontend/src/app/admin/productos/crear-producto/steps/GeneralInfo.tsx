@@ -13,8 +13,6 @@ const GeneralInfo = ({
   getCategories: () => Promise<Category[]>
 }) => {
   const [categories, setCategories] = useState<Option[]>([]);
-  const [category, setCategory] = useState<string | null>(
-  );
 
   const handleSeachCategory = async (value: string) => {
     const categories = await getCategories()
@@ -43,10 +41,11 @@ const GeneralInfo = ({
     }));
   };
 
-  const handleInputChange2 = (value: string, categoryKey: string) => {
+  const handleCategory = (value: string, label: string) => {
     setProductData((prevData) => ({
       ...prevData,
-      [categoryKey]: value,
+      categoryId: value,
+      categoryName: label,
     }));
   };
   return (
@@ -76,11 +75,18 @@ const GeneralInfo = ({
             <CustomInput name="code" type="text" placeholder="Código" required value={productData.code} maxWidth="280px" onChange={handleInputChange} />
           </div>
           <div style={{ width: "280px" }}>
-            <AutoComplete value={productData.categoryName} placeholder="Categoría" options={categories} freeOption onInput={handleSeachCategory} onSelect={(selected) => {
-              if (selected) {
-                setCategory("categoryName");
-                handleInputChange2(selected, "categoryName");
-              }
+
+            <AutoComplete placeholder="Categoría" freeOption options={categories} onInput={handleSeachCategory} onSelect={(value, label) => {
+
+              value == label ? setProductData((prevState) => ({
+                ...prevState,
+                categoryName: value,
+              })) : setProductData((prevState) => ({
+                ...prevState,
+                categoryId: value,
+              }));
+
+
             }} />
           </div>
 

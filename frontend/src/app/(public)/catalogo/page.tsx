@@ -12,11 +12,13 @@ import { getCatalog } from "@services/catalog"
 import { toast } from "sonner"
 import { useDelay } from "@/hooks/useDelay"
 import { div } from "framer-motion/client"
+import { getAllCategories } from "@services/product"
 
 
 export default function CalalogPage() {
 
   const [products, setProducts] = useState<CatalogProduct[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -31,6 +33,17 @@ export default function CalalogPage() {
       }
       setLoading(false)
     }
+
+
+    const fetchCategories = async () => {
+      const response = await getAllCategories()
+      if (response.ok) {
+        setCategories(response.result.data)
+      }
+    }
+
+    fetchCategories()
+
 
     fetchProducts()
 
@@ -58,8 +71,8 @@ export default function CalalogPage() {
       <section
         className={styles.container}
       >
-        <FilterProductCard />
-        <section>
+        <FilterProductCard categories={categories} />
+        <section className={styles.productsContainer}>
 
           {
             loading ?
@@ -81,6 +94,7 @@ export default function CalalogPage() {
                 image={product.image}
                 description={product.description}
                 code={product.code}
+                category={product.category}
               />
             </div>
           ))}

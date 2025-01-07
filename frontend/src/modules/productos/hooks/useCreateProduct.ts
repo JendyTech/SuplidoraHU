@@ -2,10 +2,10 @@ import { useState } from "react"
 import { CREATE_PRODUCT_STEPS } from "@/modules/productos/constants"
 import { addNewProduct, getAllCategories } from "@services/product";
 import { useLoader } from "@/contexts/Loader";
-import { useDelay } from "@/hooks/useDelay";
 import { useRouter } from "next/navigation";
+import { useDelay } from "@/hooks/useDelay";
 import { toast } from "sonner";
-import { get } from "http";
+import { form } from "framer-motion/client";
 
 export const useCreateProduct = () => {
 
@@ -20,8 +20,10 @@ export const useCreateProduct = () => {
     description: "",
     code: "",
     unitsPerPack: 0,
-    categoryName : ""
+    category : "",
   });
+
+
 
   const [imagesUrl, setImagesUrl] = useState<string[]>([]);
 
@@ -38,34 +40,36 @@ export const useCreateProduct = () => {
   
 
   const createProduct = async () => {
-    console.log(formData)
-  //   setLoading(true)
+    setLoading(true)
+    try {
+      await useDelay(2000)
 
-    
+      // if (formData.categoryId !== "") {
+      //   const { categoryName, ...newFormData } = formData; // Excluir 'categoryName'
+      //   setFormData(newFormData);
+      //   return;
+      // }
 
-  //   try {
-  //     await useDelay(2000)
-  //     var response = await addNewProduct({ ...formData, images: imagesUrl });
+      var response = await addNewProduct({ ...formData, images: imagesUrl });
 
-  //     if (!response.ok) {
-  //       toast.error(response.messages[0].message)
-  //       return
-  //     }
+      if (!response.ok) {
+        toast.error(response.messages[0].message)
+        return
+      }
 
-  //     toast.success(response.message)
+      toast.success(response.message)
 
-  //   router.replace('/admin/productos')
-  //  } catch (error) {
-  //   toast.error("Error al conectar al servidor")
-  //  }finally {
-  //   setLoading(false)
-  //  }
+    router.replace('/admin/productos')
+   } catch (error) {
+    toast.error("Error al conectar al servidor")
+   }finally {
+    setLoading(false)
+   }
 
   };
 
-
-
-  const handleNextStep = (newStep: number) => {
+  const handleNextStep = (newStep: number, isFirtsStep?: boolean) => {
+    console.log(formData)
     setCurrentStep(newStep)
   }
 

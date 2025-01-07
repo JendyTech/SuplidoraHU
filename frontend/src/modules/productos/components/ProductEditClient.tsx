@@ -160,7 +160,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                             <div
                                 key={index}
                                 className={styles.imageContainer}
-                                onClick={() => handleRemoveImage(index, image._id, image.url)} // Llamada a la función para eliminar
+                                onClick={() => handleRemoveImage(index, image._id, image.url)}
                             >
                                 <img src={image.url} alt="Vista previa" className={styles.preview} />
                             </div>

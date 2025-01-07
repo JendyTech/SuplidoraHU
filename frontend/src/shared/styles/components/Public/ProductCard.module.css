@@ -6,6 +6,7 @@
   margin-bottom: 1rem;
   background-color: white;
   transition: box-shadow 0.2s;
+  min-width: fit-content;
 }
 
 .card:hover {
@@ -73,6 +74,14 @@
 .code {
   font-size: 0.875rem;
   color: #16a34a;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.category {
+  font-size: 0.875rem;
+  color: #df861f;
   font-weight: 500;
   margin-bottom: 0.5rem;
   display: block;

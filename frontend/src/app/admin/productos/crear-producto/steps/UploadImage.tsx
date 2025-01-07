@@ -11,42 +11,55 @@ const UploadImage = ({ setImage, actualImage = [] }: { setImage: React.Dispatch<
         const result = await useTranformFileToBase64(file);
         setPreviewImages(prev => [...prev, result])
         setImage(prev => [...prev, result])
+
+        e.target.value = "";
     };
 
     return (
         <div className={styles.container}>
             <h2>Subir Imagen</h2>
 
-            <div className={styles.imagesContainer}>
+            <div >
                 {previewImages.length > 0 ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center", justifyContent: "center", }}>
+                        <p style={{ color: "var(--primary-color)" }}>Maximo 5 imagenes{`(${previewImages.length}/5 )`}</p>
 
-                    previewImages?.map((image, index) => (
-                        <div key={index} className={styles.imageContainer} onClick={() => {
-                            const newImages = actualImage.filter((item) => item != image);
-                            setImage(newImages)
-                            setPreviewImages(newImages)
-                        }}>
-                            <img key={index} src={image} alt="Vista previa" className={styles.preview} />
+                        <div className={styles.imagesContainer}>
+                            {previewImages?.map((image, index) => (
+
+                                <div key={index} className={styles.imageContainer} onClick={() => {
+
+                                    const newImages = actualImage.filter((item) => item != image);
+                                    setImage(newImages)
+                                    setPreviewImages(newImages)
+                                }}>
+                                    <img key={index} src={image} alt="Vista previa" className={styles.preview} />
+                                </div>
+
+                            ))}
                         </div>
-                    ))
+                    </div>
                 ) : (
                     <div>
-
+                        <p>Maximo 5 imagenes</p>
                     </div>
                 )}
             </div>
-            <div className={styles.uploadBox}>
-                <div>
-                    <p>Selecciona una imagen para cargar</p>
-                    <p>Haga click o arrastre una</p>
-                </div>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className={styles.fileInput}
-                />
-            </div>
+            {
+                actualImage.length < 5 ?
+                    <div className={styles.uploadBox}>
+                        <div>
+                            <p>Selecciona una imagen para cargar</p>
+                            <p>Haga click o arrastre una</p>
+                        </div>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className={styles.fileInput}
+                        />
+                    </div> : null
+            }
         </div>
     );
 };

@@ -13,6 +13,14 @@
     margin-right: 20px;
 }
 
+.imageSection {
+
+    display: grid;
+    width: 30%;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+}
+
 .imageSection img {
     max-width: 200px;
     height: auto;
@@ -25,4 +33,9 @@
     padding: 10px 15px;
     border: none;
     cursor: pointer;
+}
+
+.imageContainer img {
+    width: 100px;
+    height: 100px;
 }
