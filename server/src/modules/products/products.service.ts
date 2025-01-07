@@ -95,10 +95,6 @@ export class ProductsService {
     try {
       found = await ProductRepository.findByName(dto.name)
     } catch (error) {
-      console.error(
-        'Error al verificar el nombre del producto en la base de datos:',
-        error,
-      )
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -175,7 +171,6 @@ export class ProductsService {
     try {
       product = await ProductRepository.findById(id)
     } catch (error) {
-      console.error('[ERROR] Failed to fetch product:', error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -184,7 +179,6 @@ export class ProductsService {
     }
 
     if (!product) {
-      console.warn('[WARN] Product not found with ID:', id)
       return errorResponse({
         message: PRODUCT.PRODUCT_NOT_FOUND,
         status: HttpStatus.NOT_FOUND,
@@ -247,7 +241,6 @@ export class ProductsService {
           }),
         )
       } catch (error) {
-        console.error('[ERROR] Failed to delete images:', error)
         return errorResponse({
           message: PRODUCT.ERROR_DELETE_IMAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,

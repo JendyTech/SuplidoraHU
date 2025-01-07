@@ -6,11 +6,27 @@ import { hashPassword } from '@shared/functions/hash'
 import { mongoosePagination } from '@shared/functions/pagination'
 import { IUser } from '@interfaces/User'
 import { MODELS_NAMES } from '@config/constants'
-import { Types } from 'mongoose'
+import { Types, FilterQuery  } from 'mongoose'
 
 
 export class UserRepository {
   static async getUsers(pagination: PaginationDTO, user: IUser) {
+    const filters: FilterQuery<IUser> = {}
+
+    if (pagination.search) {
+      filters.$or = [
+        {
+          firstName: { $regex: new RegExp(pagination.search, 'i') }
+        },
+        {
+          lastName: { $regex: new RegExp(pagination.search, 'i') }
+        },
+        {
+          email: { $regex: new RegExp(pagination.search, 'i') }
+        },
+      ]
+    }
+
     return mongoosePagination({
       ...pagination,
       Model: UserModel,
