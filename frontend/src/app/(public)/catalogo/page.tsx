@@ -49,8 +49,17 @@ export default function CalalogPage() {
 
   const filterProducts = async () => {
 
-    if (search == "") return;
-    setLoading(true);
+    if (search.trim() === "") {
+      const data = await getCatalog();
+      if (data.ok) {
+        setProducts(data.result.data);
+      } else {
+        toast.error(data.messages[0].message);
+      }
+      setLoading(false);
+      return;
+    }
+
     await useDelay(500);
     const data = await getCatalog({
       page: 1,

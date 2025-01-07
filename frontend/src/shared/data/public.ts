@@ -2,7 +2,7 @@ import { IconShield, IconShoppingBag, IconTruck } from "@tabler/icons-react";
 
 export const PUBLIC_NAV_LINKS = [
   { path: "/#top", label: "Inicio" },
-  { path: "/catalogo#top", label: "Catálogo" },
+  { path: "/ño#top", label: "Catálogo" },
   { path: "/contacto#top", label: "Contactanos" },
 ];
 
