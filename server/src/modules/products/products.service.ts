@@ -166,133 +166,129 @@ export class ProductsService {
   }
 
   async updatedProduct(dto: UpdateProductDto, id: string, user: IUser) {
-    let product, category;
-  
+    let product, category
+
     try {
-      product = await ProductRepository.findById(id);
+      product = await ProductRepository.findById(id)
     } catch (error) {
-      console.error('[ERROR] Finding product:', error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
-      });
+      })
     }
-  
+
     if (!product) {
-      console.log('[ERROR] Product not found:', id)
       return errorResponse({
         message: PRODUCT.PRODUCT_NOT_FOUND,
         status: HttpStatus.NOT_FOUND,
-      });
+      })
     }
-  
+
     if (!dto.categoryId && !dto.categoryName) {
-      console.log('[ERROR] Missing category data:', dto)
       return errorResponse({
         message: PRODUCT.REQUIRE_CATEGORY_NAME_OR_ID,
         status: HttpStatus.BAD_REQUEST,
-      });
+      })
     }
-  
+
     if (dto.categoryId && dto.categoryName) {
-      console.log('[ERROR] Both category ID and name provided:', dto)
       return errorResponse({
         message: PRODUCT.ONLY_CATEGORY_NAME_OR_CATEGORY_ID,
         status: HttpStatus.BAD_REQUEST,
-      });
+      })
     }
-  
+
     if (dto.categoryId) {
       try {
-        category = await CategoryRepository.getCategoryById(dto.categoryId);
+        category = await CategoryRepository.getCategoryById(dto.categoryId)
         if (!category) {
           return errorResponse({
             message: CATEGORY.CATEGORY_NOT_FOUND,
             status: HttpStatus.NOT_FOUND,
-          });
+          })
         }
       } catch (error) {
         return errorResponse({
           message: GENERAL.ERROR_DATABASE_MESSAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           error,
-        });
+        })
       }
     }
-  
+
     if (dto.categoryName) {
       try {
-        const foundCategory = await CategoryRepository.getCategoryByName(dto.categoryName);
-  
+        const foundCategory = await CategoryRepository.getCategoryByName(
+          dto.categoryName,
+        )
+
         if (foundCategory) {
-          console.log('[ERROR] Category name already exists:', dto.categoryName)
           return errorResponse({
             message: CATEGORY.CATEGORIES_FOUND,
             status: HttpStatus.CONFLICT,
-          });
+          })
         }
-  
-        category = await CategoryRepository.createCategory({ name: dto.categoryName });
+
+        category = await CategoryRepository.createCategory({
+          name: dto.categoryName,
+        })
       } catch (error) {
         return errorResponse({
           message: GENERAL.ERROR_DATABASE_MESSAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           error,
-        });
+        })
       }
     }
-  
-    const { imagesToDelete = [], imagesToAdd = [] } = dto;
-  
+
+    const { imagesToDelete = [], imagesToAdd = [] } = dto
+
     if (imagesToDelete.length > 0) {
       try {
         await Promise.all(
           imagesToDelete.map(async (imageId) => {
-            const image = await ProductRepository.findImageById(imageId);
+            const image = await ProductRepository.findImageById(imageId)
             if (image) {
-              await deleteResource(image.publicId);
-              await ProductRepository.deleteImage(imageId);
+              await deleteResource(image.publicId)
+              await ProductRepository.deleteImage(imageId)
             }
           }),
-        );
+        )
       } catch (error) {
-        console.error('[ERROR] Failed to delete images:', error)
         return errorResponse({
           message: PRODUCT.ERROR_DELETE_IMAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           error,
-        });
+        })
       }
     }
-  
-    const newImages: UploadProductImage = [];
+
+    const newImages: UploadProductImage = []
     if (imagesToAdd.length > 0) {
       try {
-        console.log('[IMAGES] Starting upload of new images')
         await Promise.all(
           imagesToAdd.map(async (base64Image) => {
-            const result = await uploadBase64(base64Image);
+            const result = await uploadBase64(base64Image)
             newImages.push({
               productId: id,
               publicId: result.publicId,
               url: result.secureUrl,
               uploadBy: user._id,
-            });
+            })
           }),
-        );
-  
-        await ProductRepository.saveProductImages(newImages);
+        )
+
+        await ProductRepository.saveProductImages(newImages)
       } catch (error) {
-        console.error('[ERROR] Failed to upload new images:', error);
         return errorResponse({
           message: PRODUCT.ERROR_UPLOAD_IMAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           error,
-        });
+        })
       }
     }
-  
+
     try {
       const updatedProductData = {
         ...dto,
@@ -301,33 +297,34 @@ export class ProductsService {
         createdBy: product.createdBy,
         category: category._id,
         categoryName: category.name,
-      };
-  
-      if (dto.name && dto.name !== product.name) {
-        updatedProductData.slug = generateSlug(dto.name);
       }
-  
-      const updatedProduct = await ProductRepository.updatedProduct(id, updatedProductData);
-  
+
+      if (dto.name && dto.name !== product.name) {
+        updatedProductData.slug = generateSlug(dto.name)
+      }
+
+      const updatedProduct = await ProductRepository.updatedProduct(
+        id,
+        updatedProductData,
+      )
+
       if (!updatedProduct) {
-        console.log('[ERROR] Failed to update product')
         return errorResponse({
           message: GENERAL.ERROR_DATABASE_MESSAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
-        });
+        })
       }
-  
+
       return successResponse({
         data: updatedProduct,
         message: PRODUCT.PRODUCT_UPDATED,
-      });
+      })
     } catch (error) {
-      console.error('[ERROR] Failed during product update:', error);
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
-      });
+      })
     }
   }
   async deleteProduct(id: string) {
@@ -353,10 +350,11 @@ export class ProductsService {
 
               await ProductRepository.deleteImage(image._id)
             } catch (error) {
-              console.error(
-                `[ERROR] Failed to delete image with ID: ${image._id} and publicId: ${image.publicId}:`,
+              return errorResponse({
+                message: PRODUCT.ERROR_DELETE_IMAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
                 error,
-              )
+              })
             }
           }),
         )
@@ -369,7 +367,6 @@ export class ProductsService {
         message: PRODUCT.PRODUCT_DELETED,
       })
     } catch (error) {
-      console.error(`[ERROR] Failed to delete product with ID: ${id}:`, error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
