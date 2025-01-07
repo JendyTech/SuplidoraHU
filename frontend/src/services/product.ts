@@ -72,6 +72,8 @@ export const updateProduct = async (id: string, updateProductData : UpdateProduc
 		endpoint: `/products/${id}`,
 		body : updateProductData
 	})
+
+	console.log(response)
     
 	return response
 }

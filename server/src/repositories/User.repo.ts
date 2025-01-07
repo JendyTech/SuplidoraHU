@@ -1,4 +1,9 @@
-import { CreateUser, GetUsersByIdWithImagesResult, SaveImageUser, UpdateUser } from '@contracts/repositories/User.repo'
+import {
+  CreateUser,
+  GetUsersByIdWithImagesResult,
+  SaveImageUser,
+  UpdateUser,
+} from '@contracts/repositories/User.repo'
 import { UserModel, UserPhotoModel } from '@database/user.db'
 import { ErrorHash } from '@errors/hash'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
@@ -6,8 +11,7 @@ import { hashPassword } from '@shared/functions/hash'
 import { mongoosePagination } from '@shared/functions/pagination'
 import { IUser } from '@interfaces/User'
 import { MODELS_NAMES } from '@config/constants'
-import { Types, FilterQuery  } from 'mongoose'
-
+import { Types, FilterQuery } from 'mongoose'
 
 export class UserRepository {
   static async getUsers(pagination: PaginationDTO, user: IUser) {
@@ -16,13 +20,13 @@ export class UserRepository {
     if (pagination.search) {
       filters.$or = [
         {
-          firstName: { $regex: new RegExp(pagination.search, 'i') }
+          firstName: { $regex: new RegExp(pagination.search, 'i') },
         },
         {
-          lastName: { $regex: new RegExp(pagination.search, 'i') }
+          lastName: { $regex: new RegExp(pagination.search, 'i') },
         },
         {
-          email: { $regex: new RegExp(pagination.search, 'i') }
+          email: { $regex: new RegExp(pagination.search, 'i') },
         },
       ]
     }
@@ -31,6 +35,7 @@ export class UserRepository {
       ...pagination,
       Model: UserModel,
       filter: {
+        ...filters,
         _id: { $ne: user._id },
       },
       extract: {
@@ -65,15 +70,16 @@ export class UserRepository {
     }
 
     return result.toObject()
-
   }
 
-  static async getUsersByIdWithPhotos(id: string): Promise<null | GetUsersByIdWithImagesResult> {
+  static async getUsersByIdWithPhotos(
+    id: string,
+  ): Promise<null | GetUsersByIdWithImagesResult> {
     const [user = null] = await UserModel.aggregate([
       {
         $match: {
-          _id: new Types.ObjectId(id)
-        }
+          _id: new Types.ObjectId(id),
+        },
       },
       {
         $lookup: {
@@ -81,11 +87,11 @@ export class UserRepository {
           as: 'photos',
           localField: '_id',
           foreignField: 'userId',
-        }
+        },
       },
       {
-        $limit: 1
-      }
+        $limit: 1,
+      },
     ])
 
     return user
@@ -139,15 +145,15 @@ export class UserRepository {
       const result = await UserModel.findByIdAndUpdate(
         id,
         { password: hashedPassword },
-        { new: true }
-      );
+        { new: true },
+      )
 
-      if (!result) return null;
+      if (!result) return null
 
-      return result.toObject();
+      return result.toObject()
     } catch (error) {
-      console.error('Error al actualizar la contraseña:', error);
-      throw new ErrorHash('No se pudo actualizar la contraseña.');
+      console.error('Error al actualizar la contraseña:', error)
+      throw new ErrorHash('No se pudo actualizar la contraseña.')
     }
   }
 
@@ -174,5 +180,4 @@ export class UserRepository {
 
     return deletedImage.toObject()
   }
-
 }

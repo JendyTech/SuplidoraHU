@@ -147,7 +147,9 @@ export default function ProductTable(props: Props) {
                 setFilters={setFilters}
                 headers={headers}
                 result={pagination}
-
+                noDataComponent={<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+                    <p>No hay productos agregados.</p>
+                </div>}
             ><div>
                     <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                         <input type="text" onChange={handleChangeSearch} className={styles.searchBar} placeholder="Buscar por código o nombre" />
@@ -168,6 +170,7 @@ export default function ProductTable(props: Props) {
                 type='product'
                 onClose={closeModal}
                 onConfirm={handleDelete}
+
             /></>
     )
 }
