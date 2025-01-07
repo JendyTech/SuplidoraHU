@@ -169,7 +169,6 @@ export class ProductsService {
     let product, category;
   
     try {
-      // Buscar producto por ID
       product = await ProductRepository.findById(id);
     } catch (error) {
       return errorResponse({
@@ -186,7 +185,6 @@ export class ProductsService {
       });
     }
   
-    // Validar que se haya proporcionado categoría (ID o nombre)
     if (!dto.categoryId && !dto.categoryName) {
       return errorResponse({
         message: PRODUCT.REQUIRE_CATEGORY_NAME_OR_ID,
@@ -201,7 +199,6 @@ export class ProductsService {
       });
     }
   
-    // Manejo de categoría por ID
     if (dto.categoryId) {
       try {
         category = await CategoryRepository.getCategoryById(dto.categoryId);
@@ -220,7 +217,6 @@ export class ProductsService {
       }
     }
   
-    // Manejo de categoría por nombre
     if (dto.categoryName) {
       try {
         const foundCategory = await CategoryRepository.getCategoryByName(dto.categoryName);
@@ -232,7 +228,6 @@ export class ProductsService {
           });
         }
   
-        // Crear nueva categoría
         category = await CategoryRepository.createCategory({ name: dto.categoryName });
       } catch (error) {
         return errorResponse({
@@ -243,7 +238,6 @@ export class ProductsService {
       }
     }
   
-    // Actualizar imágenes (el código original está bien aquí)
     const { imagesToDelete = [], imagesToAdd = [] } = dto;
   
     if (imagesToDelete.length > 0) {
@@ -292,7 +286,6 @@ export class ProductsService {
       }
     }
   
-    // Actualizar producto
     try {
       const updatedProductData = {
         ...dto,
