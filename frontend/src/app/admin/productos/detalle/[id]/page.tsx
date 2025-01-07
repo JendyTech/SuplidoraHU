@@ -1,6 +1,7 @@
 import { getProductById } from "@services/product";
 import { PageParams } from "@/interfaces/Page"
 import { GetProduct } from "@interfaces/Product/GetProduct";
+import dayjs from "dayjs";
 
 export default async function ProductDetail(props: PageParams) {
     const { id } = await props.params
@@ -22,6 +23,7 @@ export default async function ProductDetail(props: PageParams) {
 
         const { result: product } = response
 
+        dayjs.locale('es');
 
 
         return (
@@ -31,7 +33,8 @@ export default async function ProductDetail(props: PageParams) {
                 <p><strong>Código:</strong> {product.code}</p>
                 <p><strong>Descripción:</strong> {product.description}</p>
                 <p><strong>Unidades por Paquete:</strong> {product.unitsPerPack}</p>
-                <p><strong>Fecha de Creación:</strong> {product.createdAt}</p>
+                <p><strong>Categoría:</strong> {product.categoryName}</p>
+                <p><strong>Fecha de Creación:</strong> {dayjs(product.createdAt).format("DD/MM/YYYY")}</p>
                 <div>
                     {product.images.length > 0 ? (
                         product.images.map((image, i) => (

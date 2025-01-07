@@ -1,5 +1,4 @@
 "use client"
-import { useCreateProduct } from '@modules/productos/hooks/useCreateProduct'
 import styles from '@shared/styles/components/Form/AutoComplete.module.css'
 import { useState, useEffect, useRef } from 'react'
 
@@ -147,7 +146,7 @@ export function AutoComplete({
       <input
         type="text"
         className={styles.input}
-        value={selectedCategory ? selectedCategory.label : inputValue}
+        value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}

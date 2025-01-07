@@ -69,10 +69,7 @@ export function ProductCard(props: Props) {
           {categoryName}
         </span>
         <p className={styles.description}>{description}</p>
-        <Link className={styles.link} href={`/catalogo/${id}`}>
-          <IconListDetails />
-          Detalles
-        </Link>
+
       </div>
     </article>
   )

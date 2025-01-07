@@ -1,32 +1,93 @@
 import React from "react";
 import styles from "@modules/productos/styles/Summary.module.css";
+import { IconX } from "@tabler/icons-react";
+import CustomButton from "@shared/components/Buttons/CustomButton";
+import { useCreateProduct } from "@modules/productos/hooks/useCreateProduct";
 
-const Summary = ({ productData, image }: { productData: AddProductModel, image: string[] | null }) => {
+const SummaryModal = ({
+    isOpen,
+    onClose,
+    productData,
+    image,
+    create
+}: {
+    isOpen: boolean;
+    onClose: () => void;
+    productData: AddProductModel;
+    image: string[] | null;
+    create: () => void
+}) => {
+
+    if (!isOpen) return null;
+
     return (
-        <div className={styles.container}>
-            <h2>Resumen del Producto</h2>
-            <div className={styles.summaryBox}>
-                <div className={styles.textSection}>
-                    <p><strong>Nombre:</strong> {productData.name}</p>
-                    <p><strong>Precio:</strong> ${productData.price}</p>
-                    <p><strong>Descripción:</strong> {productData.description}</p>
-                    <p><strong>Código:</strong> {productData.code}</p>
-                    <p><strong>Unidades por Paquete:</strong> {productData.unitsPerPack}</p>
-                    <p><strong>Categoría:</strong> {productData.categoryName}</p>
-                </div>
-                <div className={styles.imageSection}>
-                    {image?.map((image, index) => (
+        <div className={styles.modalOverlay}>
+            <div className={styles.modalContainer}>
+                <div className={styles.modalContent}>
+                    <div className={styles.modalHeader}>
+                        <h2 className={styles.title}>Resumen del Producto</h2>
+                        <button
+                            onClick={onClose}
+                            className={styles.closeButton}
+                        >
+                            <IconX className="w-6 h-6" />
+                        </button>
+                    </div>
 
-                        <div key={index} className={styles.imageContainer}>
-                            <img key={index} src={image} alt="Vista previa" className={styles.preview} />
+                    <div className={styles.contentGrid}>
+                        <div className={styles.infoSection}>
+                            <div className={styles.infoItem}>
+                                <p className={styles.label}>Nombre:</p>
+                                <p className={styles.value}>{productData.name}</p>
+                            </div>
+
+                            <div className={styles.infoItem}>
+                                <p className={styles.label}>Precio:</p>
+                                <p className={styles.value}>${productData.price}</p>
+                            </div>
+
+                            <div className={styles.infoItem}>
+                                <p className={styles.label}>Código:</p>
+                                <p className={styles.value}>{productData.code}</p>
+                            </div>
+
+                            <div className={styles.infoItem}>
+                                <p className={styles.label}>Unidades por Paquete:</p>
+                                <p className={styles.value}>{productData.unitsPerPack}</p>
+                            </div>
+
+                            <div className={styles.infoItem}>
+                                <p className={styles.label}>Descripción:</p>
+                                <p className={styles.value}>{productData.description}</p>
+                            </div>
                         </div>
 
-                    ))}
+                        <div className={styles.imagesGrid}>
+                            {image?.map((img, index) => (
+                                <div
+                                    key={index}
+                                    className={styles.imageWrapper}
+                                >
+                                    <img
+                                        src={img}
+                                        alt={`Vista previa ${index + 1}`}
+                                        className={styles.image}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "end", gap: "20px" }}>
+                        <CustomButton text="Confirmar" buttonType="submit" onClick={() => {
 
-                </div>
+                            create()
+                        }} />
+
+                    </div>                </div>
             </div>
+
         </div>
     );
 };
 
-export default Summary;
+export default SummaryModal;

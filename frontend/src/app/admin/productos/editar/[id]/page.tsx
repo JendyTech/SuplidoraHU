@@ -14,7 +14,9 @@ export default async function ProductEdit(props: PageParams) {
 
         const { result: product } = response;
 
-        return <ProductEditClient productData={product} />;
+        const { categoryName, ...data } = product;
+
+        return <ProductEditClient productData={data} />;
     } catch (error) {
         return <ErrorLoadServer />;
     }

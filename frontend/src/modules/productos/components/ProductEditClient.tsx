@@ -5,7 +5,7 @@ import CustomInput from "@shared/components/Form/Input";
 import CustomButton from "@shared/components/Buttons/CustomButton";
 import { useState } from 'react';
 import { useTranformFileToBase64 } from "@/hooks/useBase64";
-import { updateProduct } from '@services/product';
+import { getAllCategories, updateProduct } from '@services/product';
 import { useLoader } from '@/contexts/Loader';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -13,6 +13,7 @@ import { GetProduct, Image } from '@interfaces/Product/GetProduct';
 import { pre } from 'framer-motion/client';
 import { UpdateProduct } from '@interfaces/Product/UpdateProduct';
 import { useDelay } from '@/hooks/useDelay';
+import { AutoComplete, Option } from '@shared/components/Form/AutoComplete';
 
 interface ProductEditClientProps {
     productData: GetProduct;
@@ -36,8 +37,36 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                 [name]: value,
             }));
         }
-
     };
+
+    const [categories, setCategories] = useState<Option[]>([]);
+
+    const getCategories = async () => {
+        const response = await getAllCategories()
+
+        if (response.ok) {
+            const categories = response.result.data
+            return categories
+        }
+
+        return []
+    }
+
+    const handleSeachCategory = async (value: string) => {
+        const categories = await getCategories()
+        if (!categories) return;
+        setCategories((prevState) => [
+            ...prevState,
+            ...categories
+                .map((category) => ({
+                    label: String(category.name),
+                    value: category._id,
+                }))
+                .filter((newCategory) =>
+                    !prevState.some((existingCategory) => existingCategory.value === newCategory.value)
+                ).slice(0, 2),
+        ]);
+    }
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileInput = e.target;
@@ -140,6 +169,26 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
 
                     </div>
                 </div>
+                <div className={styles.inputWrapper}>
+                    <AutoComplete
+                        placeholder="Categoría"
+                        freeOption
+                        options={categories}
+                        onInput={handleSeachCategory}
+                        onSelect={(value, label) => {
+                            value === label
+                                ? (
+                                    setProduct((prevProduct) => ({
+                                        ...prevProduct!,
+                                        categoryName: value,
+                                    })))
+                                : setProduct((prevProduct) => ({
+                                    ...prevProduct!,
+                                    categoryId: value,
+                                }));
+                        }}
+                    />
+                </div>
 
                 <div style={{ width: "590px" }}>
                     <CustomInput
@@ -187,6 +236,8 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({ productData }) =>
                 <div style={{ display: "flex", justifyContent: "end", gap: "30px" }}>
                     <CustomButton
                         onClick={async () => {
+
+                            console.log(product)
 
                             setLoading(true)
                             await useDelay(2000)

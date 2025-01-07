@@ -12,18 +12,6 @@ export const useCreateProduct = () => {
   const { setLoading } = useLoader()
   const router = useRouter()
 
-  const [currentStep, setCurrentStep] = useState<number>(CREATE_PRODUCT_STEPS.INFORMATION)
-
-  const [formData, setFormData] = useState<AddProductModel>({
-    name: "",
-    price: 0,
-    description: "",
-    code: "",
-    unitsPerPack: 0,
-    category : "",
-  });
-
-
 
   const [imagesUrl, setImagesUrl] = useState<string[]>([]);
 
@@ -39,18 +27,12 @@ export const useCreateProduct = () => {
   }
   
 
-  const createProduct = async () => {
+  const createProduct = async (productData : AddProductModel, images : string[]) => {
     setLoading(true)
     try {
       await useDelay(2000)
 
-      // if (formData.categoryId !== "") {
-      //   const { categoryName, ...newFormData } = formData; // Excluir 'categoryName'
-      //   setFormData(newFormData);
-      //   return;
-      // }
-
-      var response = await addNewProduct({ ...formData, images: imagesUrl });
+      var response = await addNewProduct({ ...productData, images: images });
 
       if (!response.ok) {
         toast.error(response.messages[0].message)
@@ -68,18 +50,10 @@ export const useCreateProduct = () => {
 
   };
 
-  const handleNextStep = (newStep: number, isFirtsStep?: boolean) => {
-    console.log(formData)
-    setCurrentStep(newStep)
-  }
 
 
   return {
-    currentStep,
-    handleNextStep,
-    formData,
     imagesUrl,
-    setFormData,
     setImagesUrl,
     createProduct,
     getCategories

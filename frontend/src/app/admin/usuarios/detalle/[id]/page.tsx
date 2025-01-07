@@ -24,7 +24,7 @@ export default async function ProductDetail(props: PageParams) {
                 <p><strong>Nombre:</strong> {user.firstName}</p>
                 <p><strong>Apellido:</strong> {user.lastName}</p>
                 <p><strong>Correo:</strong> {user.email}</p>
-                <p><strong>Fecha de Creación:</strong> {dayjs(user.createdAt).format("DD [de] MMMM YYYY")}</p>
+                <p><strong>Fecha de Creación:</strong> {dayjs(user.createdAt).format("DD/MM/YYYY")}</p>
                 <div>
                     {
                         user.photo &&

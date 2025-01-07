@@ -3,6 +3,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
+}
+
+.containergf {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    background-color: white;
+    border: .1px solid rgba(214, 214, 214, 0.24);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    border-radius: 8px;
+
 }
 
 .label {
@@ -26,12 +40,10 @@
 }
 
 .inputContainer {
-    position: relative;
     width: 280px;
 }
 
 .textAreaContainer {
-    position: relative;
     width: 590px;
 }
 
@@ -103,4 +115,39 @@
 
 .textAreaContainer input:focus~.underline {
     width: 100%;
+}
+
+.containergf {
+    width: 100%;
+    padding: 20px;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    width: 100%;
+}
+
+.inputWrapper {
+    width: 100%;
+    min-width: 0;
+}
+
+.descriptionWrapper {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .inputWrapper {
+        max-width: 100%;
+    }
 }

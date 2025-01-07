@@ -11,9 +11,11 @@ export function LoginForm() {
 
   return (
     <SubmitForm submit={submit} className={styles.form}>
-      <CustomInput maxWidth="350px" name="email" type="email" placeholder="Correo" />
-      <CustomInput maxWidth="350px" name="password" type="password" placeholder="Contraseña" />
+      <div style={{ width: "350px" }}>
+        <CustomInput maxWidth="350px" name="email" type="email" placeholder="Correo" />
 
+      </div>       <div style={{ width: "350px" }}><CustomInput maxWidth="350px" name="password" type="password" placeholder="Contraseña" />
+      </div>
       <CustomButton style="filled" maxWidth="350px" text="Iniciar sesión" buttonType="submit" />
     </SubmitForm>
   );

@@ -34,7 +34,7 @@ export default function UsersTable(props: Props) {
 
         {
             name: "Fecha de Creación",
-            selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
+            selector: (row) => dayjs(row.createdAt).format("DD/MM/YYYY"),
         },
         {
             name: "", cell: (row) => <div style={{ width: "100%", }}>
@@ -126,6 +126,10 @@ export default function UsersTable(props: Props) {
             setLoading(false)
         }
     };
+    const [search, setSearch] = useState<string>("")
+    const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value)
+    }
 
     return (
         <>
@@ -137,10 +141,17 @@ export default function UsersTable(props: Props) {
 
                     <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
 
-                        <input type="text" className={styles.searchBar} placeholder="Buscar por nombre" />
+                        <input type="text" className={styles.searchBar} placeholder="Buscar por nombre" onChange={handleChangeSearch} />
 
                         <div style={{ width: "170px" }}>
-                            <CustomButton text="Buscar" style="filled" buttonType="submit" />
+                            <CustomButton text="Buscar" style="filled" buttonType="button" onClick={() => {
+                                console.log(search)
+                                setFilters({
+                                    page: 1,
+                                    max: 10,
+                                    search: search
+                                })
+                            }} />
                         </div>
                     </div> <br /></div></CustomTable>
 

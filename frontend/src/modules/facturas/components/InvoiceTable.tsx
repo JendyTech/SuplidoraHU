@@ -41,10 +41,10 @@ export default function InvoiceTable(props: Props) {
         { name: "Cliente", selector: (row) => row.clientName },
         { name: "Forma de Pago", selector: (row) => row.paymentCondition },
         { name: "Suplidor", selector: (row) => row.supplierName },
-        { name: "Fecha de Vencimiento", selector: (row) => dayjs(row.expirationDate).format("DD [de] MMMM YYYY") },
+        { name: "Fecha de Vencimiento", selector: (row) => dayjs(row.expirationDate).format("DD/MM/YYYY") },
         {
             name: "Fecha de Creación",
-            selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
+            selector: (row) => dayjs(row.createdAt).format("DD/MM/YYYY"),
         },
         {
             name: 'Acción',

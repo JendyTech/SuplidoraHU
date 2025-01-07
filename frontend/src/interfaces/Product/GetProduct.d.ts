@@ -6,6 +6,8 @@ export interface GetProduct<T = Image> {
     description: string
     unitsPerPack: number
     createdAt: string
+    categoryName? : string
+    categoryId? : string
     images : T[]
 }
 

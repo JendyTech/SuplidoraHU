@@ -19,6 +19,7 @@ interface InputProps {
   disabled?: boolean
   min?: number
   defaultValue?: string
+  multiple?: boolean
 }
 
 export default function CustomInput(props: InputProps) {
@@ -55,38 +56,41 @@ export default function CustomInput(props: InputProps) {
 
 
   return (
-    <div
-      className={`${styles.container} ${isMoneyInput ? styles.moneyContainer : ""}`}
-      style={{ maxWidth }}
-    >
-      {isMoneyInput && <span className={styles.moneyLabel}>RD$</span>}
-      <input
-        style={{ height }}
-        onChange={onChange}
-        onInvalid={handleInvalid}
-        className={`${styles.input} ${error && styles.inputError}`}
-        type={showPassword ? "text" : type}
-        name={name}
-        placeholder={placeholder}
-        required={required}
-        onInput={handleInput}
-        pattern={pattern}
-        value={value}
-        onFocus={onFocus}
-        disabled={disabled}
-        min={props.min}
-        defaultValue={props.defaultValue}
-      />
-      {type === "password" && (
-        <button
-          type="button"
-          className={styles.eyeButton}
-          onClick={handleShowPass}
-        >
-          {showPassword ? <IconEyeOff strokeWidth={1} /> : <IconEye strokeWidth={1} />}
-        </button>
-      )}
+    <div>
+      <div
+        className={`${styles.container} ${isMoneyInput ? styles.moneyContainer : ""}`}
+        style={{ maxWidth }}
+      >
+        {isMoneyInput && <span className={styles.moneyLabel}>RD$</span>}
+        <input
+          style={{ height }}
+          onChange={onChange}
+          onInvalid={handleInvalid}
+          className={`${styles.input} ${error && styles.inputError}`}
+          type={showPassword ? "text" : type}
+          name={name}
+          placeholder={placeholder}
+          required={required}
+          onInput={handleInput}
+          pattern={pattern}
+          value={value}
+          onFocus={onFocus}
+          disabled={disabled}
+          min={props.min}
+          defaultValue={props.defaultValue}
+        />
+        {type === "password" && (
+          <button
+            type="button"
+            className={styles.eyeButton}
+            onClick={handleShowPass}
+          >
+            {showPassword ? <IconEyeOff strokeWidth={1} /> : <IconEye strokeWidth={1} />}
+          </button>
+        )}
+      </div>
       {error && <span className={styles.errorMessage}>{error}</span>}
     </div>
+
   )
 }

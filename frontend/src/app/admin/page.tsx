@@ -59,7 +59,7 @@ export default function AdminPage() {
     { name: "Unidades por Paquete", selector: (row) => row.unitsPerPack },
     {
       name: "Fecha de Creación",
-      selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
+      selector: (row) => dayjs(row.createdAt).format("DD/MM/YYYY"),
     },
   ];
 
@@ -67,10 +67,10 @@ export default function AdminPage() {
     { name: "Cliente", selector: (row) => row.clientName },
     { name: "Forma de Pago", selector: (row) => row.paymentCondition },
     { name: "Suplidor", selector: (row) => row.supplierName },
-    { name: "Fecha de Vencimiento", selector: (row) => dayjs(row.expirationDate).format("DD [de] MMMM YYYY") },
+    { name: "Fecha de Vencimiento", selector: (row) => dayjs(row.expirationDate).format("DD/MM/YYYY") },
     {
       name: "Fecha de Creación",
-      selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
+      selector: (row) => dayjs(row.createdAt).format("DD/MM/YYYY"),
     }]
 
   const {

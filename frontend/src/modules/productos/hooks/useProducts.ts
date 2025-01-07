@@ -18,19 +18,25 @@ export const useProducts = (initialState: Pagination<IProduct>) => {
   useEffect(() => {
 
     if (firstLoad) {
+
       setFirstLoad(false)
       return
     }
 
+
     const getProducts = async () => {
-      if (!refresh) {
-        return
-      }
+
+      // if (!refresh) {
+      //   return
+      // }
       setLoading(true)
 
       await useDelay(500)
 
+
       try {
+      console.log(filters)
+        
         const response = await getAllProducts(filters)
 
         if (!response.ok) {

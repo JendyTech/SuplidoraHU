@@ -17,9 +17,24 @@ const UploadImage = ({ setImage, actualImage = [] }: { setImage: React.Dispatch<
 
     return (
         <div className={styles.container}>
-            <h2>Subir Imagen</h2>
 
-            <div >
+
+            <div style={{ display: "flex", alignItems: "start" }}>
+                {
+                    actualImage.length < 5 ?
+                        <div className={styles.uploadBox}>
+                            <div>
+                                <p>Selecciona una imagen para cargar</p>
+                                <p>Haga click o arrastre una</p>
+                            </div>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className={styles.fileInput}
+                            />
+                        </div> : null
+                }
                 {previewImages.length > 0 ? (
                     <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center", justifyContent: "center", }}>
                         <p style={{ color: "var(--primary-color)" }}>Maximo 5 imagenes{`(${previewImages.length}/5 )`}</p>
@@ -45,21 +60,7 @@ const UploadImage = ({ setImage, actualImage = [] }: { setImage: React.Dispatch<
                     </div>
                 )}
             </div>
-            {
-                actualImage.length < 5 ?
-                    <div className={styles.uploadBox}>
-                        <div>
-                            <p>Selecciona una imagen para cargar</p>
-                            <p>Haga click o arrastre una</p>
-                        </div>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className={styles.fileInput}
-                        />
-                    </div> : null
-            }
+
         </div>
     );
 };

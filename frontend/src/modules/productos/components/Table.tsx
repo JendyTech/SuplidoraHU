@@ -29,7 +29,7 @@ export default function Table<T = any>(props: Props<any>) {
         { name: "Unidades por Paquete", selector: (row) => row.unitsPerPack },
         {
             name: "Fecha de Creación",
-            selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
+            selector: (row) => dayjs(row.createdAt).format("DD/MM/YYYY"),
         },
     ];
 

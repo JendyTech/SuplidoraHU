@@ -5,6 +5,7 @@ export interface IProduct {
   code:         string;
   description:  string;
   unitsPerPack: number;
+  categoryName : string
   createdBy:    string;
   updatedBy:    null | string;
   createdAt:    string;
