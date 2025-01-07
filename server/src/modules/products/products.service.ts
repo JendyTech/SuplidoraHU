@@ -171,6 +171,7 @@ export class ProductsService {
     try {
       product = await ProductRepository.findById(id);
     } catch (error) {
+      console.error('[ERROR] Finding product:', error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -179,6 +180,7 @@ export class ProductsService {
     }
   
     if (!product) {
+      console.log('[ERROR] Product not found:', id)
       return errorResponse({
         message: PRODUCT.PRODUCT_NOT_FOUND,
         status: HttpStatus.NOT_FOUND,
@@ -186,6 +188,7 @@ export class ProductsService {
     }
   
     if (!dto.categoryId && !dto.categoryName) {
+      console.log('[ERROR] Missing category data:', dto)
       return errorResponse({
         message: PRODUCT.REQUIRE_CATEGORY_NAME_OR_ID,
         status: HttpStatus.BAD_REQUEST,
@@ -193,6 +196,7 @@ export class ProductsService {
     }
   
     if (dto.categoryId && dto.categoryName) {
+      console.log('[ERROR] Both category ID and name provided:', dto)
       return errorResponse({
         message: PRODUCT.ONLY_CATEGORY_NAME_OR_CATEGORY_ID,
         status: HttpStatus.BAD_REQUEST,
@@ -222,6 +226,7 @@ export class ProductsService {
         const foundCategory = await CategoryRepository.getCategoryByName(dto.categoryName);
   
         if (foundCategory) {
+          console.log('[ERROR] Category name already exists:', dto.categoryName)
           return errorResponse({
             message: CATEGORY.CATEGORIES_FOUND,
             status: HttpStatus.CONFLICT,
@@ -252,6 +257,7 @@ export class ProductsService {
           }),
         );
       } catch (error) {
+        console.error('[ERROR] Failed to delete images:', error)
         return errorResponse({
           message: PRODUCT.ERROR_DELETE_IMAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -263,6 +269,7 @@ export class ProductsService {
     const newImages: UploadProductImage = [];
     if (imagesToAdd.length > 0) {
       try {
+        console.log('[IMAGES] Starting upload of new images')
         await Promise.all(
           imagesToAdd.map(async (base64Image) => {
             const result = await uploadBase64(base64Image);
@@ -303,6 +310,7 @@ export class ProductsService {
       const updatedProduct = await ProductRepository.updatedProduct(id, updatedProductData);
   
       if (!updatedProduct) {
+        console.log('[ERROR] Failed to update product')
         return errorResponse({
           message: GENERAL.ERROR_DATABASE_MESSAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -322,7 +330,6 @@ export class ProductsService {
       });
     }
   }
-
   async deleteProduct(id: string) {
     let product
 
