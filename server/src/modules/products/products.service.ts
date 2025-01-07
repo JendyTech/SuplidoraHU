@@ -166,115 +166,133 @@ export class ProductsService {
   }
 
   async updatedProduct(dto: UpdateProductDto, id: string, user: IUser) {
-    let product, category
-
+    let product, category;
+  
     try {
-      product = await ProductRepository.findById(id)
+      // Buscar producto por ID
+      product = await ProductRepository.findById(id);
     } catch (error) {
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
-      })
+      });
     }
-
+  
     if (!product) {
       return errorResponse({
         message: PRODUCT.PRODUCT_NOT_FOUND,
         status: HttpStatus.NOT_FOUND,
-      })
+      });
     }
-
+  
+    // Validar que se haya proporcionado categoría (ID o nombre)
     if (!dto.categoryId && !dto.categoryName) {
       return errorResponse({
         message: PRODUCT.REQUIRE_CATEGORY_NAME_OR_ID,
         status: HttpStatus.BAD_REQUEST,
-      })
+      });
     }
-
+  
     if (dto.categoryId && dto.categoryName) {
       return errorResponse({
         message: PRODUCT.ONLY_CATEGORY_NAME_OR_CATEGORY_ID,
         status: HttpStatus.BAD_REQUEST,
-      })
+      });
     }
-
-    try {
-      category = await CategoryRepository.getCategoryById(dto.categoryId)
-
-      if (!category) {
+  
+    // Manejo de categoría por ID
+    if (dto.categoryId) {
+      try {
+        category = await CategoryRepository.getCategoryById(dto.categoryId);
+        if (!category) {
+          return errorResponse({
+            message: CATEGORY.CATEGORY_NOT_FOUND,
+            status: HttpStatus.NOT_FOUND,
+          });
+        }
+      } catch (error) {
         return errorResponse({
-          message: CATEGORY.CATEGORY_NOT_FOUND,
-          status: HttpStatus.NOT_FOUND,
-        })
+          message: GENERAL.ERROR_DATABASE_MESSAGE,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error,
+        });
       }
-
-      if (dto.categoryName) {
-        const foundCategory = await CategoryRepository.getCategoryByName(
-          dto.categoryName,
-        )
-
+    }
+  
+    // Manejo de categoría por nombre
+    if (dto.categoryName) {
+      try {
+        const foundCategory = await CategoryRepository.getCategoryByName(dto.categoryName);
+  
         if (foundCategory) {
           return errorResponse({
             message: CATEGORY.CATEGORIES_FOUND,
             status: HttpStatus.CONFLICT,
-          })
+          });
         }
-
-        category = await CategoryRepository.createCategory({
-          name: dto.categoryName,
-        })
+  
+        // Crear nueva categoría
+        category = await CategoryRepository.createCategory({ name: dto.categoryName });
+      } catch (error) {
+        return errorResponse({
+          message: GENERAL.ERROR_DATABASE_MESSAGE,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error,
+        });
       }
-    } catch (error) {}
-
-    const { imagesToDelete = [], imagesToAdd = [] } = dto
-
+    }
+  
+    // Actualizar imágenes (el código original está bien aquí)
+    const { imagesToDelete = [], imagesToAdd = [] } = dto;
+  
     if (imagesToDelete.length > 0) {
       try {
         await Promise.all(
           imagesToDelete.map(async (imageId) => {
-            const image = await ProductRepository.findImageById(imageId)
+            const image = await ProductRepository.findImageById(imageId);
             if (image) {
-              await deleteResource(image.publicId)
-              await ProductRepository.deleteImage(imageId)
+              await deleteResource(image.publicId);
+              await ProductRepository.deleteImage(imageId);
             }
           }),
-        )
+        );
       } catch (error) {
         return errorResponse({
           message: PRODUCT.ERROR_DELETE_IMAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           error,
-        })
+        });
       }
     }
-
-    const newImages: UploadProductImage = []
+  
+    const newImages: UploadProductImage = [];
     if (imagesToAdd.length > 0) {
       try {
         await Promise.all(
           imagesToAdd.map(async (base64Image) => {
-            const result = await uploadBase64(base64Image)
+            const result = await uploadBase64(base64Image);
             newImages.push({
               productId: id,
               publicId: result.publicId,
               url: result.secureUrl,
               uploadBy: user._id,
-            })
+            });
           }),
-        )
-
-        await ProductRepository.saveProductImages(newImages)
+        );
+  
+        await ProductRepository.saveProductImages(newImages);
       } catch (error) {
-        console.error('[ERROR] Failed to upload new images:', error)
+        console.error('[ERROR] Failed to upload new images:', error);
         return errorResponse({
           message: PRODUCT.ERROR_UPLOAD_IMAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           error,
-        })
+        });
       }
     }
-
+  
+    // Actualizar producto
     try {
       const updatedProductData = {
         ...dto,
@@ -282,35 +300,33 @@ export class ProductsService {
         updatedBy: user._id,
         createdBy: product.createdBy,
         category: category._id,
-      }
-
+        categoryName: category.name,
+      };
+  
       if (dto.name && dto.name !== product.name) {
-        updatedProductData.slug = generateSlug(dto.name)
+        updatedProductData.slug = generateSlug(dto.name);
       }
-
-      const updatedProduct = await ProductRepository.updatedProduct(
-        id,
-        updatedProductData,
-      )
-
+  
+      const updatedProduct = await ProductRepository.updatedProduct(id, updatedProductData);
+  
       if (!updatedProduct) {
         return errorResponse({
           message: GENERAL.ERROR_DATABASE_MESSAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
-        })
+        });
       }
-
+  
       return successResponse({
         data: updatedProduct,
         message: PRODUCT.PRODUCT_UPDATED,
-      })
+      });
     } catch (error) {
-      console.error('[ERROR] Failed during product update:', error)
+      console.error('[ERROR] Failed during product update:', error);
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         error,
-      })
+      });
     }
   }
 

@@ -31,6 +31,7 @@ export class UserRepository {
       ...pagination,
       Model: UserModel,
       filter: {
+        ...filters,
         _id: { $ne: user._id },
       },
       extract: {
