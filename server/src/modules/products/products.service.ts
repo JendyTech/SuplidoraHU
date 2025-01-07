@@ -167,13 +167,10 @@ export class ProductsService {
 
   async updatedProduct(dto: UpdateProductDto, id: string, user: IUser) {
     let product, category
-    console.log('[START] Updating product:', { id, dto })
 
     try {
       product = await ProductRepository.findById(id)
-      console.log('[PRODUCT] Found product:', product)
     } catch (error) {
-      console.error('[ERROR] Finding product:', error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -182,7 +179,6 @@ export class ProductsService {
     }
 
     if (!product) {
-      console.log('[ERROR] Product not found:', id)
       return errorResponse({
         message: PRODUCT.PRODUCT_NOT_FOUND,
         status: HttpStatus.NOT_FOUND,
@@ -190,7 +186,6 @@ export class ProductsService {
     }
 
     if (!dto.categoryId && !dto.categoryName) {
-      console.log('[ERROR] Missing category data:', dto)
       return errorResponse({
         message: PRODUCT.REQUIRE_CATEGORY_NAME_OR_ID,
         status: HttpStatus.BAD_REQUEST,
@@ -198,34 +193,37 @@ export class ProductsService {
     }
 
     if (dto.categoryId && dto.categoryName) {
-      console.log('[ERROR] Both category ID and name provided:', dto)
       return errorResponse({
         message: PRODUCT.ONLY_CATEGORY_NAME_OR_CATEGORY_ID,
         status: HttpStatus.BAD_REQUEST,
       })
     }
 
-    try {
-      console.log('[CATEGORY] Attempting to get/create category')
-      category = await CategoryRepository.getCategoryById(dto.categoryId)
-      console.log('[CATEGORY] Found category by ID:', category)
-
-      if (!category) {
-        console.log('[ERROR] Category not found:', dto.categoryId)
+    if (dto.categoryId) {
+      try {
+        category = await CategoryRepository.getCategoryById(dto.categoryId)
+        if (!category) {
+          return errorResponse({
+            message: CATEGORY.CATEGORY_NOT_FOUND,
+            status: HttpStatus.NOT_FOUND,
+          })
+        }
+      } catch (error) {
         return errorResponse({
-          message: CATEGORY.CATEGORY_NOT_FOUND,
-          status: HttpStatus.NOT_FOUND,
+          message: GENERAL.ERROR_DATABASE_MESSAGE,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error,
         })
       }
+    }
 
-      if (dto.categoryName) {
+    if (dto.categoryName) {
+      try {
         const foundCategory = await CategoryRepository.getCategoryByName(
           dto.categoryName,
         )
-        console.log('[CATEGORY] Found category by name:', foundCategory)
 
         if (foundCategory) {
-          console.log('[ERROR] Category name already exists:', dto.categoryName)
           return errorResponse({
             message: CATEGORY.CATEGORIES_FOUND,
             status: HttpStatus.CONFLICT,
@@ -235,33 +233,29 @@ export class ProductsService {
         category = await CategoryRepository.createCategory({
           name: dto.categoryName,
         })
-        console.log('[CATEGORY] Created new category:', category)
+      } catch (error) {
+        return errorResponse({
+          message: GENERAL.ERROR_DATABASE_MESSAGE,
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error,
+        })
       }
-    } catch (error) {
-      console.error('[ERROR] Category operations failed:', error)
     }
 
     const { imagesToDelete = [], imagesToAdd = [] } = dto
-    console.log('[IMAGES] Processing images:', {
-      deleteCount: imagesToDelete.length,
-      addCount: imagesToAdd.length,
-    })
 
     if (imagesToDelete.length > 0) {
       try {
         await Promise.all(
           imagesToDelete.map(async (imageId) => {
-            console.log('[IMAGE] Attempting to delete image:', imageId)
             const image = await ProductRepository.findImageById(imageId)
             if (image) {
               await deleteResource(image.publicId)
               await ProductRepository.deleteImage(imageId)
-              console.log('[IMAGE] Successfully deleted image:', imageId)
             }
           }),
         )
       } catch (error) {
-        console.error('[ERROR] Failed to delete images:', error)
         return errorResponse({
           message: PRODUCT.ERROR_DELETE_IMAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -273,11 +267,9 @@ export class ProductsService {
     const newImages: UploadProductImage = []
     if (imagesToAdd.length > 0) {
       try {
-        console.log('[IMAGES] Starting upload of new images')
         await Promise.all(
           imagesToAdd.map(async (base64Image) => {
             const result = await uploadBase64(base64Image)
-            console.log('[IMAGE] Uploaded new image:', result.publicId)
             newImages.push({
               productId: id,
               publicId: result.publicId,
@@ -288,9 +280,7 @@ export class ProductsService {
         )
 
         await ProductRepository.saveProductImages(newImages)
-        console.log('[IMAGES] Saved all new images to database')
       } catch (error) {
-        console.error('[ERROR] Failed to upload new images:', error)
         return errorResponse({
           message: PRODUCT.ERROR_UPLOAD_IMAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -306,34 +296,30 @@ export class ProductsService {
         updatedBy: user._id,
         createdBy: product.createdBy,
         category: category._id,
+        categoryName: category.name,
       }
 
       if (dto.name && dto.name !== product.name) {
         updatedProductData.slug = generateSlug(dto.name)
-        console.log('[PRODUCT] Generated new slug:', updatedProductData.slug)
       }
 
-      console.log('[PRODUCT] Attempting update with data:', updatedProductData)
       const updatedProduct = await ProductRepository.updatedProduct(
         id,
         updatedProductData,
       )
 
       if (!updatedProduct) {
-        console.log('[ERROR] Failed to update product')
         return errorResponse({
           message: GENERAL.ERROR_DATABASE_MESSAGE,
           status: HttpStatus.INTERNAL_SERVER_ERROR,
         })
       }
 
-      console.log('[SUCCESS] Product updated successfully:', updatedProduct)
       return successResponse({
         data: updatedProduct,
         message: PRODUCT.PRODUCT_UPDATED,
       })
     } catch (error) {
-      console.error('[ERROR] Failed during product update:', error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -364,10 +350,11 @@ export class ProductsService {
 
               await ProductRepository.deleteImage(image._id)
             } catch (error) {
-              console.error(
-                `[ERROR] Failed to delete image with ID: ${image._id} and publicId: ${image.publicId}:`,
+              return errorResponse({
+                message: PRODUCT.ERROR_DELETE_IMAGE,
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
                 error,
-              )
+              })
             }
           }),
         )
@@ -380,7 +367,6 @@ export class ProductsService {
         message: PRODUCT.PRODUCT_DELETED,
       })
     } catch (error) {
-      console.error(`[ERROR] Failed to delete product with ID: ${id}:`, error)
       return errorResponse({
         message: GENERAL.ERROR_DATABASE_MESSAGE,
         status: HttpStatus.INTERNAL_SERVER_ERROR,
