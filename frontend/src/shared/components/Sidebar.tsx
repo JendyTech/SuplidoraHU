@@ -29,12 +29,12 @@ export default function Sidebar() {
             Icon: IconHome,
             id: 'admin'
         },
-        {
+        /* {
             url: "/admin/facturacion",
             name: "Facturación",
             Icon: IconReceipt,
             id: 'facturacion'
-        },
+        }, */
         {
             url: "/admin/productos",
             name: "Productos",

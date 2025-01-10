@@ -1,153 +1,197 @@
-.container {
-    padding: 20px;
+.containergf {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 40px;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 20px;
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  
+  .title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    background-color: white;
-}
-
-.containergf {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-
-    background-color: white;
-    border: .1px solid rgba(214, 214, 214, 0.24);
-    box-shadow: var(--shadow-md);
-    width: 100%;
-    border-radius: 8px;
-
-}
-
-.label {
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-.input,
-.textarea {
-    width: 200px;
-    margin-bottom: 15px;
-}
-
-.button {
-    background-color: #008cba;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-}
-
-.inputContainer {
-    width: 280px;
-}
-
-.textAreaContainer {
-    width: 590px;
-}
-
-.inputContainer input {
-    height: 50px;
-    width: 100%;
-    padding: 10px 20px 10px 20px;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  .icon {
+    color: #287881;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .subtitle {
     font-size: 16px;
-    border: 1px solid #c0c0c0;
-    border-radius: 8px;
-    background: #F4F5F9;
-    outline: none;
-    transition: border-color 0.3s ease;
-    transition: .3s;
-}
-
-.inputContainer input:focus {
-    background-color: white;
-}
-
-.textAreaContainer textarea:focus {
-    background-color: white;
-}
-
-.textAreaContainer textarea {
-    font-family: Arial, Helvetica, sans-serif;
-    height: 100px;
-    width: 100%;
-    padding: 10px 20px 10px 20px;
-    font-size: 16px;
-    border: 1px solid #c0c0c0;
-    border-radius: 8px;
-    background: #F4F5F9;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.inputContainer input:focus+label,
-.inputContainer input:not(:placeholder-shown)+label {
-    top: -20px;
-    font-size: 14px;
-}
-
-.inputContainer .underline {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary-color);
-    transition: width 0.3s ease;
-}
-
-.inputContainer input:focus~.underline {
-    width: 100%;
-}
-
-
-
-.textAreaContainer .underline {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary-color);
-    transition: width 0.3s ease;
-}
-
-.textAreaContainer input:focus~.underline {
-    width: 100%;
-}
-
-.containergf {
-    width: 100%;
-    padding: 20px;
-}
-
-.title {
-    margin-bottom: 20px;
-}
-
-.formGrid {
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .formGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(2, 350px);
+    place-content: center;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+  
+  .inputWrapper {
+    position: relative;
+  }
+  
+  .inputWrapper label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  
+  .inputContainer input,
+  .textAreaContainer textarea {
     width: 100%;
-}
-
-.inputWrapper {
-    width: 100%;
-    min-width: 0;
-}
-
-.descriptionWrapper {
+    padding: 14px 16px;
+    font-size: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: white;
+    transition: all 0.2s ease;
+  }
+  
+  .inputContainer input:hover,
+  .textAreaContainer textarea:hover {
+    border-color: #cbd5e1;
+  }
+  
+  .inputContainer input:focus,
+  .textAreaContainer textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    outline: none;
+  }
+  
+  .descriptionWrapper {
     grid-column: 1 / -1;
-}
-
-@media (max-width: 768px) {
+  }
+  
+  .descriptionWrapper textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .uploadSection {
+    background: #f8fafc;
+    padding: 32px;
+    border-radius: 16px;
+    border: 2px dashed #e2e8f0;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .uploadTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+  
+  .uploadDescription {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 24px;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+  }
+  
+  .button {
+    min-width: 160px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .primaryButton {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+  }
+  
+  .primaryButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .containergf {
+      padding: 24px;
+      margin: 16px;
+      border-radius: 16px;
+    }
+  
     .formGrid {
-        grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
+      gap: 24px;
     }
-
-    .inputWrapper {
-        max-width: 100%;
+  
+    .title {
+      font-size: 24px;
     }
-}
+  
+    .buttonContainer {
+      flex-direction: column;
+    }
+  
+    .button {
+      width: 100%;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .inputWrapper {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  .inputError {
+    border-color: #ef4444 !important;
+  }
+  
+  .inputError:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+  }
+  
+  .inputSuccess {
+    border-color: #10b981 !important;
+  }
+  
+  .inputSuccess:focus {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1) !important;
+  }

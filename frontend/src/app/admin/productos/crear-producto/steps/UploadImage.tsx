@@ -19,7 +19,7 @@ const UploadImage = ({ setImage, actualImage = [] }: { setImage: React.Dispatch<
         <div className={styles.container}>
 
 
-            <div style={{ display: "flex", alignItems: "start" }}>
+            <div style={{ display: "flex", flexDirection: "column-reverse", alignItems: "center", justifyContent: "center", }}>
                 {
                     actualImage.length < 5 ?
                         <div className={styles.uploadBox}>

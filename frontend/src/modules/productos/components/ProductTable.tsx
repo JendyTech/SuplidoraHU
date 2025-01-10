@@ -60,11 +60,6 @@ export default function ProductTable(props: Props) {
                         },
                         {
                             type: "button",
-                            text: "Eliminar",
-                            handler: () => openModal(row)
-                        },
-                        {
-                            type: "button",
                             text: "Ver detalles",
                             handler: () => {
                                 if (row._id) {
@@ -74,6 +69,11 @@ export default function ProductTable(props: Props) {
                                 }
                             }
 
+                        },
+                        {
+                            type: "button",
+                            text: "Eliminar",
+                            handler: () => openModal(row)
                         }
                     ]}
                 />
