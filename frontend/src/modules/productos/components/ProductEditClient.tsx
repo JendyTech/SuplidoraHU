@@ -290,7 +290,6 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
         )}
       </div>
 
-      {/* Caja para subir imágenes */}
       <div className={styles.uploadSection}>
         <IconPhoto
           size={32}
