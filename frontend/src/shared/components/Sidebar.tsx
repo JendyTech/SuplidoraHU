@@ -23,12 +23,12 @@ export default function Sidebar() {
     const { data } = useSession()
 
     const items = [
-        {
-            url: "/admin",
-            name: "Dashboard",
-            Icon: IconHome,
-            id: 'admin'
-        },
+        // {
+        //     url: "/admin",
+        //     name: "Dashboard",
+        //     Icon: IconHome,
+        //     id: 'admin'
+        // },
         /* {
             url: "/admin/facturacion",
             name: "Facturación",

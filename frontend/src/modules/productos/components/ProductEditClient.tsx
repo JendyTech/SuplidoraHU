@@ -179,7 +179,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
           />
         </div>
         <div className={styles.inputWrapper}>
-        <label>
+          <label>
             <IconCurrencyDollar size={18} style={{ display: 'inline', marginRight: '8px' }} />
             Precio *
           </label>
@@ -195,7 +195,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
         </div>
 
         <div className={styles.inputWrapper}>
-        <label>
+          <label>
             <IconBarcode size={18} style={{ display: 'inline', marginRight: '8px' }} />
             Código *
           </label>
@@ -209,7 +209,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
         </div>
 
         <div className={styles.inputWrapper}>
-        <label>
+          <label>
             <IconBoxSeam size={18} style={{ display: 'inline', marginRight: '8px' }} />
             Unidades por Paquete
           </label>
@@ -238,13 +238,13 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
             onSelect={(value, label) => {
               value === label
                 ? setProduct((prevProduct) => ({
-                    ...prevProduct,
-                    categoryName: value,
-                  }))
+                  ...prevProduct,
+                  categoryName: value,
+                }))
                 : setProduct((prevProduct) => ({
-                    ...prevProduct,
-                    categoryId: value,
-                  }));
+                  ...prevProduct,
+                  categoryId: value,
+                }));
             }}
           />
         </div>
@@ -300,12 +300,18 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
           Sube imágenes de alta calidad que muestren claramente tu producto. Se
           recomienda usar un fondo blanco.
         </p>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className={styles.fileInput}
-        />
+        <div className={styles.uploadBox}>
+          <div>
+            <p>Selecciona una imagen para cargar</p>
+            <p>Haga click o arrastre una</p>
+          </div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className={styles.fileInput}
+          />
+        </div>
       </div>
 
       <div className={styles.buttonContainer}>

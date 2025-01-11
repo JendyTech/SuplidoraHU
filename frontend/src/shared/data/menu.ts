@@ -1,21 +1,7 @@
 import { ItemMenu } from "@interfaces/TopBar";
 
 export const topBar: ItemMenu[] = [
-  {
-    url: "/admin",
-    title: "Dashboard",
-    items: [],
-  },
-  /* {
-    url: "/admin/facturacion",
-    title: "Facturación",
-    items: [],
-  },
-  {
-    url: "/admin/facturacion/nueva-factura",
-    title: "Crear producto",
-    items: [],
-  }, */
+ 
   {
     url: "/admin/productos",
     title: "Productos",
@@ -46,11 +32,7 @@ export const topBar: ItemMenu[] = [
     title: "Crear usuario",
     items: [],
   },
-  {
-    url: "/admin/configuracion",
-    title: "Configuración",
-    items: [],
-  },
+
   {
     url: "/admin/perfil",
     title: "Mi Pefil",

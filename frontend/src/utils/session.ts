@@ -104,5 +104,5 @@ export const redirectSession = async () => {
     return;
   }
 
-  return redirect("/admin");
+  return redirect("/admin/productos");
 };

@@ -18,15 +18,31 @@ export default async function ProductDetail(props: PageParams) {
 
     dayjs.locale("es");
 
+
+
     return (
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           {product.images.length > 0 ? (
-            <img
-              src={product.images[0].url}
-              alt={product.name}
-              className={styles.productImage}
-            />
+            <>
+              <img
+                src={product.images[0].url}
+                alt={product.name}
+                className={styles.productImage}
+              />
+              <div style={{ display: "flex", gap: "1rem" }}>
+                {product.images.slice(1).map((image, index) => (
+                  <img
+                    key={index}
+                    src={image.url}
+                    alt={`${product.name} ${index + 1}`}
+                    className={styles.productMiniImages}
+                    width={100}
+                    height={100}
+
+
+                  />
+                ))}</div></>
           ) : (
             <div className={styles.noImage}>No hay imágenes disponibles</div>
           )}

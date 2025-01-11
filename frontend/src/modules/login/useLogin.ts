@@ -16,7 +16,7 @@ export const useLogin = () => {
 
 			resolve({
 				message: response.message,
-				redirect: "/admin",
+				redirect: "/admin/productos",
 			})
 		} catch (error) {
 			return reject("An error occurred while trying to login")

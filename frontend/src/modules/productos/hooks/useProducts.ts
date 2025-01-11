@@ -3,7 +3,6 @@ import { useLoader } from "@/contexts/Loader"
 import { Pagination, ParamsPaginationFilter } from '@/contracts/API'
 import { IProduct } from "@interfaces/Product/Product"
 import { getAllProducts } from "@services/product"
-import { useDelay } from "@/hooks/useDelay"
 import { toast } from "sonner"
 
 export const useProducts = (initialState: Pagination<IProduct>) => {
@@ -14,9 +13,9 @@ export const useProducts = (initialState: Pagination<IProduct>) => {
   const [refresh, setRefresh] = useState<boolean>(false)
 
   const { setLoading } = useLoader()
-
+  console.log("hola papi")
   useEffect(() => {
-
+    
     if (firstLoad) {
 
       setFirstLoad(false)
@@ -30,8 +29,9 @@ export const useProducts = (initialState: Pagination<IProduct>) => {
       //   return
       // }
       setLoading(true)
+   
 
-      await useDelay(500)
+      // await useDelay(500)
 
 
       try {

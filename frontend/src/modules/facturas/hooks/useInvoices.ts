@@ -23,8 +23,8 @@ export const useInvoices = (initialState: Pagination<IInvoice>) => {
 
         const getInvoices = async () => {
             setLoading(true)
-
-            await useDelay(500)
+            console.log("hola MaMi")
+            // await useDelay(500)
 
             try {
                 const response = await getAllInvoices(filters)

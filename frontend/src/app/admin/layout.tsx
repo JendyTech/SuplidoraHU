@@ -22,18 +22,18 @@ export default async function AdminLayout({ children }: Props) {
         <PreventBackButton />
         <div className={styles.layout}>
           <Sidebar />
-         <div className={styles.layout2}>
-         <div className={styles.navContainer}>
-            <nav className={styles.nav}>
-              <Navbar />
-            </nav>
+          <div className={styles.layout2}>
+            <div className={styles.navContainer}>
+              <nav className={styles.nav}>
+                <Navbar />
+              </nav>
+            </div>
+            <div className={styles.appContainer} >
+              <main className={styles.content}>
+                {children}
+              </main>
+            </div>
           </div>
-          <div className={styles.appContainer} >
-            <main className={styles.content}>
-              {children}
-            </main>
-          </div>
-         </div>
 
         </div>
 
