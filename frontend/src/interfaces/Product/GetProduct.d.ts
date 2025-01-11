@@ -1,6 +1,7 @@
 export interface GetProduct<T = Image> {
     _id: string
     name: string
+    status: boolean 
     price: number
     code: string
     description: string

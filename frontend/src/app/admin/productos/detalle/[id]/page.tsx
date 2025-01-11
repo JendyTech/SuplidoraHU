@@ -72,6 +72,13 @@ export default async function ProductDetail(props: PageParams) {
                 <p> {dayjs(product.createdAt).format("DD/MM/YYYY")}</p>
               </div>
             </div>
+            <div className={styles.infoItem}>
+              <IconCalendar size={24} strokeWidth={1.5} />
+              <div>
+                <span>Disponibilidad:</span>
+                <p style={product.status ? {color:"#03c250"} : {color: "#FF5252"}}>{product.status ? "Disponible" : "No disponible"}</p>
+              </div>
+            </div>
           </div>
           <div className={styles.description}>
             <h2>Descripción</h2>

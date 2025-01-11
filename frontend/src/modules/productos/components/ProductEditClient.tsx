@@ -22,6 +22,7 @@ import {
   IconPackage,
   IconPhoto,
 } from "@tabler/icons-react";
+import CustomSelect from "@shared/components/Form/Select";
 
 interface ProductEditClientProps {
   productData: GetProduct;
@@ -34,6 +35,14 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
     ...productData,
     images: productData.images.map((el) => el),
   }));
+
+  const [status, setStatus] = useState<boolean>(productData.status);
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = e.target.value == "true";
+    setStatus(selectedValue);
+  };
+
   const [previewImages, setPreviewImages] = useState<Image[]>(
     productData.images.map((el) => el)
   );
@@ -157,8 +166,8 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
           Editar Producto
         </h1>
         <p className={styles.subtitle}>
-          Modifique los detalles del producto para actualizarlo en su catálogo. Todos
-          los campos marcados con * son obligatorios.
+          Modifique los detalles del producto para actualizarlo en su catálogo.
+          Todos los campos marcados con * son obligatorios.
         </p>
       </div>
       <div className={styles.formGrid}>
@@ -180,7 +189,10 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
         </div>
         <div className={styles.inputWrapper}>
           <label>
-            <IconCurrencyDollar size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconCurrencyDollar
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Precio *
           </label>
           <CustomInput
@@ -196,7 +208,10 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
 
         <div className={styles.inputWrapper}>
           <label>
-            <IconBarcode size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconBarcode
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Código *
           </label>
           <CustomInput
@@ -210,7 +225,10 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
 
         <div className={styles.inputWrapper}>
           <label>
-            <IconBoxSeam size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconBoxSeam
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Unidades por Paquete
           </label>
           <CustomInput
@@ -222,7 +240,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
           />
         </div>
 
-        <div className={styles.inputWrapper} style={{ zIndex: 1000 }}>
+        <div className={styles.inputWrapper} style={{ zIndex: 1 }}>
           <label>
             <IconCategory
               size={18}
@@ -238,14 +256,28 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
             onSelect={(value, label) => {
               value === label
                 ? setProduct((prevProduct) => ({
-                  ...prevProduct,
-                  categoryName: value,
-                }))
+                    ...prevProduct,
+                    categoryName: value,
+                  }))
                 : setProduct((prevProduct) => ({
-                  ...prevProduct,
-                  categoryId: value,
-                }));
+                    ...prevProduct,
+                    categoryId: value,
+                  }));
             }}
+          />
+        </div>
+
+        <div className={styles.inputWrapper}>
+          <label>Estado del Producto *</label>
+          <CustomSelect
+            name="status"
+            options={[
+              { label: "Disponible", value: "true" }, 
+              { label: "No Disponible", value: "false" },
+            ]}
+            value={status ? "true" : "false"} 
+            onChange={handleStatusChange} 
+            placeholder="Selecciona el estado del producto"
           />
         </div>
 
@@ -326,6 +358,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
               const model: UpdateProduct = {
                 ...product,
                 price: Number(product.price),
+                status,
                 imagesToDelete: willDeleteImagesIds,
                 imagesToAdd: willAddImages,
               };

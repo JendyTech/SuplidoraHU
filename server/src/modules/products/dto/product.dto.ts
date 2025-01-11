@@ -10,7 +10,8 @@ import {
   Min,
   IsOptional,
   IsArray,
-  IsMongoId
+  IsMongoId,
+  IsBoolean
 } from 'class-validator'
 
 export class CreateProductDto {
@@ -28,6 +29,14 @@ export class CreateProductDto {
   @IsNumber({ maxDecimalPlaces: 2 }, { message: 'El precio debe ser un número entero o con 2 decimales' })
   @Min(1, { message: 'El precio debe ser mayor a 0' })
   price: number
+
+  @ApiProperty({
+    example: true,
+    description: 'Estado del producto',
+  })
+  @IsBoolean({ message: 'El estado debe ser un booleano' })
+  @IsNotEmpty({ message: 'El estado no puede estar vacío' })
+  status: boolean
 
   @ApiProperty({
     example: 'Descripción del producto',
@@ -89,6 +98,14 @@ export class UpdateProductDto{
   @Min(1, { message: 'El precio debe ser mayor a 0' })
   @IsOptional()
   price?: number
+
+  @ApiProperty({
+    example: true,
+    description: 'Estado del producto',
+  })
+  @IsBoolean({ message: 'El estado debe ser un booleano' })
+  @IsOptional()
+  status?: boolean
 
   @ApiProperty({
     example: 'Descripción del producto',

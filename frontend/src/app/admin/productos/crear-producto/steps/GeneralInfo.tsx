@@ -6,16 +6,25 @@ import UploadImage from "@/app/admin/productos/crear-producto/steps/UploadImage"
 import { useState } from "react";
 import { useCreateProduct } from "@modules/productos/hooks/useCreateProduct";
 import { AutoComplete, Option } from "@shared/components/Form/AutoComplete";
-import { IconBarcode, IconBoxSeam, IconCategory, IconCurrencyDollar, IconFileDescription, IconPackage, IconPhoto } from "@tabler/icons-react";
+import {
+  IconBarcode,
+  IconBoxSeam,
+  IconCategory,
+  IconCurrencyDollar,
+  IconFileDescription,
+  IconPackage,
+  IconPhoto,
+} from "@tabler/icons-react";
 import { toast } from "sonner";
+import CustomSelect from "@shared/components/Form/Select";
 
 const GeneralInfo = ({
-  getCategories
+  getCategories,
 }: {
-  getCategories: () => Promise<Category[]>
+  getCategories: () => Promise<Category[]>;
 }) => {
-  const { createProduct } = useCreateProduct()
-  const [isOpen, setIsOpen] = useState(false)
+  const { createProduct } = useCreateProduct();
+  const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<Option[]>([]);
   const [formData, setFormData] = useState<AddProductModel>({
     name: "",
@@ -23,11 +32,12 @@ const GeneralInfo = ({
     description: "",
     code: "",
     unitsPerPack: 0,
+    status: true,
   });
   const [imagesUrl, setImagesUrl] = useState<string[]>([]);
 
   const handleSeachCategory = async (value: string) => {
-    const categories = await getCategories()
+    const categories = await getCategories();
     if (!categories) return;
     setCategories((prevState) => [
       ...prevState,
@@ -36,11 +46,15 @@ const GeneralInfo = ({
           label: String(category.name),
           value: category._id,
         }))
-        .filter((newCategory) =>
-          !prevState.some((existingCategory) => existingCategory.value === newCategory.value)
-        ).slice(0, 2),
+        .filter(
+          (newCategory) =>
+            !prevState.some(
+              (existingCategory) => existingCategory.value === newCategory.value
+            )
+        )
+        .slice(0, 2),
     ]);
-  }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,16 +69,16 @@ const GeneralInfo = ({
 
   const handleSubmit = async () => {
     if (imagesUrl.length < 1) {
-      toast.error("Debe subir al menos una imagen")
-      return
+      toast.error("Debe subir al menos una imagen");
+      return;
     }
 
     if (!formData.categoryId && !formData.categoryName) {
-      toast.error("Debe seleccionar una categoría")
-      return
+      toast.error("Debe seleccionar una categoría");
+      return;
     }
 
-    createProduct(formData, imagesUrl)
+    createProduct(formData, imagesUrl);
   };
 
   return (
@@ -75,14 +89,18 @@ const GeneralInfo = ({
           Crear Nuevo Producto
         </h1>
         <p className={styles.subtitle}>
-          Ingrese los detalles del producto para agregarlo a su catálogo. Todos los campos marcados con * son obligatorios.
+          Ingrese los detalles del producto para agregarlo a su catálogo. Todos
+          los campos marcados con * son obligatorios.
         </p>
       </div>
 
       <div className={styles.formGrid}>
         <div className={styles.inputWrapper}>
           <label>
-            <IconPackage size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconPackage
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Nombre del Producto *
           </label>
           <CustomInput
@@ -96,7 +114,10 @@ const GeneralInfo = ({
 
         <div className={styles.inputWrapper}>
           <label>
-            <IconCurrencyDollar size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconCurrencyDollar
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Precio *
           </label>
           <CustomInput
@@ -112,7 +133,10 @@ const GeneralInfo = ({
 
         <div className={styles.inputWrapper}>
           <label>
-            <IconBarcode size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconBarcode
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Código *
           </label>
           <CustomInput
@@ -127,7 +151,10 @@ const GeneralInfo = ({
 
         <div className={styles.inputWrapper}>
           <label>
-            <IconBoxSeam size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconBoxSeam
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Unidades por Paquete
           </label>
           <CustomInput
@@ -141,7 +168,10 @@ const GeneralInfo = ({
 
         <div className={styles.inputWrapper} style={{ zIndex: 1000 }}>
           <label>
-            <IconCategory size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconCategory
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Categoría *
           </label>
           <AutoComplete
@@ -152,20 +182,42 @@ const GeneralInfo = ({
             onSelect={(value, label) => {
               value === label
                 ? setFormData((prevState) => ({
-                  ...prevState,
-                  categoryName: value,
-                }))
+                    ...prevState,
+                    categoryName: value,
+                  }))
                 : setFormData((prevState) => ({
-                  ...prevState,
-                  categoryId: value,
-                }));
+                    ...prevState,
+                    categoryId: value,
+                  }));
             }}
+          />
+        </div>
+
+        <div className={styles.inputWrapper}>
+          <label>Estado del Producto *</label>
+          <CustomSelect
+            name="status"
+            value={formData.status ? "true" : "false"} 
+            onChange={(e) =>
+              setFormData((prevData) => ({
+                ...prevData,
+                status: e.target.value === "true", 
+              }))
+            }
+            options={[
+              { label: "Disponible", value: "true" },
+              { label: "No Disponible", value: "false" },
+            ]}
+            placeholder="Selecciona el estado"
           />
         </div>
 
         <div className={`${styles.inputWrapper} ${styles.descriptionWrapper}`}>
           <label>
-            <IconFileDescription size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            <IconFileDescription
+              size={18}
+              style={{ display: "inline", marginRight: "8px" }}
+            />
             Descripción
           </label>
           <CustomInput
@@ -182,28 +234,34 @@ const GeneralInfo = ({
       </div>
 
       <div className={styles.uploadSection}>
-        <IconPhoto size={32} style={{ marginBottom: '16px', color: '#287881' }} />
+        <IconPhoto
+          size={32}
+          style={{ marginBottom: "16px", color: "#287881" }}
+        />
         <h3 className={styles.uploadTitle}>Imágenes del Producto *</h3>
         <p className={styles.uploadDescription}>
-          Sube imágenes de alta calidad que muestren claramente tu producto. Se recomienda usar un fondo blanco.
+          Sube imágenes de alta calidad que muestren claramente tu producto. Se
+          recomienda usar un fondo blanco.
         </p>
         <UploadImage setImage={setImagesUrl} actualImage={imagesUrl} />
       </div>
 
       <div className={styles.buttonContainer}>
-        <CustomButton 
+        <CustomButton
           text="Crear Producto"
           buttonType="submit"
           onClick={handleSubmit}
         />
       </div>
 
-      <SummaryModal 
-        create={() => {}} 
-        isOpen={isOpen} 
-        onClose={() => { setIsOpen(false) }} 
-        productData={formData} 
-        image={imagesUrl} 
+      <SummaryModal
+        create={() => {}}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        productData={formData}
+        image={imagesUrl}
       />
     </div>
   );

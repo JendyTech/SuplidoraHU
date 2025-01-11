@@ -14,9 +14,11 @@
   backdrop-filter: blur(5px);
   background-color: rgba(0, 0, 0, 0.5);
   user-select: none;
+  z-index: 10000;
 }
 
 .box {
+  z-index: 10000;
   pointer-events: none;
   width: 100%;
   height: 100vh;
@@ -29,12 +31,14 @@
 }
 
 .svg {
+  z-index: 10000;
   width: 130px;
   transform-origin: center;
   animation: rotate4 2s linear infinite;
 }
 
 .circle {
+  z-index: 10000;
   fill: none;
   stroke: #287881;
   stroke-width: 3;

@@ -11,12 +11,15 @@ interface SelectProps {
     onChange?: React.ChangeEventHandler<HTMLSelectElement>;
     onFocus?: () => void;
     height?: string;
+    defaultValue?: string;
     disabled?: boolean;
 }
 
+
+
 export default function CustomSelect(props: SelectProps) {
     const [error, setError] = useState<string | null>(null);
-    const { name, placeholder, maxWidth = "330px", required = true, value, onChange, onFocus, height, disabled, options } = props;
+    const { name, placeholder, defaultValue, maxWidth = "330px", required = true, value, onChange, onFocus, height, disabled, options } = props;
 
     const handleInvalid = (e: React.FormEvent<HTMLSelectElement>) => {
         e.preventDefault();
@@ -42,6 +45,7 @@ export default function CustomSelect(props: SelectProps) {
                 value={value}
                 onFocus={onFocus}
                 disabled={disabled}
+                defaultValue={defaultValue}
             >
                 <option value="" disabled selected>
                     {placeholder || "Selecciona una opción"}
