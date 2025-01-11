@@ -14,6 +14,11 @@ const productSchema = new Schema<IProduct>(
       required: true,
       unique: true,
     },
+    status:{
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     price: {
       type: Number,
       required: true,

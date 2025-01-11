@@ -6,6 +6,6 @@ interface AddProductModel {
 	unitsPerPack : number
 	categoryName? : string
 	categoryId? : string
-
+	status : boolean
 	images? : string[]
 }

@@ -1,6 +1,7 @@
 export interface UpdateProduct {
     name:         string;
     price:        number;
+    status:       boolean;
     description:  string;
     code:         string;
     unitsPerPack: number;
