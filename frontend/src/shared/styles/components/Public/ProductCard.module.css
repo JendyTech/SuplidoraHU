@@ -6,7 +6,8 @@
   margin-bottom: 1rem;
   background-color: white;
   transition: box-shadow 0.2s;
-  min-width: fit-content;
+  width: 100%;
+  height: fit-content;
 }
 
 .card:hover {
@@ -90,10 +91,10 @@
 .description {
   color: #6b7280;
   margin-bottom: 1rem;
-  -webkit-line-clamp: 2;
+  /* -webkit-line-clamp: 2;
   display: -webkit-box;
   overflow: hidden;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
 }
 
 .link {

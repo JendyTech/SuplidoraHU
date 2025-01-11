@@ -1,0 +1,60 @@
+/* Badge.module.css */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+/* Variants */
+.default {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.primary {
+    background-color: #d1faf9;
+    color: #06275f;
+}
+
+.warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.error {
+
+    color: #991b1b;
+    border: 1px solid #991b1b;
+    cursor: pointer;
+}
+
+/* Sizes */
+.sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+.md {
+    padding: 0.375rem 0.625rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.lg {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+/* Hover effects */
+.badge:hover {
+    opacity: 0.9;
+}

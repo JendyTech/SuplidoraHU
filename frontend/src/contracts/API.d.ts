@@ -21,6 +21,8 @@ export interface ParamsPaginationFilterOptions {
   page: number
   search: string
   category: string
+  maxPrice: number
+  minPrice: number
 }
 
 export type ParamsPaginationFilter = Partial<ParamsPaginationFilterOptions>

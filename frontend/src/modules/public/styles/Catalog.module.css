@@ -2,3 +2,28 @@
   display: flex;
   gap: 24px;
 }
+
+.main {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 24px 24px;
+
+}
+
+
+@media (max-width: 999px) {
+  .filterButton {
+    display: flex;
+  }
+}
+
+/* 
+@media (max-width: 998px) {
+  .container {
+    padding: 16px 24px;
+  }
+} */

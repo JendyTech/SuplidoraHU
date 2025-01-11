@@ -2,12 +2,10 @@
 
 import React, { useEffect, useState } from 'react'
 import styles from '@/shared/styles/components/Public/ProductCard.module.css'
-import Link from 'next/link'
-import { IconStar, IconListDetails } from '@tabler/icons-react'
 import { getCategoryNameById } from '@services/product'
 import { toast } from 'sonner'
 import { ProductCardSkeleton } from '@shared/components/Public/ProductCardSkeleton'
-import { s } from 'framer-motion/client'
+
 
 interface Props {
   id: string | number
@@ -17,10 +15,11 @@ interface Props {
   description: string
   code: string
   category: string
+  changed: boolean
 }
 
 export function ProductCard(props: Props) {
-  const [categoryName, setCategoryName] = useState<string>("asdas")
+  const [categoryName, setCategoryName] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
@@ -29,7 +28,7 @@ export function ProductCard(props: Props) {
     const fetchCategory = async () => {
       setIsLoading(true)
       const response = await getCategoryNameById(props.category)
-      console.log(response)
+
       if (response.ok) {
         setCategoryName(response.result.name)
       } else {
@@ -39,11 +38,11 @@ export function ProductCard(props: Props) {
     }
 
     fetchCategory()
-  }, [])
+  }, [props.changed])
 
 
 
-  const { title, price, image, description, id, code } = props
+  const { title, price, image, description, code } = props
 
   if (isLoading) {
     return <ProductCardSkeleton />

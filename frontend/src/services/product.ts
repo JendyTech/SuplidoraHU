@@ -89,13 +89,21 @@ export const deleteProduct = async (id: string) => {
 	return response
 }
 
-export const getAllCategories = async () => {
+export const getAllCategories = async (params?: ParamsPaginationFilter,) => {
 	const token = await getToken()
 	const { GET } = useClient(token)
+	const query: Record<string, string> = {}
+
+	if (params?.page) {
+		query.page = params.page.toString()
+	}
 
 	const response = await GET<Pagination<Category>>({
-		endpoint: `/category`
+		endpoint: `/category`,
+		query
 	})
+
+
 
 	return response
 }
