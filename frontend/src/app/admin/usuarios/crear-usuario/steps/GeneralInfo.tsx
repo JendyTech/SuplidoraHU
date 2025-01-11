@@ -15,7 +15,7 @@ const UserGeneralInfo = ({
     setUserData((prevData) => ({
       ...prevData,
       [name]:
-        name === "price" || name === "unitsPerPack" ? Number(value) : value, // Convierte valores numéricos
+        name === "price" || name === "unitsPerPack" ? Number(value) : value,
     }));
   };
   return (

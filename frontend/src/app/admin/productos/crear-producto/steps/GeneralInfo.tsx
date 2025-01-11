@@ -1,11 +1,12 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
 import styles from "@modules/productos/styles/GeneralInfo.module.css";
 import CustomInput from "@shared/components/Form/Input";
-import { AutoComplete, Option } from "@shared/components/Form/AutoComplete";
-import { useCreateProduct } from "@modules/productos/hooks/useCreateProduct";
-import UploadImage from "@/app/admin/productos/crear-producto/steps/UploadImage";
-import SummaryModal from "@/app/admin/productos/crear-producto/steps/Summary";
 import CustomButton from "@shared/components/Buttons/CustomButton";
+import SummaryModal from "@/app/admin/productos/crear-producto/steps/Summary";
+import UploadImage from "@/app/admin/productos/crear-producto/steps/UploadImage";
+import { useState } from "react";
+import { useCreateProduct } from "@modules/productos/hooks/useCreateProduct";
+import { AutoComplete, Option } from "@shared/components/Form/AutoComplete";
+import { IconBarcode, IconBoxSeam, IconCategory, IconCurrencyDollar, IconFileDescription, IconPackage, IconPhoto } from "@tabler/icons-react";
 import { toast } from "sonner";
 
 const GeneralInfo = ({
@@ -13,22 +14,17 @@ const GeneralInfo = ({
 }: {
   getCategories: () => Promise<Category[]>
 }) => {
-
   const { createProduct } = useCreateProduct()
   const [isOpen, setIsOpen] = useState(false)
-
   const [categories, setCategories] = useState<Option[]>([]);
-
   const [formData, setFormData] = useState<AddProductModel>({
     name: "",
     price: 0,
     description: "",
     code: "",
     unitsPerPack: 0,
-
   });
   const [imagesUrl, setImagesUrl] = useState<string[]>([]);
-
 
   const handleSeachCategory = async (value: string) => {
     const categories = await getCategories()
@@ -73,34 +69,56 @@ const GeneralInfo = ({
 
   return (
     <div className={styles.containergf}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>
+          <IconPackage className={styles.icon} />
+          Crear Nuevo Producto
+        </h1>
+        <p className={styles.subtitle}>
+          Ingrese los detalles del producto para agregarlo a su catálogo. Todos los campos marcados con * son obligatorios.
+        </p>
+      </div>
+
       <div className={styles.formGrid}>
         <div className={styles.inputWrapper}>
+          <label>
+            <IconPackage size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            Nombre del Producto *
+          </label>
           <CustomInput
             name="name"
             type="text"
-            placeholder="Nombre del Producto"
+            placeholder="ej. Smartphone Galaxy S21"
             value={formData.name}
             onChange={handleInputChange}
           />
         </div>
 
         <div className={styles.inputWrapper}>
+          <label>
+            <IconCurrencyDollar size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            Precio *
+          </label>
           <CustomInput
             pattern="^\d*\.?\d*$"
             name="price"
             type="number"
             isMoneyInput
-            placeholder="Precio"
+            placeholder="ej. 299.99"
             value={formData.price <= 0 ? "" : formData.price}
             onChange={handleInputChange}
           />
         </div>
 
         <div className={styles.inputWrapper}>
+          <label>
+            <IconBarcode size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            Código *
+          </label>
           <CustomInput
             name="code"
             type="text"
-            placeholder="Código"
+            placeholder="ej. PROD-001"
             required
             value={formData.code}
             onChange={handleInputChange}
@@ -108,18 +126,26 @@ const GeneralInfo = ({
         </div>
 
         <div className={styles.inputWrapper}>
+          <label>
+            <IconBoxSeam size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            Unidades por Paquete
+          </label>
           <CustomInput
             name="unitsPerPack"
             type="text"
-            placeholder="Unidades por Paquete"
+            placeholder="ej. 1"
             value={formData.unitsPerPack <= 0 ? "" : formData.unitsPerPack}
             onChange={handleInputChange}
           />
         </div>
 
-        <div className={styles.inputWrapper}>
+        <div className={styles.inputWrapper} style={{ zIndex: 1000 }}>
+          <label>
+            <IconCategory size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            Categoría *
+          </label>
           <AutoComplete
-            placeholder="Categoría"
+            placeholder="Seleccione o cree una categoría"
             freeOption
             options={categories}
             onInput={handleSeachCategory}
@@ -138,12 +164,16 @@ const GeneralInfo = ({
         </div>
 
         <div className={`${styles.inputWrapper} ${styles.descriptionWrapper}`}>
-
+          <label>
+            <IconFileDescription size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            Descripción
+          </label>
           <CustomInput
-            height="80px"
+            height="120px"
             name="description"
             type="text"
-            placeholder="Descripción"
+            maxWidth="100%"
+            placeholder="Describa las características principales del producto..."
             value={formData.description}
             onChange={handleInputChange}
             multiple
@@ -151,18 +181,30 @@ const GeneralInfo = ({
         </div>
       </div>
 
+      <div className={styles.uploadSection}>
+        <IconPhoto size={32} style={{ marginBottom: '16px', color: '#287881' }} />
+        <h3 className={styles.uploadTitle}>Imágenes del Producto *</h3>
+        <p className={styles.uploadDescription}>
+          Sube imágenes de alta calidad que muestren claramente tu producto. Se recomienda usar un fondo blanco.
+        </p>
+        <UploadImage setImage={setImagesUrl} actualImage={imagesUrl} />
+      </div>
 
-      <UploadImage setImage={setImagesUrl} actualImage={imagesUrl} />
-      <div style={{ height: 34 }} />
-      <div style={{ display: "flex", justifyContent: "end", gap: "20px" }}>
-        <CustomButton text="Crear" buttonType="submit" onClick={() => {
-          handleSubmit()
-        }} />
+      <div className={styles.buttonContainer}>
+        <CustomButton 
+          text="Crear Producto"
+          buttonType="submit"
+          onClick={handleSubmit}
+        />
+      </div>
 
-      </div>      <SummaryModal create={() => {
-
-      }} isOpen={isOpen} onClose={() => { setIsOpen(false) }} productData={formData} image={imagesUrl} />
-
+      <SummaryModal 
+        create={() => {}} 
+        isOpen={isOpen} 
+        onClose={() => { setIsOpen(false) }} 
+        productData={formData} 
+        image={imagesUrl} 
+      />
     </div>
   );
 };

@@ -6,7 +6,7 @@ export const topBar: ItemMenu[] = [
     title: "Dashboard",
     items: [],
   },
-  {
+  /* {
     url: "/admin/facturacion",
     title: "Facturación",
     items: [],
@@ -15,7 +15,7 @@ export const topBar: ItemMenu[] = [
     url: "/admin/facturacion/nueva-factura",
     title: "Crear producto",
     items: [],
-  },
+  }, */
   {
     url: "/admin/productos",
     title: "Productos",
