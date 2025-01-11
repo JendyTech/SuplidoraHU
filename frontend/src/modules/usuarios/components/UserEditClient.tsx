@@ -108,23 +108,29 @@ const UserEditClient: React.FC<UserEditClientProps> = ({ userData, id }) => {
         )}
       </div>
 
-      <div className={styles.uploadSection}>
+      <div className={styles.uploadSection} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", }}>
         <IconPhoto
           size={32}
           style={{ marginBottom: "16px", color: "#287881" }}
         />
-        <h3 className={styles.uploadTitle}>Imágenes del Usuario *</h3>
+        <h3 className={styles.uploadTitle}>Imagen del usuario *</h3>
         <p className={styles.uploadDescription}>
           Sube imágenes de alta calidad que muestren claramente tu producto. Se
           recomienda usar un fondo blanco.
         </p>
-        <input
-          type="file"
-          accept="image/*"
-          name="photo"
-          onChange={handleChange}
-          className={styles.fileInput}
-        />
+        <div className={styles.uploadBox}>
+          <div>
+            <p>Selecciona una imagen para cargar</p>
+            <p>Haga click o arrastre una</p>
+          </div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+            className={styles.fileInput}
+          />
+        </div>
+
       </div>
 
       <div className={styles.buttonContainer}>

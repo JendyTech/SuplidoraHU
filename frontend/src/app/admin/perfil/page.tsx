@@ -1,14 +1,18 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 
 import styles from '@modules/perfil/perfil.module.css';
 import { getProfileInfo } from '@services/profile';
 import { Profile } from '@interfaces/Profile/profile';
 import CustomButton from '@shared/components/Buttons/CustomButton';
+import { toast } from 'sonner';
+import { useDelay } from '@/hooks/useDelay';
+import { updatePassword } from '@services/users';
+import { useLoader } from '@/contexts/Loader';
 
 export default function ProfilePage() {
-    const [user, setUser] = useState<Profile | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<Profile>();
+    const [loading, setLoadings] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
     const [passwords, setPasswords] = useState({
@@ -21,18 +25,22 @@ export default function ProfilePage() {
         fetchUserProfile();
     }, []);
 
+    const { setLoading } = useLoader()
+
+
+
     const fetchUserProfile = async () => {
         try {
-            setLoading(true);
+            setLoadings(true);
             const response = await getProfileInfo();
-            console.log(response);
-            if (!response.ok) throw new Error('Failed to fetch profile');
+            // console.log(response);
+            if (!response.ok) throw new Error('Error al cargar el perfil');
             const data = response.result;
             setUser(data);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load profile');
+            setError(err instanceof Error ? err.message : 'Error al cargar el perfil');
         } finally {
-            setLoading(false);
+            setLoadings(false);
         }
     };
 
@@ -46,28 +54,47 @@ export default function ProfilePage() {
 
     const handlePasswordSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log(user);
+
         if (passwords.newPassword !== passwords.confirmPassword) {
-            setError("Las contraseñas no coinciden");
+            toast.error("Las contraseñas no coinciden");
             return;
         }
 
         try {
-            const response = await fetch('/api/user/change-password', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    currentPassword: passwords.currentPassword,
-                    newPassword: passwords.newPassword
-                })
-            });
+            setLoading(true);
+            useDelay(2000);
 
-            if (!response.ok) throw new Error('Failed to change password');
+            const response = await updatePassword(user!._id, passwords.newPassword);
+            if (!response.ok) {
+                toast.error(response.messages[0].message);
+                setLoading(false);
+                return;
+            }
+
+            toast.success("Contraseña cambiada correctamente");
+
+
             setIsChangePasswordModalOpen(false);
-            setPasswords({
-                currentPassword: '',
-                newPassword: '',
-                confirmPassword: ''
-            });
+            setLoading(false);
+
+
+            // const response = await fetch('/api/user/change-password', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({
+            //         currentPassword: passwords.currentPassword,
+            //         newPassword: passwords.newPassword
+            //     })
+            // });
+
+            // if (!response.ok) throw new Error('Failed to change password');
+            // setIsChangePasswordModalOpen(false);
+            // setPasswords({
+            //     currentPassword: '',
+            //     newPassword: '',
+            //     confirmPassword: ''
+            // });
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to change password');
         }
@@ -128,19 +155,7 @@ export default function ProfilePage() {
                         <div className={styles.modalContent}>
                             <h2 className={styles.modalTitle}>Cambiar Contraseña</h2>
                             <form onSubmit={handlePasswordSubmit} className={styles.passwordForm}>
-                                <div className={styles.formField}>
-                                    <label className={styles.label}>Contraseña Actual</label>
-                                    <input
-                                        type="password"
-                                        name="currentPassword"
-                                        value={passwords.currentPassword}
-                                        onChange={handlePasswordChange}
-                                        className={styles.input}
-                                        required
-                                        aria-errormessage='ekekek'
-                                    />
 
-                                </div>
                                 <div className={styles.formField}>
                                     <label className={styles.label}>Nueva Contraseña</label>
                                     <input

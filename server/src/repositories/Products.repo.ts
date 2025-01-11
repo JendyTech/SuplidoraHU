@@ -1,4 +1,9 @@
-import { CreateProducts, GetProductByIdWithImagesResult, SaveImageProduct, UpdateProducts } from '@contracts/repositories/Products.repo'
+import {
+  CreateProducts,
+  GetProductByIdWithImagesResult,
+  SaveImageProduct,
+  UpdateProducts,
+} from '@contracts/repositories/Products.repo'
 import { ProductModel, ProductPhotoModel } from '@database/products.db'
 import { mongoosePagination } from '@shared/functions/pagination'
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
@@ -15,26 +20,26 @@ export class ProductRepository {
     if (pagination.search) {
       filters.$or = [
         {
-          name: { $regex: new RegExp(pagination.search, 'i') }
+          name: { $regex: new RegExp(pagination.search, 'i') },
         },
         {
-          code: { $regex: new RegExp(pagination.search, 'i') }
+          code: { $regex: new RegExp(pagination.search, 'i') },
         },
       ]
     }
 
     const pricing = Number(pagination.search)
-    
+
     if (!isNaN(pricing)) {
       filters.$or.push({
-        price: pricing
+        price: pricing,
       })
     }
 
     return mongoosePagination({
       ...pagination,
       Model: ProductModel,
-      filter: filters
+      filter: filters,
     })
   }
 
@@ -48,12 +53,14 @@ export class ProductRepository {
     return result.toObject()
   }
 
-  static async getProductByIdWithImages(id: string): Promise<null | GetProductByIdWithImagesResult> {
+  static async getProductByIdWithImages(
+    id: string,
+  ): Promise<null | GetProductByIdWithImagesResult> {
     const [product = null] = await ProductModel.aggregate([
       {
         $match: {
-          _id: new Types.ObjectId(id)
-        }
+          _id: new Types.ObjectId(id),
+        },
       },
       {
         $lookup: {
@@ -61,17 +68,21 @@ export class ProductRepository {
           as: 'images',
           localField: '_id',
           foreignField: 'productId',
-        }
+        },
       },
       {
-        $limit: 1
-      }
+        $limit: 1,
+      },
     ])
 
     return product
   }
 
-  static async saveProductImages(data: Array<Pick<IProductPhoto, 'productId' | 'uploadBy' | 'url' | 'publicId'>>) {
+  static async saveProductImages(
+    data: Array<
+      Pick<IProductPhoto, 'productId' | 'uploadBy' | 'url' | 'publicId'>
+    >,
+  ) {
     const result = await ProductPhotoModel.insertMany(data)
 
     return result.map((image) => image.toObject())
@@ -149,5 +160,4 @@ export class ProductRepository {
     const result = await ProductModel.find({ _id: { $in: ids } })
     return result.map((item) => item.toObject())
   }
-
 }

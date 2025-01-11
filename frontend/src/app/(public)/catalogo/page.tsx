@@ -15,6 +15,13 @@ import { getAllCategories } from "@services/product";
 import CustomButton from "@shared/components/Buttons/CustomButton";
 import { IconAdjustmentsHorizontal, IconSearch } from "@tabler/icons-react";
 import styles2 from "@/shared/styles/components/Public/FilterProductCard.module.css";
+import { BounceLoader, ClipLoader, GridLoader, SyncLoader } from "react-spinners";
+
+interface Filter {
+  page: number;
+  max: number;
+  search: string;
+}
 
 export default function CalalogPage() {
   const [products, setProducts] = useState<CatalogProduct[]>([]);
@@ -45,11 +52,24 @@ export default function CalalogPage() {
     fetchProducts();
   }, []);
 
-  const [search, setSearch] = useState<string>("");
+
+
+
+  const [filter, setFilter] = useState<Filter>({
+    page: 1,
+    max: 10,
+    search: "",
+  });
+
+
 
   const filterProducts = async () => {
 
-    if (search.trim() === "") {
+
+    if (filter.search.trim() === "") {
+      setLoading(true);
+      await useDelay(1000);
+
       const data = await getCatalog();
       if (data.ok) {
         setProducts(data.result.data);
@@ -60,12 +80,10 @@ export default function CalalogPage() {
       return;
     }
 
-    await useDelay(500);
-    const data = await getCatalog({
-      page: 1,
-      max: 10,
-      search: search,
-    });
+    setLoading(true);
+    await useDelay(1000);
+
+    const data = await getCatalog(filter);
     if (data.ok) {
       setProducts(data.result.data);
     } else {
@@ -75,8 +93,12 @@ export default function CalalogPage() {
   };
 
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-    setSearch(e.target.value);
+    setLoading(true);
+    setFilter((prev) => ({
+      ...prev,
+      search: e.target.value,
+    }));
+    setLoading(false);
   };
 
   return (
@@ -157,10 +179,13 @@ export default function CalalogPage() {
             </div>
           </div>
         </div>
-        <section className={styles.productsContainer}>
+        <section className={styles.productsContainer} >
           {loading ? (
-            <div style={{ width: "100%" }}>
-              <ProductCardSkeleton />
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <div style={{ position: "absolute", top: "60%", left: "60%", transform: "translate(-50%, -50%)" }}>
+                <ClipLoader size={100} color="#287881" />
+              </div>
+              {/* <ProductCardSkeleton /> */}
             </div>
           ) : products.length === 0 ? (
             <p>No hay productos disponibles</p>

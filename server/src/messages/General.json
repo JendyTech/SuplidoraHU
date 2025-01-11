@@ -5,6 +5,10 @@
     "MAX_NUMBER": "The maximum number of records per page must be a valid number",
     "SEARCH_STRING": "The search string must be a valid string",
     "START_DATE": "The start date must be a valid date",
-    "END_DATE": "The end date must be a valid date"
+    "END_DATE": "The end date must be a valid date",
+    "CATEGORY": "The category must be a valid string",
+    "MIN_PRICE": "The minimum price must be a valid number",
+    "MAX_PRICE": "The maximum price must be a valid number"
+    
   }
 }

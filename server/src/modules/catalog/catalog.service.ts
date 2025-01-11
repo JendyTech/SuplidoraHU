@@ -6,10 +6,11 @@ import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { HttpStatus } from '@nestjs/common'
 import { successResponse, errorResponse } from '@shared/functions/response'
 import { catchError } from '@shared/utils/catchError'
+import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
 
 @Injectable()
 export class CatalogService {
-  async getCatalog(pagination: PaginationDTO) {
+  async getCatalog(pagination: CatalogPaginationDTO) {
     const [error, result] = await catchError(async () => {
       return await CatalogRepository.getCatalog(pagination)
     })

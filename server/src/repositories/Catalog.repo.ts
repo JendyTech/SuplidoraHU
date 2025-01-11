@@ -1,12 +1,13 @@
 import { PaginationDTO } from '@shared/dto/Pagination.dto'
 import { ProductModel } from '@database/products.db'
 import { mongoosePagination } from '@shared/functions/pagination'
-import { FilterQuery } from 'mongoose'
+import { FilterQuery, Types } from 'mongoose'
 import { IProduct } from '@interfaces/Product'
 import { MODELS_NAMES } from '@config/constants'
+import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
 
 export class CatalogRepository {
-  static async getCatalog(pagination: PaginationDTO) {
+  static async getCatalog(pagination: CatalogPaginationDTO) {
     const filters: FilterQuery<IProduct> = {}
 
     if (pagination.search) {
@@ -28,6 +29,14 @@ export class CatalogRepository {
       })
     }
 
+    if (pagination.category) {
+      try {
+        filters.category = new Types.ObjectId(pagination.category)
+        console.log(filters)
+      } catch (error) {
+        console.error('Error al convertir la categoría a ObjectId:', error)
+      }
+    }
     return mongoosePagination({
       ...pagination,
       Model: ProductModel,

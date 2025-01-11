@@ -79,3 +79,17 @@ export const deleteUser = async (id: string) => {
 	return response
 }
 
+export const updatePassword = async (id: string, newPassword : string) => {
+	const token = await getToken()
+	const { PATCH } = useClient(token)
+
+	const response = await PATCH<IUser>({
+		endpoint: `/users/${id}/password`,
+		body :{
+			"newPassword": newPassword
+		  }
+	})
+
+	return response
+}
+

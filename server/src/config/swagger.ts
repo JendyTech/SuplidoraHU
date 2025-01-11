@@ -24,8 +24,8 @@ export const swaggerSetup = (app: INestApplication) => {
     const document = SwaggerModule.createDocument(app, swaggerConfig)
     SwaggerModule.setup(APP_SWAGGER_URL, app, document, {
       swaggerOptions: {
-        persistAuthorization: NODE_ENV === 'DEVELOPMENT'
-      }
+        persistAuthorization: NODE_ENV === 'DEVELOPMENT',
+      },
     })
   }
 }
