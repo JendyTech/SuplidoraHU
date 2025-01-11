@@ -20,6 +20,7 @@ export interface ParamsPaginationFilterOptions {
   max: number
   page: number
   search: string
+  category: string
 }
 
 export type ParamsPaginationFilter = Partial<ParamsPaginationFilterOptions>

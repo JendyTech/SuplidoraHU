@@ -23,6 +23,10 @@ export const getCatalog = async (params?: ParamsPaginationFilter, server: boolea
         query.search = params.search
     }
 
+    if (params?.category) {
+        query.category = params.category
+    }
+
     const response = await GET<Pagination<CatalogProduct>>({
         endpoint: "/catalog",
         query

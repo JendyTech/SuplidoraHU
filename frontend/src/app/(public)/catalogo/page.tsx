@@ -10,12 +10,11 @@ import { CatalogProduct } from "@interfaces/catalog/CatalogProduct";
 import { getCatalog } from "@services/catalog";
 import { toast } from "sonner";
 import { useDelay } from "@/hooks/useDelay";
-import { div } from "framer-motion/client";
 import { getAllCategories } from "@services/product";
 import CustomButton from "@shared/components/Buttons/CustomButton";
 import { IconAdjustmentsHorizontal, IconSearch } from "@tabler/icons-react";
 import styles2 from "@/shared/styles/components/Public/FilterProductCard.module.css";
-import { BounceLoader, ClipLoader, GridLoader, SyncLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 interface Filter {
   page: number;
@@ -27,6 +26,7 @@ export default function CalalogPage() {
   const [products, setProducts] = useState<CatalogProduct[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     setLoading(true);
@@ -52,20 +52,13 @@ export default function CalalogPage() {
     fetchProducts();
   }, []);
 
-
-
-
   const [filter, setFilter] = useState<Filter>({
     page: 1,
     max: 10,
     search: "",
   });
 
-
-
   const filterProducts = async () => {
-
-
     if (filter.search.trim() === "") {
       setLoading(true);
       await useDelay(1000);
@@ -86,6 +79,8 @@ export default function CalalogPage() {
     const data = await getCatalog(filter);
     if (data.ok) {
       setProducts(data.result.data);
+      console.log(data.result);
+
     } else {
       toast.error(data.messages[0].message);
     }
@@ -93,12 +88,12 @@ export default function CalalogPage() {
   };
 
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoading(true);
+
     setFilter((prev) => ({
       ...prev,
       search: e.target.value,
     }));
-    setLoading(false);
+
   };
 
   return (
@@ -165,6 +160,12 @@ export default function CalalogPage() {
                     name="category"
                     value={category.name}
                     className={styles2.categoryInput}
+                    onChange={() => {
+                      setFilter((prev) => ({
+                        ...prev,
+                        category: category._id,
+                      }));
+                    }}
                   />
                   <span className={styles2.categoryLabel}>{category.name}</span>
                 </label>
@@ -175,6 +176,15 @@ export default function CalalogPage() {
                 text="Buscar"
                 buttonType="button"
                 onClick={() => filterProducts()}
+              />
+            </div>
+            <div style={{ paddingTop: "20px" }}>
+              <CustomButton
+                text="Limpiar filtros"
+                buttonType="button"
+                onClick={() => filterProducts()}
+                backgroundColor="var(--primary-light)"
+                textColor="#287881"
               />
             </div>
           </div>
