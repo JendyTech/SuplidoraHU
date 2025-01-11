@@ -10,9 +10,9 @@ import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
 
 @Injectable()
 export class CatalogService {
-  async getCatalog(pagination: CatalogPaginationDTO) {
+  async getCatalog(pagination: CatalogPaginationDTO, minPrice?: number, maxPrice?: number) {
     const [error, result] = await catchError(async () => {
-      return await CatalogRepository.getCatalog(pagination)
+      return await CatalogRepository.getCatalog(pagination, minPrice, maxPrice)
     })
 
     if (error) {

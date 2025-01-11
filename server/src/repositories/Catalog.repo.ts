@@ -7,7 +7,7 @@ import { MODELS_NAMES } from '@config/constants'
 import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
 
 export class CatalogRepository {
-  static async getCatalog(pagination: CatalogPaginationDTO) {
+  static async getCatalog(pagination: CatalogPaginationDTO, minPrice?: number, maxPrice?: number) {
     const filters: FilterQuery<IProduct> = {}
 
     if (pagination.search) {
@@ -29,6 +29,16 @@ export class CatalogRepository {
       })
     }
 
+    if (pagination.minPrice !== undefined || pagination.maxPrice !== undefined) {
+      filters.price = {};
+      if (minPrice !== undefined) {
+        filters.price.$gte = Number(minPrice); 
+      }
+      if (maxPrice !== undefined) {
+        filters.price.$lte = Number(maxPrice); 
+      }
+    }
+
     if (pagination.category) {
       try {
         filters.category = new Types.ObjectId(pagination.category)
@@ -37,6 +47,7 @@ export class CatalogRepository {
         console.error('Error al convertir la categoría a ObjectId:', error)
       }
     }
+
     return mongoosePagination({
       ...pagination,
       Model: ProductModel,
