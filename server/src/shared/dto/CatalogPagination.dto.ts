@@ -43,4 +43,14 @@ export class CatalogPaginationDTO {
   @IsOptional()
   @IsDateString({}, { message: PAGINATION.END_DATE })
   endDate?: string
+
+  @ApiProperty({ required: false })
+  @IsString({ message: PAGINATION.MIN_PRICE })
+  @IsOptional()
+  minPrice?: string
+
+  @ApiProperty({ required: false })
+  @IsString({ message: PAGINATION.MAX_PRICE })
+  @IsOptional()
+  maxPrice?: string
 }

@@ -10,8 +10,12 @@ export class CatalogController {
 
   @Get('/')
   @IsPublic()
-  getCatalog(@Query() dto: CatalogPaginationDTO) {
-    return this.catalogService.getCatalog(dto)
+  getCatalog(
+    @Query() dto: CatalogPaginationDTO,
+    @Query('minPrice') minPrice?: number,
+    @Query('maxPrice') maxPrice?: number,
+  ) {
+    return this.catalogService.getCatalog(dto, minPrice, maxPrice)
   }
 
   @Get('/:slug')
