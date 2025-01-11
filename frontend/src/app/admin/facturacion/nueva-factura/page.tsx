@@ -145,17 +145,17 @@ export default function BillingPage() {
             />
           </div>
         </div>
-        <div className={styles.billingSection}>
+        <div className={styles.billingSection} style={{ width: "400px" }}>
           <h2>Productos</h2>
           <div
             className={styles.inputSearchContainer}
-            style={{ width: "100%" }}
+            style={{ width: "400px" }}
           >
             <CustomInput
               type="search"
               name="product"
               placeholder="Buscar Producto"
-              maxWidth="100%"
+              maxWidth="400px"
               required={false}
               value={searchTerm}
               onChange={handleSearchChange}
