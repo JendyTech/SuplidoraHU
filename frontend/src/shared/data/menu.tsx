@@ -85,11 +85,11 @@ export const topBar: ItemMenu[] = [
       </LinkButton>
     ),
   },
-  {
+  /* {
     url: "/admin/configuracion",
     title: "Configuración",
     items: [],
-  },
+  }, */
   {
     url: "/admin/productos/:id",
     title: "Detalle de producto",

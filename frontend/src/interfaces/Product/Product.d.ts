@@ -4,6 +4,7 @@ export interface IProduct {
   price:        number;
   code:         string;
   description:  string;
+  status:      boolean;
   unitsPerPack: number;
   categoryName : string
   createdBy:    string;
