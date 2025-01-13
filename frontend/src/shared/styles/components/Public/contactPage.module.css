@@ -1,56 +1,65 @@
 .container {
     min-height: 100vh;
-    background-color: #f9fafb;
+    background-color: #f7fafc;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 2rem;
 }
 
 .inner {
     width: 100%;
-    max-width: 80rem;
-    padding: 3rem;
+    max-width: 75rem;
+    padding: 3rem 0.5rem;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-}
-
-@media (min-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr 1fr;
-    }
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #287881;
-    margin-bottom: 1.5rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #287881; 
+    margin-bottom: 1rem;
 }
 
 .description {
     color: #4b5563;
-    margin-bottom: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
 }
 
 .contactMethods {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .contactMethods {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .contactItem {
     display: flex;
     gap: 1rem;
     align-items: center;
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
 }
 
 .iconWrapper {
-    background-color: #e6f7f8;
-    padding: 0.75rem;
+    background-color:rgb(236, 236, 236);
+    padding: 1rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -58,9 +67,9 @@
 }
 
 .icon {
-    color: #287881;
-    width: 1.5rem;
-    height: 1.5rem;
+    color: #287881; 
+    width: 2rem;
+    height: 2rem;
 }
 
 .contactTitle {
@@ -71,77 +80,64 @@
 
 .contactDetails {
     color: #4b5563;
+    margin-top: 0.5rem;
 }
 
-.formWrapper {
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+.contactDetails a {
+    color: #287881;
+    text-decoration: none;
+    font-weight: 600;
 }
 
-.formTitle {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #111827;
-    margin-bottom: 1.5rem;
-}
 
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.label {
-    font-size: 0.875rem;
-    font-weight: 500;
+.channelDescription {
     color: #6b7280;
-    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
 }
 
-.input,
-.textarea {
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 0.375rem;
-    border: 1px solid #d1d5db;
-    background-color: #ffffff;
-    color: #111827;
-}
 
-.input:focus,
-.textarea:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
-
-.textarea {
-    resize: vertical;
-}
-
-.submitButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem;
+.btn {
+    display: inline-block;
     background-color: #287881;
     color: #ffffff;
-    border: none;
-    border-radius: 0.375rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
     font-size: 1rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+    text-align: center;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
-.submitButton:hover {
-    background-color: #2563eb;
+.whatsappBtn {
+    background-color: #25d366;
 }
 
-.submitIcon {
-    width: 1.25rem;
-    height: 1.25rem;
+.whatsappBtn:hover {
+    background-color: #128c7e;
+}
+
+.facebookBtn {
+    background-color: #3b5998;
+}
+
+.facebookBtn:hover {
+    background-color: #2d4373;
+}
+
+.contactItem a {
+    color: white;
+    text-decoration: none;
+}
+
+.contactItem a:hover {
+    text-decoration: underline;
+}
+
+.contactDetails a {
+    color: #287881;
+    font-weight: bold;
 }

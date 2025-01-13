@@ -6,6 +6,7 @@ import { IProduct } from "@interfaces/Product/Product"
 import { GetProduct } from "@interfaces/Product/GetProduct"
 import { Update } from "vite"
 import { UpdateProduct } from "@interfaces/Product/UpdateProduct"
+import { Category } from "@interfaces/Category/Category"
 
 export const getAllProducts = async (params?: ParamsPaginationFilter, server: boolean = false) => {
 	const token = await getToken(server)
@@ -89,7 +90,7 @@ export const deleteProduct = async (id: string) => {
 	return response
 }
 
-export const getAllCategories = async (params?: ParamsPaginationFilter,) => {
+export const getAllCategories = async (params?: ParamsPaginationFilter) => {
 	const token = await getToken()
 	const { GET } = useClient(token)
 	const query: Record<string, string> = {}
@@ -102,8 +103,6 @@ export const getAllCategories = async (params?: ParamsPaginationFilter,) => {
 		endpoint: `/category`,
 		query
 	})
-
-
 
 	return response
 }

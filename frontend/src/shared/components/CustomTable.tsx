@@ -7,13 +7,14 @@ import styles from '@modules/productos/styles/productos.module.css'
 
 
 interface Props<T> {
-    result?: Pagination<any>
-    setFilters: Dispatch<SetStateAction<Partial<ParamsPaginationFilterOptions>>>
-    headers: TableColumn<any>[]
-    children?: React.ReactNode
-    noDataComponent?: React.ReactNode
+    result?: Pagination<any>;
+    setFilters: Dispatch<SetStateAction<Partial<ParamsPaginationFilterOptions>>>;
+    headers: TableColumn<any>[];
+    children?: React.ReactNode;
+    noDataComponent?: React.ReactNode;
+    customStyles?: TableStyles;
+    paginationEnabled?: boolean; 
 }
-
 
 export default function CustomTable<T = any>(props: Props<any>) {
     const {
@@ -30,23 +31,24 @@ export default function CustomTable<T = any>(props: Props<any>) {
         },
         setFilters,
         headers,
-    } = props
-
+        customStyles,
+        paginationEnabled = true, 
+    } = props;
 
     const handleChangePage = (newPage: number) => {
         setFilters({
             page: newPage
-        })
-    }
+        });
+    };
 
     const handleChangeMax = (newMax: number) => {
         setFilters({
             page: 1,
             max: newMax
-        })
-    }
+        });
+    };
 
-    const customStyles: TableStyles = {
+    const defaultStyles: TableStyles = {
         header: {
             style: {
                 minHeight: '56px',
@@ -103,28 +105,23 @@ export default function CustomTable<T = any>(props: Props<any>) {
         },
     };
 
-
-
     return (
-        <div className={styles.tableContainer} >
-
+        <div className={styles.tableContainer}>
             {props.children}
-
             <DataTable
-                paginationServer
+                paginationServer={paginationEnabled}
                 selectableRows
                 noHeader
-                pagination
+                pagination={paginationEnabled}
                 columns={headers}
                 data={pagination.data}
-                customStyles={customStyles}
+                customStyles={customStyles || defaultStyles} 
                 paginationRowsPerPageOptions={[5, 8, 10]}
                 paginationPerPage={pagination.metadata.max}
                 paginationTotalRows={pagination.metadata.total}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeMax}
                 noDataComponent={props.noDataComponent}
-
             />
         </div>
     );

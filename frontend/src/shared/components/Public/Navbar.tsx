@@ -1,12 +1,15 @@
-"use client"
-import styles from '@/shared/styles/components/Public/Navbar.module.css'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { PUBLIC_NAV_LINKS } from '@shared/data/public'
-
+"use client";
+import { useState } from "react";
+import styles from "@/shared/styles/components/Public/Navbar.module.css";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { PUBLIC_NAV_LINKS } from "@shared/data/public";
 
 export function Navbar() {
-  const path = usePathname()
+  const [menuOpen, setMenuOpen] = useState(false);
+  const path = usePathname();
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <header className={styles.header}>
@@ -14,19 +17,34 @@ export function Navbar() {
         <Link href="/" className={styles.logo}>
           <img
             src="/logo.png"
-            alt='Logo'
+            alt="Logo"
             className={styles.logoImage}
           />
         </Link>
 
-        <div
-          className={styles.linksContainer}
+        <button
+          className={styles.hamburger}
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
         >
-          {PUBLIC_NAV_LINKS.map(link => (
+          <span className={styles.hamburgerLine}></span>
+          <span className={styles.hamburgerLine}></span>
+          <span className={styles.hamburgerLine}></span>
+        </button>
+
+        <div
+          className={`${styles.linksContainer} ${
+            menuOpen ? styles.linksContainerOpen : ""
+          }`}
+        >
+          {PUBLIC_NAV_LINKS.map((link) => (
             <Link
               key={link.path}
               href={link.path}
-              className={`${styles.navLink} ${isActive(path, link.path) ? styles.active : ''}`}
+              className={`${styles.navLink} ${
+                isActive(path, link.path) ? styles.active : ""
+              }`}
+              onClick={() => setMenuOpen(false)} 
             >
               {link.label}
             </Link>
@@ -34,21 +52,18 @@ export function Navbar() {
         </div>
       </nav>
     </header>
-  )
+  );
 }
-
-
 
 const isActive = (path: string, link: string) => {
-  const clearHash = link.replace("#top", "")
+  const clearHash = link.replace("#top", "");
 
-  if (path === '/' && clearHash === '/') return true
+  if (path === "/" && clearHash === "/") return true;
 
-  const parts = path.split('/').filter(Boolean)
-  const currentSubPath = link.split('/')[1].replace("#top", "")
+  const parts = path.split("/").filter(Boolean);
+  const currentSubPath = link.split("/")[1].replace("#top", "");
 
-  if (parts[0] === currentSubPath) return true
+  if (parts[0] === currentSubPath) return true;
 
-  return false
-}
-
+  return false;
+};

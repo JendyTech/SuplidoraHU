@@ -16,6 +16,7 @@ import styles2 from "@/shared/styles/components/Public/FilterProductCard.module.
 import { ClipLoader } from "react-spinners";
 import Badge from "@shared/components/Badge";
 import CatalogPagination from "@/app/(public)/catalogo/components/Pagination";
+import { Category } from "@interfaces/Category/Category";
 
 interface Filter {
   search: string;

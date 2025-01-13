@@ -3,6 +3,7 @@ export interface IProduct {
   name:         string;
   price:        number;
   code:         string;
+  image:       string;
   description:  string;
   status:      boolean;
   unitsPerPack: number;
@@ -13,3 +14,4 @@ export interface IProduct {
   updatedAt:    string;
   __v:          number;
 }
+

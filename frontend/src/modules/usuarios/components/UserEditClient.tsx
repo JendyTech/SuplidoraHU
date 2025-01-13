@@ -68,7 +68,7 @@ const UserEditClient: React.FC<UserEditClientProps> = ({ userData, id }) => {
               size={18}
               style={{ display: "inline", marginRight: "8px" }}
             />
-            Nombre del Usuario
+            Nombre del Usuario*
           </label>
           <CustomInput
             name="firstName"
@@ -84,7 +84,7 @@ const UserEditClient: React.FC<UserEditClientProps> = ({ userData, id }) => {
               size={18}
               style={{ display: "inline", marginRight: "8px" }}
             />
-            Apellido
+            Apellido*
           </label>
           <CustomInput
             name="lastName"
@@ -145,7 +145,7 @@ const UserEditClient: React.FC<UserEditClientProps> = ({ userData, id }) => {
                   `Usuario ${userData.firstName} editado correctamente.`
                 );
               } else {
-                toast.error(`Error al editar el usuario.`);
+                toast.error(`Debe editar ambos campos.`);
               }
 
               setLoading(false);
