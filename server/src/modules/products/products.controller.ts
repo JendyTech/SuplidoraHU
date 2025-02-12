@@ -67,4 +67,9 @@ export class ProductsController {
   ) {
     return this.productsService.updatedProduct(dto, id, user)
   }
+
+  @Get('/search/:term')
+  searchProduct(@Param('term') term: string) {
+    return true
+  }
 }
