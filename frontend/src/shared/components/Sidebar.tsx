@@ -23,12 +23,12 @@ export default function Sidebar() {
     const { data } = useSession()
 
     const items = [
-         {
-             url: "/admin",
-             name: "Dashboard",
-             Icon: IconHome,
-             id: 'admin'
-         },
+        {
+            url: "/admin",
+            name: "Dashboard",
+            Icon: IconHome,
+            id: 'admin'
+        },
         /* {
             url: "/admin/facturacion",
             name: "Facturación",
@@ -118,7 +118,9 @@ export default function Sidebar() {
                                     textAlign: "center"
                                 }}
                             >
-                                {data.firstName.at(0)?.toUpperCase()}
+                                {data.firstName && data.firstName.length > 0
+                                    ? data.firstName.at(0)?.toUpperCase()
+                                    : ""}
                             </div>
                         )}
 

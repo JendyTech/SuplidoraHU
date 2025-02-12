@@ -33,18 +33,16 @@ export function Navbar() {
         </button>
 
         <div
-          className={`${styles.linksContainer} ${
-            menuOpen ? styles.linksContainerOpen : ""
-          }`}
+          className={`${styles.linksContainer} ${menuOpen ? styles.linksContainerOpen : ""
+            }`}
         >
           {PUBLIC_NAV_LINKS.map((link) => (
             <Link
               key={link.path}
               href={link.path}
-              className={`${styles.navLink} ${
-                isActive(path, link.path) ? styles.active : ""
-              }`}
-              onClick={() => setMenuOpen(false)} 
+              className={`${styles.navLink} ${isActive(path, link.path) ? styles.active : ""
+                }`}
+              onClick={() => setMenuOpen(false)}
             >
               {link.label}
             </Link>
