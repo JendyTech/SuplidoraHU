@@ -1,5 +1,5 @@
-import { IsBase64Image } from '@shared/decorators/Validator'
-import { imageBase64 } from '@shared/data/imageBase64'
+import { IsBase64Image } from '@/shared/decorators/Validator'
+import { imageBase64 } from '@/shared/data/imageBase64'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsString,

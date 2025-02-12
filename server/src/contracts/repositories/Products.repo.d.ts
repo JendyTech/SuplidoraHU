@@ -1,25 +1,28 @@
-import { IProduct, IProductPhoto } from '@interfaces/Product'
+import { IProduct, IProductPhoto } from '@/interfaces/Product'
 
 export type CreateProducts = Omit<
   IProduct,
-  '_id' | 'createdAt' | 'updatedAt' | 'updatedBy' 
+  '_id' | 'createdAt' | 'updatedAt' | 'updatedBy'
 > & {
-  slug: string; 
+  slug: string
 }
 
 export type UpdateProducts = Partial<
   Omit<IProduct, '_id' | 'createdAt' | 'updatedAt'>
 > & {
-  updatedBy: string;
-  slug?: string;
-};
+  updatedBy: string
+  slug?: string
+}
 
-export type UploadProductImage = Array<Pick<IProductPhoto, 'productId' | 'uploadBy' | 'url' | 'publicId'>>
+export type UploadProductImage = Array<
+  Pick<IProductPhoto, 'productId' | 'uploadBy' | 'url' | 'publicId'>
+>
 
-export type SaveImageProduct = Pick<IProductPhoto, 'publicId' | 'uploadBy' | 'url' | 'productId'>
+export type SaveImageProduct = Pick<
+  IProductPhoto,
+  'publicId' | 'uploadBy' | 'url' | 'productId'
+>
 
 export interface GetProductByIdWithImagesResult extends IProduct {
   images: IProductPhoto[]
 }
-
-

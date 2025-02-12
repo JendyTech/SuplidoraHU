@@ -1,9 +1,9 @@
-import PreventBackButton from '@shared/components/Logic/PreventBack'
+import PreventBackButton from '@/shared/components/Logic/PreventBack'
 import { SessionProvider } from '@/contexts/Session'
 import { readTokenServer } from '@/utils/session'
-import styles from '@shared/styles/layout.module.css'
-import Sidebar from '@shared/components/Sidebar'
-import Navbar from '@shared/components/Navbar'
+import styles from '@/shared/styles/layout.module.css'
+import Sidebar from '@/shared/components/Sidebar'
+import Navbar from '@/shared/components/Navbar'
 
 
 interface Props {

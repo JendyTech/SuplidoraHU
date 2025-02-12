@@ -1,53 +1,53 @@
-"use client";
+"use client"
 
-import styles from "@modules/productos/styles/GeneralInfo.module.css";
-import CustomInput from "@shared/components/Form/Input";
-import CustomButton from "@shared/components/Buttons/CustomButton";
-import { useState } from "react";
-import { useTranformFileToBase64 } from "@/hooks/useBase64";
-import { useLoader } from "@/contexts/Loader";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { GetUser } from "@interfaces/User/GetUser";
-import { updateUser } from "@services/users";
-import { UpdateUser } from "@interfaces/User/UpdateUser";
+import styles from "@/modules/productos/styles/GeneralInfo.module.css"
+import CustomInput from "@/shared/components/Form/Input"
+import CustomButton from "@/shared/components/Buttons/CustomButton"
+import { useState } from "react"
+import { useTranformFileToBase64 } from "@/hooks/useBase64"
+import { useLoader } from "@/contexts/Loader"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+import { GetUser } from "@/interfaces/User/GetUser"
+import { updateUser } from "@services/users"
+import { UpdateUser } from "@/interfaces/User/UpdateUser"
 import {
   IconPhoto,
   IconUser,
   IconUserEdit,
   IconUserFilled,
-} from "@tabler/icons-react";
+} from "@tabler/icons-react"
 
 interface UserEditClientProps {
-  userData: GetUser;
-  id: string;
+  userData: GetUser
+  id: string
 }
 
 const UserEditClient: React.FC<UserEditClientProps> = ({ userData, id }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   const [newUserData, setNewUserData] = useState<UpdateUser>({
     name: userData.firstName,
     lastname: userData.lastName,
     photo: userData.photo,
-  });
-  if (!userData) return <div>Producto no encontrado</div>;
+  })
+  if (!userData) return <div>Producto no encontrado</div>
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, files } = event.target;
-    const file = files?.[0];
+    const { name, value, files } = event.target
+    const file = files?.[0]
 
-    if (name === "photo" && !file) return;
+    if (name === "photo" && !file) return
 
     if (name === "photo" && file) {
-      const result = await useTranformFileToBase64(file);
-      setNewUserData((prev) => ({ ...prev!, photo: result }));
-      return;
+      const result = await useTranformFileToBase64(file)
+      setNewUserData((prev) => ({ ...prev!, photo: result }))
+      return
     }
-    setNewUserData((prev) => ({ ...prev!, [name]: value }));
-  };
+    setNewUserData((prev) => ({ ...prev!, [name]: value }))
+  }
 
-  const { setLoading } = useLoader();
+  const { setLoading } = useLoader()
 
   return (
     <div className={styles.containergf}>
@@ -136,22 +136,22 @@ const UserEditClient: React.FC<UserEditClientProps> = ({ userData, id }) => {
       <div className={styles.buttonContainer}>
         <CustomButton
           onClick={async () => {
-            setLoading(true);
+            setLoading(true)
             try {
-              const response = await updateUser(id, newUserData!);
+              const response = await updateUser(id, newUserData!)
 
               if (response.ok) {
                 toast.success(
                   `Usuario ${userData.firstName} editado correctamente.`
-                );
+                )
               } else {
-                toast.error(`Debe editar ambos campos.`);
+                toast.error(`Debe editar ambos campos.`)
               }
 
-              setLoading(false);
-              router.push("/admin/usuarios");
+              setLoading(false)
+              router.push("/admin/usuarios")
             } catch (error) {
-              setLoading(false);
+              setLoading(false)
             }
           }}
           style="filled"
@@ -161,7 +161,7 @@ const UserEditClient: React.FC<UserEditClientProps> = ({ userData, id }) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserEditClient;
+export default UserEditClient

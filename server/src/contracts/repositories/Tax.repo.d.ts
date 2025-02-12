@@ -1,3 +1,3 @@
-import { ITax } from "@interfaces/Tax";
+import { ITax } from '@/interfaces/Tax'
 
-export type CreateTaxes= Omit<ITax, '_id'>
+export type CreateTaxes = Omit<ITax, '_id'>

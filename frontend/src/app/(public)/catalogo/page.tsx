@@ -1,78 +1,78 @@
-"use client";
+"use client"
 
-import styles from "@modules/public/styles/Catalog.module.css";
-import { ContentContainer } from "@shared/components/Public/ContentContainer";
-import { ProductCard } from "@shared/components/Public/ProductCard";
-import { Typography } from "@shared/components/Public/Typograpy";
-import { useEffect, useRef, useState } from "react";
-import { CatalogProduct } from "@interfaces/catalog/CatalogProduct";
-import { getCatalog } from "@services/catalog";
-import { toast } from "sonner";
-import { useDelay } from "@/hooks/useDelay";
-import { getAllCategories, getCategoryNameById } from "@services/product";
-import CustomButton from "@shared/components/Buttons/CustomButton";
-import { IconAdjustmentsHorizontal, IconSearch, IconX } from "@tabler/icons-react";
-import styles2 from "@/shared/styles/components/Public/FilterProductCard.module.css";
-import { ClipLoader } from "react-spinners";
-import Badge from "@shared/components/Badge";
-import CatalogPagination from "@/app/(public)/catalogo/components/Pagination";
-import { Category } from "@interfaces/Category/Category";
+import styles from "@/modules/public/styles/Catalog.module.css"
+import { ContentContainer } from "@/shared/components/Public/ContentContainer"
+import { ProductCard } from "@/shared/components/Public/ProductCard"
+import { Typography } from "@/shared/components/Public/Typograpy"
+import { useEffect, useRef, useState } from "react"
+import { CatalogProduct } from "@/interfaces/catalog/CatalogProduct"
+import { getCatalog } from "@services/catalog"
+import { toast } from "sonner"
+import { useDelay } from "@/hooks/useDelay"
+import { getAllCategories, getCategoryNameById } from "@services/product"
+import CustomButton from "@/shared/components/Buttons/CustomButton"
+import { IconAdjustmentsHorizontal, IconSearch, IconX } from "@tabler/icons-react"
+import styles2 from "@/shared/styles/components/Public/FilterProductCard.module.css"
+import { ClipLoader } from "react-spinners"
+import Badge from "@/shared/components/Badge"
+import CatalogPagination from "@/app/(public)/catalogo/components/Pagination"
+import { Category } from "@/interfaces/Category/Category"
 
 interface Filter {
-  search: string;
-  maxPrice: number;
-  minPrice: number;
-  max: number;
-  category: string;
+  search: string
+  maxPrice: number
+  minPrice: number
+  max: number
+  category: string
 }
 
 export default function CalalogPage() {
-  const [products, setProducts] = useState<CatalogProduct[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [isNext, setIsNext] = useState(false);
-  const [isNextProducts, setIsNextProducts] = useState(false);
-  const [actualNextIndex, setActualNextIndex] = useState(1);
-  const [changed, setChanged] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
-  const [actualCategory, setActualCategory] = useState<string>();
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [products, setProducts] = useState<CatalogProduct[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [loading, setLoading] = useState(false)
+  const [isNext, setIsNext] = useState(false)
+  const [isNextProducts, setIsNextProducts] = useState(false)
+  const [actualNextIndex, setActualNextIndex] = useState(1)
+  const [changed, setChanged] = useState(false)
+  const [isFiltered, setIsFiltered] = useState(false)
+  const [actualCategory, setActualCategory] = useState<string>()
+  const [totalPages, setTotalPages] = useState<number>(0)
 
 
-  const [totalProducts, setTotalProducts] = useState<number>(0);
+  const [totalProducts, setTotalProducts] = useState<number>(0)
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
-      await useDelay(1000);
-      const data = await getCatalog();
+      setLoading(true)
+      await useDelay(1000)
+      const data = await getCatalog()
       if (data.ok) {
-        setProducts(data.result.data);
-        setTotalPages(data.result.metadata.totalPages);
-        setIsNextProducts(data.result.metadata.next);
-        setTotalProducts(data.result.metadata.total);
-        console.log(data.result.metadata);
+        setProducts(data.result.data)
+        setTotalPages(data.result.metadata.totalPages)
+        setIsNextProducts(data.result.metadata.next)
+        setTotalProducts(data.result.metadata.total)
+        console.log(data.result.metadata)
       } else {
-        toast.error(data.messages[0].message);
+        toast.error(data.messages[0].message)
       }
-      setLoading(false);
-    };
+      setLoading(false)
+    }
 
     const fetchCategories = async () => {
-      const response = await getAllCategories();
+      const response = await getAllCategories()
       if (response && response.ok && response.result) {
-        const isNextPage = !!response.result.metadata?.next;
-        setIsNext(isNextPage);
-        setCategories(response.result.data);
+        const isNextPage = !!response.result.metadata?.next
+        setIsNext(isNextPage)
+        setCategories(response.result.data)
 
       } else {
-        console.error("Error en la respuesta de categorías:", response);
+        console.error("Error en la respuesta de categorías:", response)
       }
-    };
+    }
 
-    fetchCategories();
-    fetchProducts();
-  }, []);
+    fetchCategories()
+    fetchProducts()
+  }, [])
 
   const [filter, setFilter] = useState<Filter>({
     max: 20,
@@ -80,7 +80,7 @@ export default function CalalogPage() {
     maxPrice: 0,
     minPrice: 0,
     category: "",
-  });
+  })
 
   const defaultFilter = {
     max: 20,
@@ -88,12 +88,12 @@ export default function CalalogPage() {
     maxPrice: 0,
     minPrice: 0,
     category: "",
-  };
+  }
 
   const filterProducts = async () => {
     if (filter.maxPrice < filter.minPrice) {
-      toast.error("El precio maximo no puede ser menor que el precio mínimo");
-      return;
+      toast.error("El precio maximo no puede ser menor que el precio mínimo")
+      return
     }
 
     const areFiltersEqual = () => {
@@ -103,83 +103,83 @@ export default function CalalogPage() {
         filter.maxPrice === defaultFilter.maxPrice &&
         filter.minPrice === defaultFilter.minPrice &&
         filter.category === defaultFilter.category
-      );
-    };
+      )
+    }
 
     if (areFiltersEqual()) {
-      setLoading(true);
+      setLoading(true)
 
-      const data = await getCatalog();
+      const data = await getCatalog()
       if (data.ok) {
-        setProducts(data.result.data);
+        setProducts(data.result.data)
       } else {
-        toast.error(data.messages[0].message);
+        toast.error(data.messages[0].message)
       }
-      setLoading(false);
-      return;
+      setLoading(false)
+      return
     } else {
       if (filter.category && filter.category !== "") {
-        const category = await getCategoryNameById(filter.category);
+        const category = await getCategoryNameById(filter.category)
         if (category.ok) {
-          setActualCategory(category.result.name);
+          setActualCategory(category.result.name)
         } else {
-          toast.error(category.messages[0].message);
-          return;
+          toast.error(category.messages[0].message)
+          return
         }
       }
 
-      setLoading(true);
-      await useDelay(1000);
-      const data = await getCatalog(filter);
+      setLoading(true)
+      await useDelay(1000)
+      const data = await getCatalog(filter)
       if (data.ok) {
-        setProducts(data.result.data);
+        setProducts(data.result.data)
       } else {
-        toast.error(data.messages[0].message);
+        toast.error(data.messages[0].message)
       }
-      setLoading(false);
-      setIsFiltered(true);
-      setChanged(!changed);
+      setLoading(false)
+      setIsFiltered(true)
+      setChanged(!changed)
     }
-  };
+  }
 
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter((prev) => ({
       ...prev,
       search: e.target.value,
-    }));
-  };
+    }))
+  }
 
   const addNextCategoryPage = async () => {
-    const response = await getAllCategories({ page: actualNextIndex + 1 });
+    const response = await getAllCategories({ page: actualNextIndex + 1 })
 
     if (response && response.ok && response.result) {
-      setCategories((prev) => [...prev, ...response.result.data]);
-      setIsNext(response.result.metadata?.next);
-      setActualNextIndex(actualNextIndex + 1);
+      setCategories((prev) => [...prev, ...response.result.data])
+      setIsNext(response.result.metadata?.next)
+      setActualNextIndex(actualNextIndex + 1)
     } else {
-      console.error("Error en la respuesta de categorías:", response);
+      console.error("Error en la respuesta de categorías:", response)
     }
-  };
+  }
 
   const handleRemoveFilters = async () => {
-    setLoading(true);
+    setLoading(true)
 
-    const data = await getCatalog();
+    const data = await getCatalog()
     if (data.ok) {
-      setProducts(data.result.data);
+      setProducts(data.result.data)
     } else {
-      toast.error(data.messages[0].message);
+      toast.error(data.messages[0].message)
     }
-    setLoading(false);
-    setFilter(defaultFilter);
-    setIsFiltered(false);
-    setChanged(false);
-    return;
-  };
+    setLoading(false)
+    setFilter(defaultFilter)
+    setIsFiltered(false)
+    setChanged(false)
+    return
+  }
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null)
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   return (
     <div>
@@ -231,7 +231,7 @@ export default function CalalogPage() {
                     setFilter((prev) => ({
                       ...prev,
                       minPrice: parseInt(e.target.value),
-                    }));
+                    }))
                   }}
                   value={filter.minPrice == 0 ? "" : filter.minPrice}
                 />
@@ -244,7 +244,7 @@ export default function CalalogPage() {
                     setFilter((prev) => ({
                       ...prev,
                       maxPrice: parseInt(e.target.value),
-                    }));
+                    }))
                   }}
                   value={filter.maxPrice == 0 ? "" : filter.maxPrice}
                 />
@@ -266,7 +266,7 @@ export default function CalalogPage() {
                         setFilter((prev) => ({
                           ...prev,
                           category: "",
-                        }));
+                        }))
                       }}
                       checked={filter.category === ""}
                     />
@@ -286,7 +286,7 @@ export default function CalalogPage() {
                           setFilter((prev) => ({
                             ...prev,
                             category: category._id,
-                          }));
+                          }))
                         }}
                         checked={filter.category === category._id}
                       />
@@ -354,7 +354,7 @@ export default function CalalogPage() {
                   label={`Limpiar filtros`}
                   variant="error"
                   onClick={() => {
-                    handleRemoveFilters();
+                    handleRemoveFilters()
                   }}
                 />
               </div>
@@ -369,11 +369,11 @@ export default function CalalogPage() {
               <CatalogPagination
                 currentPage={actualNextIndex}
                 onPageChange={async function (page: number) {
-                  const response = await getCatalog({ page: page });
+                  const response = await getCatalog({ page: page })
                   if (response.ok) {
-                    setProducts(response.result.data);
-                    setActualNextIndex(page);
-                    setIsNextProducts(response.result.metadata.next);
+                    setProducts(response.result.data)
+                    setActualNextIndex(page)
+                    setIsNextProducts(response.result.metadata.next)
                   }
                 }}
                 totalPages={totalPages - 1}
@@ -429,11 +429,11 @@ export default function CalalogPage() {
               loading ? null : <CatalogPagination
                 currentPage={actualNextIndex}
                 onPageChange={async function (page: number) {
-                  const response = await getCatalog({ page: page });
+                  const response = await getCatalog({ page: page })
                   if (response.ok) {
-                    setProducts(response.result.data);
-                    setActualNextIndex(page);
-                    setIsNextProducts(response.result.metadata.next);
+                    setProducts(response.result.data)
+                    setActualNextIndex(page)
+                    setIsNextProducts(response.result.metadata.next)
                   }
                 }}
                 totalPages={totalPages - 1}
@@ -476,7 +476,7 @@ export default function CalalogPage() {
                   setFilter((prev) => ({
                     ...prev,
                     minPrice: parseInt(e.target.value),
-                  }));
+                  }))
                 }}
                 value={filter.minPrice == 0 ? "" : filter.minPrice}
               />
@@ -489,7 +489,7 @@ export default function CalalogPage() {
                   setFilter((prev) => ({
                     ...prev,
                     maxPrice: parseInt(e.target.value),
-                  }));
+                  }))
                 }}
                 value={filter.maxPrice == 0 ? "" : filter.maxPrice}
               />
@@ -511,7 +511,7 @@ export default function CalalogPage() {
                       setFilter((prev) => ({
                         ...prev,
                         category: "",
-                      }));
+                      }))
                     }}
                     checked={filter.category === ""}
                   />
@@ -531,7 +531,7 @@ export default function CalalogPage() {
                         setFilter((prev) => ({
                           ...prev,
                           category: category._id,
-                        }));
+                        }))
                       }}
                       checked={filter.category === category._id}
                     />
@@ -572,5 +572,5 @@ export default function CalalogPage() {
         </div>
       </div> : null}
     </div>
-  );
+  )
 }

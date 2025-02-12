@@ -1,9 +1,9 @@
-import { IProduct } from '@interfaces/Product'
-import { mongoosePagination } from '@shared/functions/pagination'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
+import { IProduct } from '@/interfaces/Product'
+import { mongoosePagination } from '@/shared/functions/pagination'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
 import { FilterQuery } from 'mongoose'
-import { CategoryModel } from '@database/category.db'
-import { CreateCategories } from '@contracts/repositories/Category.repo'
+import { CategoryModel } from '@/database/category.db'
+import { CreateCategories } from '@/contracts/repositories/Category.repo'
 
 export class CategoryRepository {
   static async getCategories(pagination: PaginationDTO) {
@@ -52,5 +52,4 @@ export class CategoryRepository {
 
     return result.toObject()
   }
-
 }

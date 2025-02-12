@@ -1,6 +1,6 @@
-import styles from "@shared/styles/components/Public/Footer.module.css"
+import styles from "@/shared/styles/components/Public/Footer.module.css"
 import { IconMail, IconPhone, IconMapPin } from '@tabler/icons-react'
-import { PUBLIC_NAV_LINKS } from '@shared/data/public'
+import { PUBLIC_NAV_LINKS } from '@/shared/data/public'
 import Link from 'next/link'
 
 export function Footer() {

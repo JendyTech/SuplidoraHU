@@ -8,15 +8,15 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { ProductsService } from '@modules/products/products.service'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { ProductsService } from '@/modules/products/products.service'
 import {
   CreateProductDto,
   UpdateProductDto,
   UploadProductImageDto,
-} from '@modules/products/dto/Product.dto'
-import { User } from '@shared/decorators/Session'
-import { IUser } from '@interfaces/User'
+} from '@/modules/products/dto/Product.dto'
+import { User } from '@/shared/decorators/Session'
+import { IUser } from '@/interfaces/User'
 
 @Controller('/api/products')
 export class ProductsController {

@@ -1,11 +1,11 @@
-import styles from "@modules/productos/styles/GeneralInfo.module.css";
-import CustomInput from "@shared/components/Form/Input";
-import CustomButton from "@shared/components/Buttons/CustomButton";
-import SummaryModal from "@/app/admin/productos/crear-producto/steps/Summary";
-import UploadImage from "@/app/admin/productos/crear-producto/steps/UploadImage";
-import { useState } from "react";
-import { useCreateProduct } from "@modules/productos/hooks/useCreateProduct";
-import { AutoComplete, Option } from "@shared/components/Form/AutoComplete";
+import styles from "@/modules/productos/styles/GeneralInfo.module.css"
+import CustomInput from "@/shared/components/Form/Input"
+import CustomButton from "@/shared/components/Buttons/CustomButton"
+import SummaryModal from "@/app/admin/productos/crear-producto/steps/Summary"
+import UploadImage from "@/app/admin/productos/crear-producto/steps/UploadImage"
+import { useState } from "react"
+import { useCreateProduct } from "@/modules/productos/hooks/useCreateProduct"
+import { AutoComplete, Option } from "@/shared/components/Form/AutoComplete"
 import {
   IconBarcode,
   IconBoxSeam,
@@ -14,18 +14,18 @@ import {
   IconFileDescription,
   IconPackage,
   IconPhoto,
-} from "@tabler/icons-react";
-import { toast } from "sonner";
-import CustomSelect from "@shared/components/Form/Select";
+} from "@tabler/icons-react"
+import { toast } from "sonner"
+import CustomSelect from "@/shared/components/Form/Select"
 
 const GeneralInfo = ({
   getCategories,
 }: {
-  getCategories: () => Promise<Category[]>;
+  getCategories: () => Promise<Category[]>
 }) => {
-  const { createProduct } = useCreateProduct();
-  const [isOpen, setIsOpen] = useState(false);
-  const [categories, setCategories] = useState<Option[]>([]);
+  const { createProduct } = useCreateProduct()
+  const [isOpen, setIsOpen] = useState(false)
+  const [categories, setCategories] = useState<Option[]>([])
   const [formData, setFormData] = useState<AddProductModel>({
     name: "",
     price: 0,
@@ -33,12 +33,12 @@ const GeneralInfo = ({
     code: "",
     unitsPerPack: 0,
     status: true,
-  });
-  const [imagesUrl, setImagesUrl] = useState<string[]>([]);
+  })
+  const [imagesUrl, setImagesUrl] = useState<string[]>([])
 
   const handleSeachCategory = async (value: string) => {
-    const categories = await getCategories();
-    if (!categories) return;
+    const categories = await getCategories()
+    if (!categories) return
     setCategories((prevState) => [
       ...prevState,
       ...categories
@@ -53,33 +53,33 @@ const GeneralInfo = ({
             )
         )
         .slice(0, 2),
-    ]);
-  };
+    ])
+  }
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
       [name]:
         name === "price" || name === "unitsPerPack" ? Number(value) : value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async () => {
     if (imagesUrl.length < 1) {
-      toast.error("Debe subir al menos una imagen");
-      return;
+      toast.error("Debe subir al menos una imagen")
+      return
     }
 
     if (!formData.categoryId && !formData.categoryName) {
-      toast.error("Debe seleccionar una categoría");
-      return;
+      toast.error("Debe seleccionar una categoría")
+      return
     }
 
-    createProduct(formData, imagesUrl);
-  };
+    createProduct(formData, imagesUrl)
+  }
 
   return (
     <div className={styles.containergf}>
@@ -182,13 +182,13 @@ const GeneralInfo = ({
             onSelect={(value, label) => {
               value === label
                 ? setFormData((prevState) => ({
-                    ...prevState,
-                    categoryName: value,
-                  }))
+                  ...prevState,
+                  categoryName: value,
+                }))
                 : setFormData((prevState) => ({
-                    ...prevState,
-                    categoryId: value,
-                  }));
+                  ...prevState,
+                  categoryId: value,
+                }))
             }}
           />
         </div>
@@ -197,11 +197,11 @@ const GeneralInfo = ({
           <label>Estado del Producto *</label>
           <CustomSelect
             name="status"
-            value={formData.status ? "true" : "false"} 
+            value={formData.status ? "true" : "false"}
             onChange={(e) =>
               setFormData((prevData) => ({
                 ...prevData,
-                status: e.target.value === "true", 
+                status: e.target.value === "true",
               }))
             }
             options={[
@@ -255,16 +255,16 @@ const GeneralInfo = ({
       </div>
 
       <SummaryModal
-        create={() => {}}
+        create={() => { }}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          setIsOpen(false)
         }}
         productData={formData}
         image={imagesUrl}
       />
     </div>
-  );
-};
+  )
+}
 
-export default GeneralInfo;
+export default GeneralInfo

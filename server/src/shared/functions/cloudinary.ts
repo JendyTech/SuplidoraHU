@@ -1,14 +1,14 @@
 import * as cloudinary from 'cloudinary'
-import type { CloudinaryResult } from '@contracts/Cloudinary'
+import type { CloudinaryResult } from '@/contracts/Cloudinary'
 import {
   ErrorUploadCloudinary,
   ErrorDeleteCloudinary,
-} from '@errors/cloudinary'
+} from '@/errors/cloudinary'
 import {
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
   CLOUDINARY_CLOUD_NAME,
-} from '@config/enviroments'
+} from '@/config/enviroments'
 
 cloudinary.v2.config({
   cloud_name: CLOUDINARY_CLOUD_NAME,

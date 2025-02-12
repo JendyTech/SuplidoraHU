@@ -1,4 +1,7 @@
-import { errorResponse, unknownErrorResponse } from '@shared/functions/response'
+import {
+  errorResponse,
+  unknownErrorResponse,
+} from '@/shared/functions/response'
 import type { HttpStatus } from '@nestjs/common'
 
 interface IErrorHandleErrorListParams {

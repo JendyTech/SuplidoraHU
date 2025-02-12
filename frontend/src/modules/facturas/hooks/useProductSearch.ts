@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import { getAllProducts } from "@services/product";
-import { IProduct } from "@interfaces/Product/Product";
+import { IProduct } from "@/interfaces/Product/Product";
 
 export const useProductSearch = (searchTerm: string) => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -41,7 +41,9 @@ export const useProductSearch = (searchTerm: string) => {
           Array.isArray(response.result.data)
         ) {
           const filteredProducts = response.result.data.filter((product) =>
-            product.name.toLowerCase().startsWith(debouncedSearchTerm.toLowerCase())
+            product.name
+              .toLowerCase()
+              .startsWith(debouncedSearchTerm.toLowerCase())
           );
           const limitedProducts = filteredProducts.slice(0, 3);
           setProducts(limitedProducts);

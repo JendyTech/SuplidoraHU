@@ -1,4 +1,4 @@
-import { PAGINATION } from '@messages/General.json'
+import { PAGINATION } from '@/messages/General.json'
 import { IsOptional, IsString, IsNumber, IsDateString } from 'class-validator'
 import { Transform } from 'class-transformer'
 import { ApiProperty } from '@nestjs/swagger'

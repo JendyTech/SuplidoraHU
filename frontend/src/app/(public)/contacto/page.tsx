@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   IconMapPin,
@@ -6,9 +6,9 @@ import {
   IconMessage,
   IconBrandFacebook,
   IconBrandWhatsapp,
-} from "@tabler/icons-react";
-import { motion } from "framer-motion";
-import styles from "@shared/styles/components/Public/contactPage.module.css";
+} from "@tabler/icons-react"
+import { motion } from "framer-motion"
+import styles from "@/shared/styles/components/Public/contactPage.module.css"
 
 export function ContactPage() {
   return (
@@ -159,7 +159,7 @@ export function ContactPage() {
         </div>
       </div>
     </motion.div>
-  );
+  )
 }
 
-export default ContactPage;
+export default ContactPage

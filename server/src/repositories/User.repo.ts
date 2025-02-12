@@ -3,14 +3,14 @@ import {
   GetUsersByIdWithImagesResult,
   SaveImageUser,
   UpdateUser,
-} from '@contracts/repositories/User.repo'
-import { UserModel, UserPhotoModel } from '@database/user.db'
-import { ErrorHash } from '@errors/hash'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { hashPassword } from '@shared/functions/hash'
-import { mongoosePagination } from '@shared/functions/pagination'
-import { IUser } from '@interfaces/User'
-import { MODELS_NAMES } from '@config/constants'
+} from '@/contracts/repositories/User.repo'
+import { UserModel, UserPhotoModel } from '@/database/user.db'
+import { ErrorHash } from '@/errors/hash'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { hashPassword } from '@/shared/functions/hash'
+import { mongoosePagination } from '@/shared/functions/pagination'
+import { IUser } from '@/interfaces/User'
+import { MODELS_NAMES } from '@/config/constants'
 import { Types, FilterQuery } from 'mongoose'
 
 export class UserRepository {

@@ -1,25 +1,25 @@
 "use client"
 
 import React from 'react'
-import { Stepper, StepperItem } from '@shared/components/Stepper'
+import { Stepper, StepperItem } from '@/shared/components/Stepper'
 import { IconCheck, IconImageInPicture, IconInfoCircle } from '@tabler/icons-react'
-import { useCreateProduct } from '@modules/productos/hooks/useCreateProduct'
+import { useCreateProduct } from '@/modules/productos/hooks/useCreateProduct'
 import GeneralInfo from '@/app/admin/productos/crear-producto/steps/GeneralInfo'
 import UploadImage from '@/app/admin/productos/crear-producto/steps/UploadImage'
 import Summary from '@/app/admin/productos/crear-producto/steps/Summary'
 
 export default function CreateProductsPage() {
 
-    const { setImagesUrl, imagesUrl, createProduct, getCategories } = useCreateProduct()
+  const { setImagesUrl, imagesUrl, createProduct, getCategories } = useCreateProduct()
 
-    return (
-        <div>
+  return (
+    <div>
 
-            <GeneralInfo getCategories={getCategories} />
+      <GeneralInfo getCategories={getCategories} />
 
 
-            <div style={{ height: 24 }}></div>
+      <div style={{ height: 24 }}></div>
 
-        </div>
-    )
+    </div>
+  )
 }

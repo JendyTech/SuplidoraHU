@@ -1,6 +1,6 @@
 import * as jsonwebtoken from 'jsonwebtoken'
-import { JWT_SECRET } from '@config/enviroments'
-import { JWT_ALGORITHM, TOKEN_DESTINATION } from '@config/constants'
+import { JWT_SECRET } from '@/config/enviroments'
+import { JWT_ALGORITHM, TOKEN_DESTINATION } from '@/config/constants'
 
 const { sign, verify } = jsonwebtoken
 

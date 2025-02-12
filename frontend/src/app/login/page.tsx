@@ -1,7 +1,7 @@
-import { LoginForm } from "@modules/login/components/LoginForm";
-import styles from "@modules/login/login.module.css";
-import { redirectSession } from "@/utils/session";
-import CustomButton from "@shared/components/Buttons/CustomButton";
+import { LoginForm } from "@/modules/login/components/LoginForm"
+import styles from "@/modules/login/login.module.css"
+import { redirectSession } from "@/utils/session"
+import CustomButton from "@/shared/components/Buttons/CustomButton"
 
 export default async function LoginPage() {
 
@@ -18,5 +18,5 @@ export default async function LoginPage() {
         </div>
       </main>
     </>
-  );
+  )
 }

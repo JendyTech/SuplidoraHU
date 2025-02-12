@@ -1,9 +1,9 @@
 import { IconUser, IconUserCheck } from '@tabler/icons-react'
-import styles from '@modules/productos/styles/productos.module.css'
-import { InfoContainer } from '@modules/productos/components/InfoContainer'
-import UsersTable from '@modules/usuarios/components/UserTable'
+import styles from '@/modules/productos/styles/productos.module.css'
+import { InfoContainer } from '@/modules/productos/components/InfoContainer'
+import UsersTable from '@/modules/usuarios/components/UserTable'
 import { getAllUsers } from '@services/users'
-import { ErrorLoadServer } from '@shared/components/Error/ErrorLoadServer'
+import { ErrorLoadServer } from '@/shared/components/Error/ErrorLoadServer'
 
 export default async function UsersPage() {
 

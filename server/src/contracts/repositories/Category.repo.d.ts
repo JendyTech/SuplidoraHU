@@ -1,6 +1,6 @@
-import { ICategory } from "@interfaces/Category";
+import { ICategory } from '@/interfaces/Category'
 
 export type CreateCategories = Omit<
-    ICategory,
-    '_id' | 'createdAt' | 'updatedAt' | 'updatedBy'
+  ICategory,
+  '_id' | 'createdAt' | 'updatedAt' | 'updatedBy'
 >

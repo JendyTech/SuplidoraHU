@@ -1,22 +1,22 @@
-import { getProductById } from "@services/product";
-import { PageParams } from "@/interfaces/Page";
-import { IconTag, IconPackage, IconCalendar } from "@tabler/icons-react";
-import styles from "@modules/productos/styles/detailProduct.module.css";
-import dayjs from "dayjs";
+import { getProductById } from "@services/product"
+import { PageParams } from "@/interfaces/Page"
+import { IconTag, IconPackage, IconCalendar } from "@tabler/icons-react"
+import styles from "@/modules/productos/styles/detailProduct.module.css"
+import dayjs from "dayjs"
 
 export default async function ProductDetail(props: PageParams) {
-  const { id } = await props.params;
+  const { id } = await props.params
 
   try {
-    const response = await getProductById(id, true);
+    const response = await getProductById(id, true)
 
     if (!response.ok) {
-      return <div className={styles.error}>Error: Producto no encontrado</div>;
+      return <div className={styles.error}>Error: Producto no encontrado</div>
     }
 
-    const { result: product } = response;
+    const { result: product } = response
 
-    dayjs.locale("es");
+    dayjs.locale("es")
 
 
 
@@ -76,7 +76,7 @@ export default async function ProductDetail(props: PageParams) {
               <IconCalendar size={24} strokeWidth={1.5} />
               <div>
                 <span>Disponibilidad:</span>
-                <p style={product.status ? {color:"#03c250"} : {color: "#FF5252"}}>{product.status ? "Disponible" : "No disponible"}</p>
+                <p style={product.status ? { color: "#03c250" } : { color: "#FF5252" }}>{product.status ? "Disponible" : "No disponible"}</p>
               </div>
             </div>
           </div>
@@ -86,8 +86,8 @@ export default async function ProductDetail(props: PageParams) {
           </div>
         </div>
       </div>
-    );
+    )
   } catch (error) {
-    return <div className={styles.error}>Error al cargar el producto</div>;
+    return <div className={styles.error}>Error al cargar el producto</div>
   }
 }

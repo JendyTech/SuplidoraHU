@@ -1,4 +1,4 @@
-import { STORAGES } from "@config/constants";
+import { STORAGES } from "@/config/constants";
 
 export const readTokenServer = async () => {
   const { cookies } = await import("next/headers");

@@ -1,6 +1,6 @@
-import { IProduct, IProductPhoto } from '@interfaces/Product'
+import { IProduct, IProductPhoto } from '@/interfaces/Product'
 import { model, Schema, Types } from 'mongoose'
-import { MODELS_NAMES } from '@config/constants'
+import { MODELS_NAMES } from '@/config/constants'
 
 const productSchema = new Schema<IProduct>(
   {
@@ -14,7 +14,7 @@ const productSchema = new Schema<IProduct>(
       required: true,
       unique: true,
     },
-    status:{
+    status: {
       type: Boolean,
       required: true,
       default: true,

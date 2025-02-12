@@ -1,7 +1,7 @@
 import type { INestApplication } from '@nestjs/common'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { APP_NAME, APP_SWAGGER_URL } from '@config/constants'
-import { NODE_ENV } from '@config/enviroments'
+import { APP_NAME, APP_SWAGGER_URL } from '@/config/constants'
+import { NODE_ENV } from '@/config/enviroments'
 
 const swaggerConfig = new DocumentBuilder()
   .addBearerAuth()

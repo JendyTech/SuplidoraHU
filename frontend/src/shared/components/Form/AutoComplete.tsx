@@ -1,5 +1,5 @@
 "use client"
-import styles from '@shared/styles/components/Form/AutoComplete.module.css'
+import styles from '@/shared/styles/components/Form/AutoComplete.module.css'
 import { useState, useEffect, useRef } from 'react'
 
 export interface Option {

@@ -1,13 +1,17 @@
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { ProductModel } from '@database/products.db'
-import { mongoosePagination } from '@shared/functions/pagination'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { ProductModel } from '@/database/products.db'
+import { mongoosePagination } from '@/shared/functions/pagination'
 import { FilterQuery, Types } from 'mongoose'
-import { IProduct } from '@interfaces/Product'
-import { MODELS_NAMES } from '@config/constants'
-import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
+import { IProduct } from '@/interfaces/Product'
+import { MODELS_NAMES } from '@/config/constants'
+import { CatalogPaginationDTO } from '@/shared/dto/CatalogPagination.dto'
 
 export class CatalogRepository {
-  static async getCatalog(pagination: CatalogPaginationDTO, minPrice?: number, maxPrice?: number) {
+  static async getCatalog(
+    pagination: CatalogPaginationDTO,
+    minPrice?: number,
+    maxPrice?: number,
+  ) {
     const filters: FilterQuery<IProduct> = {}
 
     if (pagination.search) {
@@ -29,13 +33,16 @@ export class CatalogRepository {
       })
     }
 
-    if (pagination.minPrice !== undefined || pagination.maxPrice !== undefined) {
-      filters.price = {};
+    if (
+      pagination.minPrice !== undefined ||
+      pagination.maxPrice !== undefined
+    ) {
+      filters.price = {}
       if (minPrice !== undefined) {
-        filters.price.$gte = Number(minPrice); 
+        filters.price.$gte = Number(minPrice)
       }
       if (maxPrice !== undefined) {
-        filters.price.$lte = Number(maxPrice); 
+        filters.price.$lte = Number(maxPrice)
       }
     }
 

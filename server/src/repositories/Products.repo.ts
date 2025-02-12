@@ -3,14 +3,14 @@ import {
   GetProductByIdWithImagesResult,
   SaveImageProduct,
   UpdateProducts,
-} from '@contracts/repositories/Products.repo'
-import { ProductModel, ProductPhotoModel } from '@database/products.db'
-import { mongoosePagination } from '@shared/functions/pagination'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
+} from '@/contracts/repositories/Products.repo'
+import { ProductModel, ProductPhotoModel } from '@/database/products.db'
+import { mongoosePagination } from '@/shared/functions/pagination'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
 import { HttpException, HttpStatus } from '@nestjs/common'
-import { IProduct } from '@interfaces/Product'
-import { MODELS_NAMES } from '@config/constants'
-import { IProductPhoto } from '@interfaces/Product'
+import { IProduct } from '@/interfaces/Product'
+import { MODELS_NAMES } from '@/config/constants'
+import { IProductPhoto } from '@/interfaces/Product'
 import { Types, FilterQuery } from 'mongoose'
 
 export class ProductRepository {

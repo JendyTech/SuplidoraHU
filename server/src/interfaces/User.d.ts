@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongoose'
-import { IUser } from '@interfaces/User';
+import { IUser } from '@/interfaces/User'
 
 export interface IUser {
   _id: string

@@ -1,9 +1,9 @@
-import AUTH from '@messages/Auth.json'
-import { ERROR_DATABASE_MESSAGE } from '@messages/General.json'
+import AUTH from '@/messages/Auth.json'
+import { ERROR_DATABASE_MESSAGE } from '@/messages/General.json'
 import { Reflector } from '@nestjs/core'
-import { IS_PUBLIC_KEY } from '@config/constants'
-import { verifyToken, isExpired } from '@shared/functions/jwt'
-import { errorResponse } from '@shared/functions/response'
+import { IS_PUBLIC_KEY } from '@/config/constants'
+import { verifyToken, isExpired } from '@/shared/functions/jwt'
+import { errorResponse } from '@/shared/functions/response'
 import { Request } from 'express'
 import {
   CanActivate,
@@ -11,7 +11,7 @@ import {
   Injectable,
   HttpStatus,
 } from '@nestjs/common'
-import { UserRepository } from '@repositories/User.repo'
+import { UserRepository } from '@/repositories/User.repo'
 
 @Injectable()
 export class AuthGuard implements CanActivate {

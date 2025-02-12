@@ -1,6 +1,6 @@
 import colors from 'colors'
 import { connect } from 'mongoose'
-import { MONGO_URI } from '@config/enviroments'
+import { MONGO_URI } from '@/config/enviroments'
 
 connect(MONGO_URI)
   .then(() => {

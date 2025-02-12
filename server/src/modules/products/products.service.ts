@@ -1,21 +1,21 @@
-import PRODUCT from '@messages/Product.json'
-import CATEGORY from '@messages/Category.json'
-import GENERAL from '@messages/General.json'
+import PRODUCT from '@/messages/Product.json'
+import CATEGORY from '@/messages/Category.json'
+import GENERAL from '@/messages/General.json'
 import { Injectable } from '@nestjs/common'
 import {
   CreateProductDto,
   UpdateProductDto,
-} from '@modules/products/dto/product.dto'
-import { IUser } from '@interfaces/User'
-import { generateSlug } from '@shared/utils/generateSlug'
-import { ProductRepository } from '@repositories/Products.repo'
-import { successResponse, errorResponse } from '@shared/functions/response'
+} from '@/modules/products/dto/product.dto'
+import { IUser } from '@/interfaces/User'
+import { generateSlug } from '@/shared/utils/generateSlug'
+import { ProductRepository } from '@/repositories/Products.repo'
+import { successResponse, errorResponse } from '@/shared/functions/response'
 import { HttpStatus } from '@nestjs/common'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { uploadBase64, deleteResource } from '@shared/functions/cloudinary'
-import { CloudinaryResult } from '@contracts/Cloudinary'
-import { CategoryRepository } from '@repositories/Category.repo'
-import { UploadProductImage } from '@contracts/repositories/Products.repo'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { uploadBase64, deleteResource } from '@/shared/functions/cloudinary'
+import { CloudinaryResult } from '@/contracts/Cloudinary'
+import { CategoryRepository } from '@/repositories/Category.repo'
+import { UploadProductImage } from '@/contracts/repositories/Products.repo'
 
 @Injectable()
 export class ProductsService {
