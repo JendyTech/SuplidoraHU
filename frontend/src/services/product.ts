@@ -4,7 +4,6 @@ import { getToken } from "@/utils/tokenClient";
 import { Pagination } from "@/contracts/API";
 import { IProduct } from "@/interfaces/Product/Product";
 import { GetProduct } from "@/interfaces/Product/GetProduct";
-import { Update } from "vite";
 import { UpdateProduct } from "@/interfaces/Product/UpdateProduct";
 import { Category } from "@/interfaces/Category/Category";
 
