@@ -14,7 +14,7 @@ import {
   CreateProductDto,
   UpdateProductDto,
   UploadProductImageDto,
-} from '@/modules/products/dto/Product.dto'
+} from './dto/product.dto'
 import { User } from '@/shared/decorators/Session'
 import { IUser } from '@/interfaces/User'
 
