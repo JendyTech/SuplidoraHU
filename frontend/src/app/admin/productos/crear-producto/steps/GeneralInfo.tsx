@@ -17,6 +17,7 @@ import {
 } from "@tabler/icons-react"
 import { toast } from "sonner"
 import CustomSelect from "@/shared/components/Form/Select"
+import { Category } from '@/interfaces/Category/Category'
 
 const GeneralInfo = ({
   getCategories,

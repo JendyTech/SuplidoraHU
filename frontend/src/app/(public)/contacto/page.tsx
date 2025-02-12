@@ -10,7 +10,7 @@ import {
 import { motion } from "framer-motion"
 import styles from "@/shared/styles/components/Public/contactPage.module.css"
 
-export function ContactPage() {
+export default function ContactPage() {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -162,4 +162,3 @@ export function ContactPage() {
   )
 }
 
-export default ContactPage
