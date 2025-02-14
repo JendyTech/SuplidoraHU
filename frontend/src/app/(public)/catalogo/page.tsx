@@ -359,7 +359,7 @@ export default function CalalogPage() {
                 />
               </div>
             ) : null}
-            <div style={{ display: "flex", gap: "20px", justifyContent: "space-between" }}>
+            <div className={styles2.query} style={{ display: "flex", gap: "20px", justifyContent: "space-between" }}>
 
               <div className={styles2.filterButton} onClick={() => setShowModal(true)}>
                 <p>Filtros</p>
@@ -380,9 +380,7 @@ export default function CalalogPage() {
 
                 isNextPage={isNextProducts}
               />
-              <p>{
-                totalProducts < 20 ? totalProducts : `${actualNextIndex * 20} a ${(actualNextIndex + 1) * 20}`
-              } de {totalProducts} productos listados</p>
+
             </div>
 
             {loading ? (
@@ -417,6 +415,7 @@ export default function CalalogPage() {
                   key={product.id}
                   title={product.name}
                   price={product.price}
+                  status={product.status}
                   image={product.image}
                   description={product.description}
                   code={product.code}
@@ -445,8 +444,14 @@ export default function CalalogPage() {
         </section>
 
       </div>
-      {showModal ? <div className={styles2.cardResponsive}>
-        <div className={styles2.cardResponsiveContent}>
+      {showModal ? <div style={{
+
+      }} className={styles2.cardResponsive} >
+        <div className={styles2.cardResponsiveContent} style={
+          {
+            marginBottom: "40px"
+          }
+        }>
           <div className={styles2.inputWrapper} style={{ display: "flex", justifyContent: "space-between", alignContent: "center" }}>
             <input
               type="text"
@@ -520,6 +525,7 @@ export default function CalalogPage() {
                   </span>
                 </label>
 
+
                 {categories?.map((category) => (
                   <label key={category._id} className={styles2.categoryOption}>
                     <input
@@ -540,6 +546,7 @@ export default function CalalogPage() {
                     </span>
                   </label>
                 ))}
+
               </form>
 
               {isNext ? (

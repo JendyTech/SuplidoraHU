@@ -69,6 +69,8 @@ export const updateProduct = async (id: string, updateProductData : UpdateProduc
 	const token = await getToken()
 	const { PATCH } = useClient(token)
 
+	console.log(updateProductData);
+
 	const response = await PATCH<IProduct>({
 		endpoint: `/products/${id}`,
 		body : updateProductData

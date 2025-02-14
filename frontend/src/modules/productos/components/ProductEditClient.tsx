@@ -256,13 +256,13 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
             onSelect={(value, label) => {
               value === label
                 ? setProduct((prevProduct) => ({
-                    ...prevProduct,
-                    categoryName: value,
-                  }))
+                  ...prevProduct,
+                  categoryName: value,
+                }))
                 : setProduct((prevProduct) => ({
-                    ...prevProduct,
-                    categoryId: value,
-                  }));
+                  ...prevProduct,
+                  categoryId: value,
+                }));
             }}
           />
         </div>
@@ -272,11 +272,11 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
           <CustomSelect
             name="status"
             options={[
-              { label: "Disponible", value: "true" }, 
+              { label: "Disponible", value: "true" },
               { label: "No Disponible", value: "false" },
             ]}
-            value={status ? "true" : "false"} 
-            onChange={handleStatusChange} 
+            value={status ? "true" : "false"}
+            onChange={handleStatusChange}
             placeholder="Selecciona el estado del producto"
           />
         </div>
@@ -349,21 +349,20 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
       <div className={styles.buttonContainer}>
         <CustomButton
           onClick={async () => {
-            console.log(product);
 
-            setLoading(true);
-            await useDelay(2000);
+            // setLoading(true);
+            // await useDelay(2000);
 
             try {
+
               const model: UpdateProduct = {
                 ...product,
                 price: Number(product.price),
                 status,
                 imagesToDelete: willDeleteImagesIds,
                 imagesToAdd: willAddImages,
+                categoryId: product.category!,
               };
-
-              console.log(model);
 
               const response = await updateProduct(productData._id, model);
 

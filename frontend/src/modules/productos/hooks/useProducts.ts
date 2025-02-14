@@ -13,7 +13,6 @@ export const useProducts = (initialState: Pagination<IProduct>) => {
   const [refresh, setRefresh] = useState<boolean>(false)
 
   const { setLoading } = useLoader()
-  console.log("hola papi")
   useEffect(() => {
     
     if (firstLoad) {

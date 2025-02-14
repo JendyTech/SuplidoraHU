@@ -14,7 +14,7 @@ const productSchema = new Schema<IProduct>(
       required: true,
       unique: true,
     },
-    status:{
+    status: {
       type: Boolean,
       required: true,
       default: true,

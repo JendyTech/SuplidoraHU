@@ -16,6 +16,7 @@ interface Props {
   code: string
   category: string
   changed: boolean
+  status: string
 }
 
 export function ProductCard(props: Props) {
@@ -63,6 +64,9 @@ export function ProductCard(props: Props) {
         <p className={styles.price}>${price.toFixed(2)}</p>
         <span className={styles.code}>
           {code}
+        </span>
+        <span className={styles.code}>
+          Disponible
         </span>
         <span className={styles.category}>
           {categoryName}

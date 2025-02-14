@@ -7,7 +7,11 @@ import { MODELS_NAMES } from '@config/constants'
 import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
 
 export class CatalogRepository {
-  static async getCatalog(pagination: CatalogPaginationDTO, minPrice?: number, maxPrice?: number) {
+  static async getCatalog(
+    pagination: CatalogPaginationDTO,
+    minPrice?: number,
+    maxPrice?: number,
+  ) {
     const filters: FilterQuery<IProduct> = {}
 
     if (pagination.search) {
@@ -29,13 +33,16 @@ export class CatalogRepository {
       })
     }
 
-    if (pagination.minPrice !== undefined || pagination.maxPrice !== undefined) {
-      filters.price = {};
+    if (
+      pagination.minPrice !== undefined ||
+      pagination.maxPrice !== undefined
+    ) {
+      filters.price = {}
       if (minPrice !== undefined) {
-        filters.price.$gte = Number(minPrice); 
+        filters.price.$gte = Number(minPrice)
       }
       if (maxPrice !== undefined) {
-        filters.price.$lte = Number(maxPrice); 
+        filters.price.$lte = Number(maxPrice)
       }
     }
 
@@ -74,6 +81,7 @@ export class CatalogRepository {
             _id: 0,
             name: 1,
             slug: 1,
+            status: 1,
             description: 1,
             code: 1,
             price: 1,

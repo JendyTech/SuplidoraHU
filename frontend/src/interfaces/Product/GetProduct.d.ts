@@ -9,6 +9,7 @@ export interface GetProduct<T = Image> {
     createdAt: string
     categoryName? : string
     categoryId? : string
+    category? : string 
     images : T[]
 }
 

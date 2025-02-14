@@ -138,9 +138,7 @@
   color: #4b5563;
 }
 
-.cardResponsive {
-  display: none;
-}
+
 
 .filterButton {
   width: 150px;
@@ -165,5 +163,18 @@
 @media (max-width: 999px) {
   .filterButton {
     display: flex;
+  }
+}
+
+
+@media (max-width: 500px) {
+  .query {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .filterButton {
+    margin: 0;
   }
 }

@@ -7,4 +7,5 @@ export interface CatalogProduct {
     description: string;
     image:       string;
     category:    string;
+    status :     string;
 }
