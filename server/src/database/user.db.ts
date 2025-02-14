@@ -1,6 +1,6 @@
-import { IUser, IUserPhoto } from '@interfaces/User'
+import { IUser, IUserPhoto } from '@/interfaces/User'
 import { model, Schema, Types } from 'mongoose'
-import { MODELS_NAMES } from '@config/constants'
+import { MODELS_NAMES } from '@/config/constants'
 
 const UserSchema = new Schema<IUser>(
   {
@@ -32,16 +32,16 @@ const UserSchema = new Schema<IUser>(
     },
     active: {
       type: Boolean,
-      default: true
+      default: true,
     },
     createdBy: {
       type: Types.ObjectId,
-      default: null
+      default: null,
     },
     updatedBy: {
       type: Types.ObjectId,
-      default: null
-    }
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -71,7 +71,7 @@ const userPhotoSchema = new Schema<IUserPhoto>(
   },
   {
     timestamps: true,
-  }
+  },
 )
 
 export const UserPhotoModel = model<IUserPhoto>(

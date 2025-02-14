@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common'
-import { APP_SIZE_LIMIT_UPLOAD } from '@config/constants'
+import { APP_SIZE_LIMIT_UPLOAD } from '@/config/constants'
 import { json, urlencoded } from 'body-parser'
 
 export const parserSetup = (app: INestApplication) => {

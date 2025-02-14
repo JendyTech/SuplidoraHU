@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import styles from '@/shared/styles/components/Public/ProductCard.module.css'
 import { getCategoryNameById } from '@services/product'
 import { toast } from 'sonner'
-import { ProductCardSkeleton } from '@shared/components/Public/ProductCardSkeleton'
+import { ProductCardSkeleton } from '@/shared/components/Public/ProductCardSkeleton'
 
 
 interface Props {

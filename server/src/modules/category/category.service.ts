@@ -1,11 +1,11 @@
-import CATEGORY from '@messages/Category.json'
-import GENERAL from '@messages/General.json'
+import CATEGORY from '@/messages/Category.json'
+import GENERAL from '@/messages/General.json'
 import { Injectable } from '@nestjs/common'
-import { catchError } from '@shared/utils/catchError'
+import { catchError } from '@/shared/utils/catchError'
 import { HttpStatus } from '@nestjs/common'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { successResponse, errorResponse } from '@shared/functions/response'
-import { CategoryRepository } from '@repositories/Category.repo'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { successResponse, errorResponse } from '@/shared/functions/response'
+import { CategoryRepository } from '@/repositories/Category.repo'
 
 @Injectable()
 export class CategoryService {

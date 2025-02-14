@@ -1,9 +1,9 @@
-import { ContentContainer } from '@shared/components/Public/ContentContainer'
-import { Typography } from '@shared/components/Public/Typograpy'
-import { AutoGrid } from '@shared/components/Container/AutoGrid'
-import { Feature } from '@shared/components/Public/Feature'
-import { Hero } from '@shared/components/Public/Hero'
-import { FEATURES } from '@shared/data/public'
+import { ContentContainer } from '@/shared/components/Public/ContentContainer'
+import { Typography } from '@/shared/components/Public/Typograpy'
+import { AutoGrid } from '@/shared/components/Container/AutoGrid'
+import { Feature } from '@/shared/components/Public/Feature'
+import { Hero } from '@/shared/components/Public/Hero'
+import { FEATURES } from '@/shared/data/public'
 
 export default function Home() {
   return (

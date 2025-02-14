@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import styles from "@modules/productos/styles/editProduct.module.css";
-import CustomInput from "@shared/components/Form/Input";
-import CustomButton from "@shared/components/Buttons/CustomButton";
-import { useState } from "react";
-import { useTranformFileToBase64 } from "@/hooks/useBase64";
-import { getAllCategories, updateProduct } from "@services/product";
-import { useLoader } from "@/contexts/Loader";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { GetProduct, Image } from "@interfaces/Product/GetProduct";
-import { UpdateProduct } from "@interfaces/Product/UpdateProduct";
-import { useDelay } from "@/hooks/useDelay";
-import { AutoComplete, Option } from "@shared/components/Form/AutoComplete";
+import styles from "@/modules/productos/styles/editProduct.module.css"
+import CustomInput from "@/shared/components/Form/Input"
+import CustomButton from "@/shared/components/Buttons/CustomButton"
+import { useState } from "react"
+import { useTranformFileToBase64 } from "@/hooks/useBase64"
+import { getAllCategories, updateProduct } from "@services/product"
+import { useLoader } from "@/contexts/Loader"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+import { GetProduct, Image } from "@/interfaces/Product/GetProduct"
+import { UpdateProduct } from "@/interfaces/Product/UpdateProduct"
+import { useDelay } from "@/hooks/useDelay"
+import { AutoComplete, Option } from "@/shared/components/Form/AutoComplete"
 import {
   IconBarcode,
   IconBoxSeam,
@@ -21,11 +21,11 @@ import {
   IconFileDescription,
   IconPackage,
   IconPhoto,
-} from "@tabler/icons-react";
-import CustomSelect from "@shared/components/Form/Select";
+} from "@tabler/icons-react"
+import CustomSelect from "@/shared/components/Form/Select"
 
 interface ProductEditClientProps {
-  productData: GetProduct;
+  productData: GetProduct
 }
 
 const ProductEditClient: React.FC<ProductEditClientProps> = ({
@@ -34,53 +34,53 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
   const [product, setProduct] = useState<GetProduct<Image>>(() => ({
     ...productData,
     images: productData.images.map((el) => el),
-  }));
+  }))
 
-  const [status, setStatus] = useState<boolean>(productData.status);
+  const [status, setStatus] = useState<boolean>(productData.status)
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value == "true";
-    setStatus(selectedValue);
-  };
+    const selectedValue = e.target.value == "true"
+    setStatus(selectedValue)
+  }
 
   const [previewImages, setPreviewImages] = useState<Image[]>(
     productData.images.map((el) => el)
-  );
+  )
 
-  const [willDeleteImagesIds, setWillDeleteImagesIds] = useState<string[]>([]);
-  const [willAddImages, setWillAddImages] = useState<string[]>([]);
+  const [willDeleteImagesIds, setWillDeleteImagesIds] = useState<string[]>([])
+  const [willAddImages, setWillAddImages] = useState<string[]>([])
 
-  const router = useRouter();
-  if (!product) return <div>Producto no encontrado</div>;
+  const router = useRouter()
+  if (!product) return <div>Producto no encontrado</div>
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     if (value && name) {
       setProduct((prevProduct) => ({
         ...prevProduct!,
         [name]: value,
-      }));
+      }))
     }
-  };
+  }
 
-  const [categories, setCategories] = useState<Option[]>([]);
+  const [categories, setCategories] = useState<Option[]>([])
 
   const getCategories = async () => {
-    const response = await getAllCategories();
+    const response = await getAllCategories()
 
     if (response.ok) {
-      const categories = response.result.data;
-      return categories;
+      const categories = response.result.data
+      return categories
     }
 
-    return [];
-  };
+    return []
+  }
 
   const handleSeachCategory = async (value: string) => {
-    const categories = await getCategories();
-    if (!categories) return;
+    const categories = await getCategories()
+    if (!categories) return
     setCategories((prevState) => [
       ...prevState,
       ...categories
@@ -95,15 +95,15 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
             )
         )
         .slice(0, 2),
-    ]);
-  };
+    ])
+  }
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileInput = e.target;
-    const file = fileInput.files?.[0];
-    if (!file) return;
+    const fileInput = e.target
+    const file = fileInput.files?.[0]
+    if (!file) return
 
-    const result = await useTranformFileToBase64(file);
+    const result = await useTranformFileToBase64(file)
 
     const newImage: Image = {
       _id: "",
@@ -114,49 +114,49 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
       updatedAt: new Date(),
       __v: 0,
       publicId: "",
-    };
+    }
     const isInWillAddImages: boolean = willAddImages.some(
       (image: string) => image === result
-    );
+    )
 
     if (!isInWillAddImages) {
-      const newImages = [...previewImages, newImage];
-      setPreviewImages((prev) => [...prev, newImage]);
+      const newImages = [...previewImages, newImage]
+      setPreviewImages((prev) => [...prev, newImage])
       setProduct((prev) => ({
         ...prev!,
         images: newImages,
-      }));
+      }))
     }
 
-    fileInput.value = "";
+    fileInput.value = ""
 
     const isInProduct: boolean = productData.images.some(
       (image: Image) => image.url === result
-    );
+    )
     if (!isInProduct && !isInWillAddImages) {
-      setWillAddImages((prev) => [...prev, result]);
+      setWillAddImages((prev) => [...prev, result])
     }
-  };
+  }
 
   const handleRemoveImage = (index: number, id: string, url: string) => {
-    const newImages = previewImages.filter((_, i) => i !== index);
-    setPreviewImages(newImages);
+    const newImages = previewImages.filter((_, i) => i !== index)
+    setPreviewImages(newImages)
     setProduct((prev) => ({
       ...prev!,
       images: newImages,
-    }));
+    }))
 
     const isInProduct: boolean = productData.images.some(
       (image: Image) => image._id === id
-    );
+    )
     if (isInProduct) {
-      setWillDeleteImagesIds((prev) => [...prev, id]);
+      setWillDeleteImagesIds((prev) => [...prev, id])
     }
 
-    setWillAddImages((prev) => prev.filter((image: string) => image !== url));
-  };
+    setWillAddImages((prev) => prev.filter((image: string) => image !== url))
+  }
 
-  const { setLoading } = useLoader();
+  const { setLoading } = useLoader()
 
   return (
     <div className={styles.tableContainer}>
@@ -262,7 +262,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
                 : setProduct((prevProduct) => ({
                   ...prevProduct,
                   categoryId: value,
-                }));
+                }))
             }}
           />
         </div>
@@ -349,9 +349,10 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
       <div className={styles.buttonContainer}>
         <CustomButton
           onClick={async () => {
+            console.log(product)
 
-            // setLoading(true);
-            // await useDelay(2000);
+            setLoading(true)
+            await useDelay(2000)
 
             try {
 
@@ -361,26 +362,27 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
                 status,
                 imagesToDelete: willDeleteImagesIds,
                 imagesToAdd: willAddImages,
-                categoryId: product.category!,
-              };
+              }
 
-              const response = await updateProduct(productData._id, model);
+              console.log(model)
+
+              const response = await updateProduct(productData._id, model)
 
               if (response.ok) {
                 toast.success(
                   `Producto ${productData.name} editado correctamente.`
-                );
+                )
               } else {
-                toast.error(response.messages[0].message);
-                return;
+                toast.error(response.messages[0].message)
+                return
               }
 
-              setLoading(false);
-              router.push("/admin/productos");
+              setLoading(false)
+              router.push("/admin/productos")
             } catch (error) {
-              setLoading(false);
+              setLoading(false)
             } finally {
-              setLoading(false);
+              setLoading(false)
             }
           }}
           style="filled"
@@ -390,7 +392,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductEditClient;
+export default ProductEditClient

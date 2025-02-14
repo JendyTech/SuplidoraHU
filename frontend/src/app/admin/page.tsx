@@ -1,85 +1,85 @@
-"use client";
+"use client"
 
-import { useLoader } from "@/contexts/Loader";
-import { useDelay } from "@/hooks/useDelay";
-import { Pagination } from "@contracts/API";
-import { IProduct } from "@interfaces/Product/Product";
-import { GetProduct, Image } from "@interfaces/Product/GetProduct";
-import { CatalogProduct } from "@interfaces/catalog/CatalogProduct";
-import styles from "@modules/dashboard/styles/dashboard.module.css";
-import { InfoContainer } from "@modules/productos/components/InfoContainer";
-import { useProducts } from "@modules/productos/hooks/useProducts";
-import { getAllProducts, getAllCategories } from "@services/product";
-import CustomTable from "@shared/components/CustomTable";
+import { useLoader } from "@/contexts/Loader"
+import { useDelay } from "@/hooks/useDelay"
+import { Pagination } from "@/contracts/API"
+import { IProduct } from "@/interfaces/Product/Product"
+import { GetProduct, Image } from "@/interfaces/Product/GetProduct"
+import { CatalogProduct } from "@/interfaces/catalog/CatalogProduct"
+import styles from "@/modules/dashboard/styles/dashboard.module.css"
+import { InfoContainer } from "@/modules/productos/components/InfoContainer"
+import { useProducts } from "@/modules/productos/hooks/useProducts"
+import { getAllProducts, getAllCategories } from "@services/product"
+import CustomTable from "@/shared/components/CustomTable"
 import {
   IconCalendarTime,
   IconCategory,
   IconShoppingCart,
   IconShoppingCartPlus,
-} from "@tabler/icons-react";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { TableColumn } from "react-data-table-component";
-import { AutoComplete } from "@shared/components/Form/AutoComplete";
-import { getCatalog } from "@services/catalog";
-import { toast } from "sonner";
-import { ProductCard } from "@shared/components/Public/ProductCard";
+} from "@tabler/icons-react"
+import dayjs from "dayjs"
+import { useEffect, useState } from "react"
+import { TableColumn } from "react-data-table-component"
+import { AutoComplete } from "@/shared/components/Form/AutoComplete"
+import { getCatalog } from "@services/catalog"
+import { toast } from "sonner"
+import { ProductCard } from "@/shared/components/Public/ProductCard"
 
 export default function AdminPage() {
-  const [last3Products, setLast3Products] = useState<Pagination<IProduct>>();
-  const [allProducts, setAllProducts] = useState<Pagination<IProduct>>();
-  const [products, setProducts] = useState<CatalogProduct[]>([]);
-  const [totalProducts, setTotalProducts] = useState<number>(0);
-  const [totalCategories, setTotalCategories] = useState<number>(0);
+  const [last3Products, setLast3Products] = useState<Pagination<IProduct>>()
+  const [allProducts, setAllProducts] = useState<Pagination<IProduct>>()
+  const [products, setProducts] = useState<CatalogProduct[]>([])
+  const [totalProducts, setTotalProducts] = useState<number>(0)
+  const [totalCategories, setTotalCategories] = useState<number>(0)
 
-  const { setLoading } = useLoader();
+  const { setLoading } = useLoader()
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
-      await useDelay(1000);
-      const data = await getCatalog();
+      setLoading(true)
+      await useDelay(1000)
+      const data = await getCatalog()
       if (data.ok) {
-        setProducts(data.result.data.slice(-3));
+        setProducts(data.result.data.slice(-3))
       } else {
-        toast.error(data.messages[0].message);
+        toast.error(data.messages[0].message)
       }
 
-      setLoading(false);
-    };
-    fetchProducts();
-  }, []);
+      setLoading(false)
+    }
+    fetchProducts()
+  }, [])
 
   useEffect(() => {
     const setData = async () => {
-      setLoading(true);
+      setLoading(true)
 
-      const productsResponse = await getAllProducts({}, false);
-      const categoriesResponse = await getAllCategories({});
+      const productsResponse = await getAllProducts({}, false)
+      const categoriesResponse = await getAllCategories({})
 
       if (!productsResponse.ok || !categoriesResponse.ok) {
-        setLoading(false);
-        return;
+        setLoading(false)
+        return
       }
 
-      const productData = productsResponse.result;
-      const categoryData = categoriesResponse.result;
+      const productData = productsResponse.result
+      const categoryData = categoriesResponse.result
 
       const sortedProducts = [...productData.data].sort(
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
-      const last3 = sortedProducts.slice(0, 3);
+      )
+      const last3 = sortedProducts.slice(0, 3)
 
-      await useDelay(3000);
-      setAllProducts(productData);
-      setLast3Products({ ...productData, data: last3 });
-      setTotalProducts(productData.metadata.total);
-      setTotalCategories(categoryData.metadata.total);
-      setLoading(false);
-    };
-    setData();
-  }, []);
+      await useDelay(3000)
+      setAllProducts(productData)
+      setLast3Products({ ...productData, data: last3 })
+      setTotalProducts(productData.metadata.total)
+      setTotalCategories(categoryData.metadata.total)
+      setLoading(false)
+    }
+    setData()
+  }, [])
 
   const productsHeaders: TableColumn<IProduct>[] = [
     { name: "Nombre", selector: (row) => row.name, width: "350px" },
@@ -103,7 +103,7 @@ export default function AdminPage() {
       name: "Fecha de Creación",
       selector: (row) => dayjs(row.createdAt).format("DD [de] MMMM YYYY"),
     },
-  ];
+  ]
 
   return (
     <>
@@ -150,7 +150,7 @@ export default function AdminPage() {
             <h3>Últimos productos agregados</h3>
             <br />
             <CustomTable
-              setFilters={() => {}}
+              setFilters={() => { }}
               headers={productsHeaders}
               result={last3Products}
               paginationEnabled={false}
@@ -237,5 +237,5 @@ export default function AdminPage() {
         </div>
       </div>
     </>
-  );
+  )
 }

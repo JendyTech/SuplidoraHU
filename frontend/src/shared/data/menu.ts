@@ -1,7 +1,6 @@
-import { ItemMenu } from "@interfaces/TopBar";
+import { ItemMenu } from "@/interfaces/TopBar";
 
 export const topBar: ItemMenu[] = [
- 
   {
     url: "/admin/productos",
     title: "Productos",

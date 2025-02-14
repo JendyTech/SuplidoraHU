@@ -1,29 +1,29 @@
-import { useSubmit } from "@/hooks/useForm"
-import { setCookie } from "@/utils/cookies"
-import { STORAGES } from "@config/constants"
-import { loginService } from "@services/auth"
+import { useSubmit } from "@/hooks/useForm";
+import { setCookie } from "@/utils/cookies";
+import { STORAGES } from "@/config/constants";
+import { loginService } from "@services/auth";
 
 export const useLogin = () => {
-	const submit = useSubmit(async ({ data, reject, resolve }) => {
-		try {
-			const response = await loginService(data)
+  const submit = useSubmit(async ({ data, reject, resolve }) => {
+    try {
+      const response = await loginService(data);
 
-			if (!response.ok) {
-				return reject(response.messages[0].message)
-			}
+      if (!response.ok) {
+        return reject(response.messages[0].message);
+      }
 
-			await setCookie(STORAGES.TOKEN, response.result.token, 30)
+      await setCookie(STORAGES.TOKEN, response.result.token, 30);
 
-			resolve({
-				message: response.message,
-				redirect: "/admin/productos",
-			})
-		} catch (error) {
-			return reject("An error occurred while trying to login")
-		}
-	})
+      resolve({
+        message: response.message,
+        redirect: "/admin/productos",
+      });
+    } catch (error) {
+      return reject("An error occurred while trying to login");
+    }
+  });
 
-	return {
-		submit,
-	}
-}
+  return {
+    submit,
+  };
+};

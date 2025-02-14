@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IProduct } from "@interfaces/Product/Product";
+import { IProduct } from "@/interfaces/Product/Product";
 
 export const useCart = () => {
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);

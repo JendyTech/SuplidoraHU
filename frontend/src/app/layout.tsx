@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { LoaderProvider } from '@/contexts/Loader'
 import { Toaster } from 'sonner'
 import { LoadAppScreen } from '@/shared/components/Screen/LoadAppScreen'
-import { poppins } from '@config/fonts'
+import { poppins } from '@/config/fonts'
 
 export const metadata: Metadata = {
   title: "Suplidora HU",

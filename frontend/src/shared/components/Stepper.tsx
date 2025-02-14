@@ -1,7 +1,7 @@
 "use client"
 
-import styles from '@shared/styles/components/stepper.module.css'
-import CustomButton from '@shared/components/Buttons/CustomButton'
+import styles from '@/shared/styles/components/stepper.module.css'
+import CustomButton from '@/shared/components/Buttons/CustomButton'
 import { Children } from 'react'
 import { Icon, IconProps } from '@tabler/icons-react'
 
@@ -43,7 +43,7 @@ export function Stepper(props: StepperProps) {
 
 
   const handleNextStep = (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
     const newStep = active + 1
     const isLastStep = newStep > (steps.length - 1)
 

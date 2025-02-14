@@ -1,4 +1,4 @@
-import { ICreditNote, ICreditNoteItem } from '@interfaces/CreditNote'
+import { ICreditNote, ICreditNoteItem } from '@/interfaces/CreditNote'
 
 export interface CreateCreditNotes
   extends Omit<ICreditNote, '_id' | 'createdAt' | 'updatedAt'> {
@@ -6,11 +6,11 @@ export interface CreateCreditNotes
 }
 
 export interface CreateCreditNoteItem {
-    productId: string
-    quantity: number
-    description: string
-    unitPrice: number
-    total: number
+  productId: string
+  quantity: number
+  description: string
+  unitPrice: number
+  total: number
 }
 
 export interface GetCreditNoteByIdWithItemsResults extends ICreditNote {

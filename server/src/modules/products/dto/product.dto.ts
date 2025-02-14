@@ -1,5 +1,5 @@
-import { IsBase64Image } from '@shared/decorators/Validator'
-import { imageBase64 } from '@shared/data/imageBase64'
+import { IsBase64Image } from '@/shared/decorators/Validator'
+import { imageBase64 } from '@/shared/data/imageBase64'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsString,
@@ -11,7 +11,7 @@ import {
   IsOptional,
   IsArray,
   IsMongoId,
-  IsBoolean
+  IsBoolean,
 } from 'class-validator'
 
 export class CreateProductDto {
@@ -26,7 +26,10 @@ export class CreateProductDto {
     description: 'Descripción del producto',
   })
   @IsNumber({}, { message: 'El precio debe ser un número' })
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'El precio debe ser un número entero o con 2 decimales' })
+  @IsNumber(
+    { maxDecimalPlaces: 2 },
+    { message: 'El precio debe ser un número entero o con 2 decimales' },
+  )
   @Min(1, { message: 'El precio debe ser mayor a 0' })
   price: number
 
@@ -60,10 +63,10 @@ export class CreateProductDto {
   @Min(1, { message: 'Las unidades por paquete debe ser mayor a 0' })
   unitsPerPack: number
 
-  @ApiProperty({ example: [imageBase64], description: 'Imagen del producto'})
+  @ApiProperty({ example: [imageBase64], description: 'Imagen del producto' })
   @IsOptional()
   @IsArray()
-  images?: string[];
+  images?: string[]
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -71,17 +74,14 @@ export class CreateProductDto {
   @IsNotEmpty({ message: 'El nombre de la categoria no puede estar vacío' })
   categoryName?: string
 
-
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString({ message: 'El id de la categoria debe ser un string' })
   @IsMongoId({ message: 'El id de la categoria debe ser valido' })
   categoryId?: string
-
-
 }
 
-export class UpdateProductDto{
+export class UpdateProductDto {
   @ApiProperty({ example: 'Producto 1', description: 'Nombre del producto' })
   @IsString({ message: 'El nombre debe ser un string' })
   @IsNotEmpty({ message: 'El nombre no puede estar vacío' })
@@ -94,7 +94,10 @@ export class UpdateProductDto{
     description: 'Descripción del producto',
   })
   @IsNumber({}, { message: 'El precio debe ser un número' })
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'El precio debe ser un número entero o con 2 decimales' })
+  @IsNumber(
+    { maxDecimalPlaces: 2 },
+    { message: 'El precio debe ser un número entero o con 2 decimales' },
+  )
   @Min(1, { message: 'El precio debe ser mayor a 0' })
   @IsOptional()
   price?: number
@@ -132,20 +135,20 @@ export class UpdateProductDto{
   @Min(1, { message: 'Las unidades por paquete debe ser mayor a 0' })
   unitsPerPack?: number
 
-  @ApiProperty({ example: [imageBase64], description: 'Imagen del producto'})
+  @ApiProperty({ example: [imageBase64], description: 'Imagen del producto' })
   @IsOptional()
   @IsArray()
-  images?: string[];
+  images?: string[]
 
-  @ApiProperty({ example: "00000000000000", description: 'ID del producto'})
+  @ApiProperty({ example: '00000000000000', description: 'ID del producto' })
   @IsOptional()
   @IsArray()
-  imagesToDelete?: string[];
+  imagesToDelete?: string[]
 
-  @ApiProperty({ example: [imageBase64], description: 'Imagen del producto'})
+  @ApiProperty({ example: [imageBase64], description: 'Imagen del producto' })
   @IsOptional()
   @IsArray()
-  imagesToAdd?: string[];
+  imagesToAdd?: string[]
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -159,7 +162,6 @@ export class UpdateProductDto{
   @IsMongoId({ message: 'El id de la categoria debe ser valido' })
   categoryId?: string
 }
-
 
 export class UploadProductImageDto {
   @ApiProperty({ example: imageBase64, description: 'Imagen del producto' })

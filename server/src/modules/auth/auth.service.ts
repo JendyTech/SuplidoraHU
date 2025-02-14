@@ -1,13 +1,13 @@
-import AUTH from '@messages/Auth.json'
-import { ERROR_DATABASE_MESSAGE } from '@messages/General.json'
+import AUTH from '@/messages/Auth.json'
+import { ERROR_DATABASE_MESSAGE } from '@/messages/General.json'
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { UserRepository } from '@repositories/User.repo'
-import { SESSION_TOKEN_TIME } from '@config/constants'
-import { compareHash } from '@shared/functions/hash'
-import { successResponse, errorResponse } from '@shared/functions/response'
-import { createToken } from '@shared/functions/jwt'
-import { SignInDTO } from '@modules/auth/dto/signIn.dto'
-import { TOKEN_DESTINATION } from '@config/constants'
+import { UserRepository } from '@/repositories/User.repo'
+import { SESSION_TOKEN_TIME } from '@/config/constants'
+import { compareHash } from '@/shared/functions/hash'
+import { successResponse, errorResponse } from '@/shared/functions/response'
+import { createToken } from '@/shared/functions/jwt'
+import { SignInDTO } from '@/modules/auth/dto/signIn.dto'
+import { TOKEN_DESTINATION } from '@/config/constants'
 
 @Injectable()
 export class AuthService {
@@ -51,7 +51,7 @@ export class AuthService {
     if (!user.active) {
       return errorResponse({
         message: AUTH.LOGIN.USER_IS_NOT_ACTIVE,
-        status: HttpStatus.UNAUTHORIZED
+        status: HttpStatus.UNAUTHORIZED,
       })
     }
 

@@ -1,69 +1,68 @@
-import { useState, useEffect } from "react"
-import { useLoader } from "@/contexts/Loader"
-import { Pagination, ParamsPaginationFilter } from '@/contracts/API'
-import { IProduct } from "@interfaces/Product/Product"
-import { getAllProducts } from "@services/product"
-import { useDelay } from "@/hooks/useDelay"
-import { toast } from "sonner"
-import { CatalogProduct } from "@interfaces/catalog/CatalogProduct"
-import { getCatalog } from "@services/catalog"
+import { useState, useEffect } from "react";
+import { useLoader } from "@/contexts/Loader";
+import { Pagination, ParamsPaginationFilter } from "@/contracts/API";
+import { IProduct } from "@/interfaces/Product/Product";
+import { getAllProducts } from "@services/product";
+import { useDelay } from "@/hooks/useDelay";
+import { toast } from "sonner";
+import { CatalogProduct } from "@/interfaces/catalog/CatalogProduct";
+import { getCatalog } from "@services/catalog";
 
-export const useCatalogProducts = (initialState: Pagination<CatalogProduct>) => {
-  const [pagination, setPagination] = useState(initialState)
-  const [firstLoad, setFirstLoad] = useState(true)
-  const [filters, setFilters] = useState<ParamsPaginationFilter>({})
+export const useCatalogProducts = (
+  initialState: Pagination<CatalogProduct>
+) => {
+  const [pagination, setPagination] = useState(initialState);
+  const [firstLoad, setFirstLoad] = useState(true);
+  const [filters, setFilters] = useState<ParamsPaginationFilter>({});
 
-  const [refresh, setRefresh] = useState<boolean>(false)
+  const [refresh, setRefresh] = useState<boolean>(false);
 
-  const { setLoading } = useLoader()
+  const { setLoading } = useLoader();
 
   useEffect(() => {
-
     if (firstLoad) {
-      setFirstLoad(false)
-      return
+      setFirstLoad(false);
+      return;
     }
 
     const getProducts = async () => {
       if (!refresh) {
-        return
+        return;
       }
-      setLoading(true)
+      setLoading(true);
 
-      await useDelay(500)
+      await useDelay(500);
 
       try {
-        const response = await getCatalog(filters)
+        const response = await getCatalog(filters);
 
         if (!response.ok) {
-          toast.error("Error al buscar los productos")
-          return
+          toast.error("Error al buscar los productos");
+          return;
         }
-  
-        setPagination(response.result)
+
+        setPagination(response.result);
       } catch (error) {
-        toast.error("Error al buscar los productos")
+        toast.error("Error al buscar los productos");
       } finally {
-        setLoading(false)
+        setLoading(false);
 
         if (refresh) {
-          setRefresh(false)
+          setRefresh(false);
         }
       }
-    }
+    };
 
-    void getProducts()
-
-  }, [filters, refresh])
+    void getProducts();
+  }, [filters, refresh]);
 
   const reload = () => {
-    setRefresh(true)
-  }
-
+    setRefresh(true);
+  };
 
   return {
-    pagination, 
+    pagination,
     setFilters,
-    reload
-  }
-}
+    reload,
+  };
+};

@@ -1,11 +1,11 @@
 "use client"
-import { SubmitPromiseForm, SubmitHandler } from '@contracts/Form'
+import { SubmitPromiseForm, SubmitHandler } from '@/contracts/Form'
 import { FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { forwardRef } from 'react'
 import { useForm as formManager } from '@/hooks/useForm'
 import { toast } from 'sonner'
-import { FORM_ACTION_TIMEOUT, REDIRECT_TIMEOUT } from '@config/constants'
+import { FORM_ACTION_TIMEOUT, REDIRECT_TIMEOUT } from '@/config/constants'
 import { useLoader } from '@/contexts/Loader'
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
   actionTimeout: number
   formProps: React.HTMLProps<HTMLFormElement
   >
-  className : string
+  className: string
 }
 
 const SubmitForm = forwardRef<HTMLFormElement, Readonly<Partial<Props>>>((props, ref) => {

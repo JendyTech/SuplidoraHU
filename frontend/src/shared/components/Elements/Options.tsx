@@ -1,10 +1,10 @@
 "use client"
 
-import styles from '@shared/styles/components/Elements/Options.module.css'
+import styles from '@/shared/styles/components/Elements/Options.module.css'
 import Link from 'next/link'
 import { IconDotsVertical } from '@tabler/icons-react'
 import { useId, useState, useRef, useEffect } from 'react'
-import { IOptions } from '@contracts/Options'
+import { IOptions } from '@/contracts/Options'
 
 interface Props<T> {
   options: IOptions<T>[]

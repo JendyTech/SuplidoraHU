@@ -1,19 +1,19 @@
 "use client"
 
-import { useState } from 'react';
-import styles from '@shared/styles/components/Screen/Tabs.module.css'; 
+import { useState } from 'react'
+import styles from '@/shared/styles/components/Screen/Tabs.module.css'
 
 interface Tab {
-  label: string;
-  content: JSX.Element;
+  label: string
+  content: JSX.Element
 }
 
 interface TabsProps {
-  tabs: Tab[];
+  tabs: Tab[]
 }
 
 export const Tabs = ({ tabs }: TabsProps) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(0)
 
   return (
     <div>
@@ -32,5 +32,5 @@ export const Tabs = ({ tabs }: TabsProps) => {
         {tabs[activeTab].content}
       </div>
     </div>
-  );
-};
+  )
+}

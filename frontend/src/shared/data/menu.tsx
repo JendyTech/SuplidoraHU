@@ -1,7 +1,7 @@
-import React from "react";
-import { ItemMenu } from "@interfaces/TopBar";
-import { LinkButton } from "@shared/components/Link/LinkButton";
-import { url } from "inspector";
+import React from "react"
+import { ItemMenu } from "@/interfaces/TopBar"
+import { LinkButton } from "@/shared/components/Link/LinkButton"
+import { url } from "inspector"
 
 export const topBar: ItemMenu[] = [
   {
@@ -107,4 +107,4 @@ export const topBar: ItemMenu[] = [
     title: "Dashboard",
     items: [],
   }
-];
+]

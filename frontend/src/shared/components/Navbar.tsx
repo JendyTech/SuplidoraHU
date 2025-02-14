@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import styles from '@shared/styles/navbar.module.css'
+import styles from '@/shared/styles/navbar.module.css'
 import { usePathname } from 'next/navigation'
-import { topBar } from '@shared/data/menu'
+import { topBar } from '@/shared/data/menu'
 import { getItemBarMenuItem } from '@/utils/getItemBarMenuItem'
 
 export default function Navbar() {

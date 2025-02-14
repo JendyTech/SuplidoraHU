@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react"
-import styles from "@shared/styles/components/Form/Input.module.css"
+import styles from "@/shared/styles/components/Form/Input.module.css"
 import { IconEye, IconEyeOff } from "@tabler/icons-react"
 
 interface InputProps {

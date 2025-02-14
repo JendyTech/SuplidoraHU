@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common'
-import { CategoryService } from '@modules/category/category.service'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { IsPublic } from '@shared/decorators/isPublic'
+import { CategoryService } from '@/modules/category/category.service'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { IsPublic } from '@/shared/decorators/isPublic'
 
 @Controller('api/category')
 export class CategoryController {

@@ -12,7 +12,7 @@
     "outDir": "./dist",
     "resolvePackageJsonImports": true,
     "moduleResolution": "NodeNext",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -22,39 +22,39 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@shared/*": [
-        "src/shared/*"
-      ],
-      "@modules/*": [
-        "src/modules/*"
-      ],
-      "@config/*": [
-        "src/config/*"
-      ],
-      "@interfaces/*": [
-        "src/interfaces/*"
-      ],
-      "@contracts/*": [
-        "src/contracts/*"
-      ],
-      "@errors/*": [
-        "src/errors/*"
-      ],
-      "@database/*": [
-        "src/database/*"
-      ],
-      "@decorators/*": [
-        "src/shared/decorators/*"
-      ],
-      "@repositories/*": [
-        "src/repositories/*"
-      ],
-      "@types/*": [
-        "src/types/*"
-      ],
-      "@messages/*": [
-        "src/messages/*"
-      ],
+      // "@/shared/*": [
+      //   "src/shared/*"
+      // ],
+      // "@/modules/*": [
+      //   "src/modules/*"
+      // ],
+      // "@/config/*": [
+      //   "src/config/*"
+      // ],
+      // "@/interfaces/*": [
+      //   "src/interfaces/*"
+      // ],
+      // "@/contracts/*": [
+      //   "src/contracts/*"
+      // ],
+      // "@/errors/*": [
+      //   "src/errors/*"
+      // ],
+      // "@/database/*": [
+      //   "src/database/*"
+      // ],
+      // "@decorators/*": [
+      //   "src/shared/decorators/*"
+      // ],
+      // "@/repositories/*": [
+      //   "src/repositories/*"
+      // ],
+      // "@types/*": [
+      //   "src/types/*"
+      // ],
+      // "@/messages/*": [
+      //   "src/messages/*"
+      // ],
       "@/*": [
         "src/*"
       ]

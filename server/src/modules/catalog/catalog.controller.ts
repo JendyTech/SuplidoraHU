@@ -1,8 +1,8 @@
 import { Controller, Param, Query, Get } from '@nestjs/common'
-import { CatalogService } from '@modules/catalog/catalog.service'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { IsPublic } from '@shared/decorators/isPublic'
-import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
+import { CatalogService } from '@/modules/catalog/catalog.service'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { IsPublic } from '@/shared/decorators/isPublic'
+import { CatalogPaginationDTO } from '@/shared/dto/CatalogPagination.dto'
 
 @Controller('/api/catalog')
 export class CatalogController {

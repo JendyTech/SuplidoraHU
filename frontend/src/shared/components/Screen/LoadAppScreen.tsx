@@ -1,5 +1,5 @@
 "use client"
-import styles from '@/shared/styles/components/screen/LoadAppScreen.module.css'
+import styles from '../../styles/components/Screen/LoadAppScreen.module.css'
 import { useLoader } from '@/contexts/Loader'
 
 export function LoadAppScreen() {

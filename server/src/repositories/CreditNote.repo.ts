@@ -1,13 +1,13 @@
 import {
   CreateCreditNotes,
   GetCreditNoteByIdWithItemsResults,
-} from '@contracts/repositories/CreditNote.repo'
-import { CreditNoteModel, CreditNoteItemModel } from '@database/creditnote.db'
-import { mongoosePagination } from '@shared/functions/pagination'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { MODELS_NAMES } from '@config/constants'
+} from '@/contracts/repositories/CreditNote.repo'
+import { CreditNoteModel, CreditNoteItemModel } from '@/database/creditnote.db'
+import { mongoosePagination } from '@/shared/functions/pagination'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { MODELS_NAMES } from '@/config/constants'
 import { FilterQuery, Types } from 'mongoose'
-import { ICreditNote } from '@interfaces/CreditNote'
+import { ICreditNote } from '@/interfaces/CreditNote'
 
 export class CreditNoteRepository {
   static async getCreditNotes(pagination: PaginationDTO) {
@@ -94,19 +94,19 @@ export class CreditNoteRepository {
     }
   }
 
-      static async getLastCreditNoteNumber(): Promise<string | null> {
-          const lastCreditNote = await CreditNoteModel.findOne({})
-              .sort({ createdAt: -1 })
-              .select('creditNoteNumber')
-  
-          return lastCreditNote?.creditNoteNumber || null
-      }
-  
-      static async getLastNCF(): Promise<string | null> {
-          const lastCreditNote = await CreditNoteModel.findOne({})
-          .sort({ createdAt: -1 })
-          .select('ncfNumber')
-  
-          return lastCreditNote?.ncfNumber || null
-      }
+  static async getLastCreditNoteNumber(): Promise<string | null> {
+    const lastCreditNote = await CreditNoteModel.findOne({})
+      .sort({ createdAt: -1 })
+      .select('creditNoteNumber')
+
+    return lastCreditNote?.creditNoteNumber || null
+  }
+
+  static async getLastNCF(): Promise<string | null> {
+    const lastCreditNote = await CreditNoteModel.findOne({})
+      .sort({ createdAt: -1 })
+      .select('ncfNumber')
+
+    return lastCreditNote?.ncfNumber || null
+  }
 }

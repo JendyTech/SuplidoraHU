@@ -1,10 +1,10 @@
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { ProductModel } from '@database/products.db'
-import { mongoosePagination } from '@shared/functions/pagination'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { ProductModel } from '@/database/products.db'
+import { mongoosePagination } from '@/shared/functions/pagination'
 import { FilterQuery, Types } from 'mongoose'
-import { IProduct } from '@interfaces/Product'
-import { MODELS_NAMES } from '@config/constants'
-import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
+import { IProduct } from '@/interfaces/Product'
+import { MODELS_NAMES } from '@/config/constants'
+import { CatalogPaginationDTO } from '@/shared/dto/CatalogPagination.dto'
 
 export class CatalogRepository {
   static async getCatalog(

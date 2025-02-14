@@ -1,8 +1,8 @@
 "use client"
-import { IUserLoggeding } from '@interfaces/UserLoggeding'
+import { IUserLoggeding } from '@/interfaces/UserLoggeding'
 import { createContext, useContext, useState, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
-import { GLOBAL_TOKEN, STORAGES } from '@config/constants'
+import { GLOBAL_TOKEN, STORAGES } from '@/config/constants'
 import { useShortFormatName } from '@/hooks/useShortName'
 import { useReadToken } from '@/hooks/useReadToken'
 import { setCookie } from '@/utils/cookies'

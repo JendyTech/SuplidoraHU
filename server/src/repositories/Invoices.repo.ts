@@ -1,13 +1,13 @@
 import {
   CreateInvoices,
   GetInvoiceByIdWithItemsResults,
-} from '@contracts/repositories/Invoices.repo'
-import { InvoiceModel, InvoiceItemModel } from '@database/invoices.db'
-import { mongoosePagination } from '@shared/functions/pagination'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
-import { MODELS_NAMES } from '@config/constants'
+} from '@/contracts/repositories/Invoices.repo'
+import { InvoiceModel, InvoiceItemModel } from '@/database/invoices.db'
+import { mongoosePagination } from '@/shared/functions/pagination'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
+import { MODELS_NAMES } from '@/config/constants'
 import { FilterQuery, Types } from 'mongoose'
-import { IInvoice } from '@interfaces/Invoice'
+import { IInvoice } from '@/interfaces/Invoice'
 
 export class InvoicesRepository {
   static async getInvoices(pagination: PaginationDTO) {
@@ -30,7 +30,7 @@ export class InvoicesRepository {
     return mongoosePagination({
       ...pagination,
       Model: InvoiceModel,
-        filter: filters
+      filter: filters,
     })
   }
 

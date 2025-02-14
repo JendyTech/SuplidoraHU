@@ -1,23 +1,23 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
-import styles from "@modules/productos/styles/GeneralInfo.module.css";
+import React, { Dispatch, SetStateAction, useState } from "react"
+import styles from "@/modules/productos/styles/GeneralInfo.module.css"
 
 const UserGeneralInfo = ({
   setUserData,
   userData,
 }: {
-  setUserData: Dispatch<SetStateAction<AddUserModel>>;
-  userData: AddUserModel;
+  setUserData: Dispatch<SetStateAction<AddUserModel>>
+  userData: AddUserModel
 }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setUserData((prevData) => ({
       ...prevData,
       [name]:
         name === "price" || name === "unitsPerPack" ? Number(value) : value,
-    }));
-  };
+    }))
+  }
   return (
     <div className={styles.container} style={{ width: " 100%" }}>
       <h2 style={{ marginBottom: "20px" }}>Información General</h2>
@@ -87,7 +87,7 @@ const UserGeneralInfo = ({
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default UserGeneralInfo;
+export default UserGeneralInfo

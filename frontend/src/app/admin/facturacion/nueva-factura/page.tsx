@@ -1,22 +1,22 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import CustomInput from "@shared/components/Form/Input";
-import CustomButton from "@shared/components/Buttons/CustomButton";
-import styles from "@modules/facturas/styles/facturas.module.css";
-import InvoiceSummary from "@modules/facturas/components/InvoiceSummary";
-import CustomSelect from "@shared/components/Form/Select";
-import { useCreateInvoice } from "@modules/facturas/hooks/useCreateInvoice";
-import { useSession } from "@/contexts/Session";
-import { IconTrash } from "@tabler/icons-react";
-import { useShortFormatName } from "@/hooks/useShortName";
-import { useCart } from "@modules/facturas/hooks/useCart";
-import { useProductSearch } from "@modules/facturas/hooks/useProductSearch";
+import React, { useState, useEffect } from "react"
+import CustomInput from "@/shared/components/Form/Input"
+import CustomButton from "@/shared/components/Buttons/CustomButton"
+import styles from "@/modules/facturas/styles/facturas.module.css"
+import InvoiceSummary from "@/modules/facturas/components/InvoiceSummary"
+import CustomSelect from "@/shared/components/Form/Select"
+import { useCreateInvoice } from "@/modules/facturas/hooks/useCreateInvoice"
+import { useSession } from "@/contexts/Session"
+import { IconTrash } from "@tabler/icons-react"
+import { useShortFormatName } from "@/hooks/useShortName"
+import { useCart } from "@/modules/facturas/hooks/useCart"
+import { useProductSearch } from "@/modules/facturas/hooks/useProductSearch"
 
 export default function BillingPage() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("")
   const { createInvoice, formData, setFormData, handleFormDataChange } =
-    useCreateInvoice();
+    useCreateInvoice()
   const {
     selectedProducts,
     addProductToCart,
@@ -24,25 +24,25 @@ export default function BillingPage() {
     decreaseQuantity,
     removeProductFromCart,
     calculateTotals,
-  } = useCart();
-  const { products, loading, error } = useProductSearch(searchTerm);
-  const { subtotal, itbis, total } = calculateTotals();
+  } = useCart()
+  const { products, loading, error } = useProductSearch(searchTerm)
+  const { subtotal, itbis, total } = calculateTotals()
 
-  const { data } = useSession();
-  const userName = useShortFormatName(`${data.firstName} ${data.lastName}`);
+  const { data } = useSession()
+  const userName = useShortFormatName(`${data.firstName} ${data.lastName}`)
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
+    setSearchTerm(e.target.value)
+  }
 
   useEffect(() => {
     if (!formData.supplierName) {
       setFormData((prevData) => ({
         ...prevData,
         supplierName: userName,
-      }));
+      }))
     }
-  }, [userName, formData.supplierName, setFormData]);
+  }, [userName, formData.supplierName, setFormData])
 
   useEffect(() => {
     setFormData((prevData) => ({
@@ -54,15 +54,15 @@ export default function BillingPage() {
         unitPrice: product.price,
         total: product.price * product.quantity,
       })),
-    }));
-  }, [selectedProducts, setFormData]);
+    }))
+  }, [selectedProducts, setFormData])
 
   const formatCurrency = (value: number) =>
-    value.toLocaleString("es-DO", { style: "currency", currency: "DOP" });
+    value.toLocaleString("es-DO", { style: "currency", currency: "DOP" })
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
   return (
     <div className={styles.billingPage}>
@@ -237,5 +237,5 @@ export default function BillingPage() {
         </div>
       </form>
     </div>
-  );
+  )
 }

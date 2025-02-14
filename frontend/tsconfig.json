@@ -23,16 +23,16 @@
       }
     ],
     "paths": {
-      "@modules/*": [
+      "@/modules/*": [
         "./src/modules/*"
       ],
-      "@config/*": [
+      "@/config/*": [
         "./src/config/*"
       ],
-      "@contracts/*": [
+      "@/contracts/*": [
         "./src/contracts/*"
       ],
-      "@interfaces/*": [
+      "@/interfaces/*": [
         "./src/interfaces/*"
       ],
       "@i18n/*": [
@@ -41,7 +41,7 @@
       "@services/*": [
         "./src/services/*"
       ],
-      "@shared/*": [
+      "@/shared/*": [
         "./src/shared/*"
       ],
       "@/*": [

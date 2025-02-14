@@ -1,6 +1,6 @@
-import { IProduct, IProductPhoto } from '@interfaces/Product'
+import { IProduct, IProductPhoto } from '@/interfaces/Product'
 import { model, Schema, Types } from 'mongoose'
-import { MODELS_NAMES } from '@config/constants'
+import { MODELS_NAMES } from '@/config/constants'
 
 const productSchema = new Schema<IProduct>(
   {

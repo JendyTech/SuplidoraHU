@@ -1,12 +1,12 @@
-import CATALOG from '@messages/Catalog.json'
-import GENERAL from '@messages/General.json'
+import CATALOG from '@/messages/Catalog.json'
+import GENERAL from '@/messages/General.json'
 import { Injectable } from '@nestjs/common'
-import { CatalogRepository } from '@repositories/Catalog.repo'
-import { PaginationDTO } from '@shared/dto/Pagination.dto'
+import { CatalogRepository } from '@/repositories/Catalog.repo'
+import { PaginationDTO } from '@/shared/dto/Pagination.dto'
 import { HttpStatus } from '@nestjs/common'
-import { successResponse, errorResponse } from '@shared/functions/response'
-import { catchError } from '@shared/utils/catchError'
-import { CatalogPaginationDTO } from '@shared/dto/CatalogPagination.dto'
+import { successResponse, errorResponse } from '@/shared/functions/response'
+import { catchError } from '@/shared/utils/catchError'
+import { CatalogPaginationDTO } from '@/shared/dto/CatalogPagination.dto'
 
 @Injectable()
 export class CatalogService {
