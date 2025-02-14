@@ -12,7 +12,7 @@ export const useLogin = () => {
         return reject(response.messages[0].message);
       }
 
-      await setCookie(STORAGES.TOKEN, response.result.token, 30);
+      await setCookie(STORAGES.TOKEN, response.result.token);
 
       resolve({
         message: response.message,

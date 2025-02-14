@@ -38,23 +38,28 @@ const GeneralInfo = ({
   const [imagesUrl, setImagesUrl] = useState<string[]>([])
 
   const handleSeachCategory = async (value: string) => {
-    const categories = await getCategories()
-    if (!categories) return
-    setCategories((prevState) => [
-      ...prevState,
-      ...categories
-        .map((category) => ({
-          label: String(category.name),
-          value: category._id,
-        }))
-        .filter(
-          (newCategory) =>
-            !prevState.some(
-              (existingCategory) => existingCategory.value === newCategory.value
-            )
-        )
-        .slice(0, 2),
-    ])
+    try {
+      const categories = await getCategories()
+      if (!categories) return
+      setCategories((prevState) => [
+        ...prevState,
+        ...categories
+          .map((category) => ({
+            label: String(category.name),
+            value: category._id,
+          }))
+          .filter(
+            (newCategory) =>
+              !prevState.some(
+                (existingCategory) => existingCategory.value === newCategory.value
+              )
+          )
+          .slice(0, 2),
+      ])
+    } catch (error) {
+      console.log("error")
+
+    }
   }
 
   const handleInputChange = (
@@ -177,7 +182,6 @@ const GeneralInfo = ({
           </label>
           <AutoComplete
             placeholder="Seleccione o cree una categoría"
-            freeOption
             options={categories}
             onInput={handleSeachCategory}
             onSelect={(value, label) => {

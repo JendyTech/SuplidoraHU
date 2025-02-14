@@ -394,10 +394,7 @@ export default function CalalogPage() {
               >
                 <div
                   style={{
-                    position: "absolute",
-                    top: "60%",
-                    left: "60%",
-                    transform: "translate(-50%, -50%)",
+
                   }}
                 >
                   <ClipLoader size={100} color="#287881" />
@@ -462,7 +459,7 @@ export default function CalalogPage() {
             />
             <IconSearch className={styles2.iconSearch} />
 
-            <IconX onClick={() => setShowModal(false)} size={36} strokeWidth={1.5} />
+            <IconX onClick={() => setShowModal(false)} size={26} strokeWidth={1} />
 
           </div>
 

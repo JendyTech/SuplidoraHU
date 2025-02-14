@@ -46,18 +46,14 @@ export default function ProductTable(props: Props) {
     {
       name: "Unidades",
       selector: (row) => row.unitsPerPack,
-      maxWidth: "130px",
+      maxWidth: "70px",
     },
     {
       name: "Categoría",
       selector: (row) => row.categoryName,
       maxWidth: "130px",
     },
-    {
-      name: "Fecha de Creación",
-      selector: (row) => dayjs(row.createdAt).format("DD/MM/YYYY"),
-      maxWidth: "200px",
-    },
+
     {
       name: "",
       cell: (row) => (
