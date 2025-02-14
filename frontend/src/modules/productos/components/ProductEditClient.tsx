@@ -356,13 +356,20 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
 
             try {
 
-              const model: UpdateProduct = {
-                ...product,
+              const uProduct: UpdateProduct = {
+                name: product.name,
                 price: Number(product.price),
                 status,
+                description: product.description,
+                code: product.code,
+                unitsPerPack: Number(product.unitsPerPack),
                 imagesToDelete: willDeleteImagesIds,
                 imagesToAdd: willAddImages,
+                categoryId: product.categoryId ?? "",
+                images: product.images,
               }
+
+              const model: UpdateProduct = uProduct
 
               console.log(model)
 

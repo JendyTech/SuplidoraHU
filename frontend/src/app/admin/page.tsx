@@ -229,6 +229,7 @@ export default function AdminPage() {
                     category={product.category}
                     changed={false}
                     description={""}
+                    status={product.status}
                   />
                 </div>
               ))}
