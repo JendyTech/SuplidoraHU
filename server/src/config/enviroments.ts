@@ -6,7 +6,7 @@ if (NODE_ENV === 'DEVELOPMENT') {
   process.loadEnvFile()
 }
 
-export const PORT = Number(process.env.PORT ?? 8080)
+export const PORT = Number(process.env.PORT ?? 4000)
 export const MONGO_URI = String(
   process.env.MONGO_URI ?? 'mongodb://localhost:27017/suplidora-hu',
 )
