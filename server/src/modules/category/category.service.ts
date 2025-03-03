@@ -28,6 +28,25 @@ export class CategoryService {
     })
   }
 
+  async getCategoriesNoPagination() {
+    const [error, result] = await catchError(async () => {
+      return await CategoryRepository.getCategoriesNoPg()
+    })
+
+    if (error) {
+      return errorResponse({
+        error: error,
+        message: GENERAL.ERROR_DATABASE_MESSAGE,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+      })
+    }
+
+    return successResponse({
+      data: result,
+      message: CATEGORY.CATEGORIES_FETCHED,
+    })
+  }
+
   async getCategoryById(id: string) {
     const [error, result] = await catchError(async () => {
       return await CategoryRepository.getCategoryById(id)

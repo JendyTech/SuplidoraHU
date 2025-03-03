@@ -5,6 +5,7 @@ import styles from '@/shared/styles/components/Public/ProductCard.module.css'
 import { getCategoryNameById } from '@services/product'
 import { toast } from 'sonner'
 import { ProductCardSkeleton } from '@/shared/components/Public/ProductCardSkeleton'
+import CustomButton from '../Buttons/CustomButton'
 
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
   category: string
   changed: boolean
   status: string
+  slug: string
 }
 
 export function ProductCard(props: Props) {
@@ -43,7 +45,7 @@ export function ProductCard(props: Props) {
 
 
 
-  const { title, price, image, description, code } = props
+  const { title, price, image, description, code, slug } = props
 
   if (isLoading) {
     return <ProductCardSkeleton />
@@ -73,6 +75,14 @@ export function ProductCard(props: Props) {
         </span>
         <p className={styles.description}>{description}</p>
 
+        <CustomButton
+          text="Ver Detalle"
+          buttonType="button"
+          maxWidth='120px'
+          onClick={() => {
+            window.location.href = `/catalogo/${slug}`
+          }}
+        />
       </div>
     </article>
   )

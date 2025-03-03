@@ -216,7 +216,7 @@ export default function CalalogPage() {
               <IconSearch className={styles2.iconSearch} />
             </div>
 
-            <div className={styles2.priceRangeWrapper}>
+            <div className={styles2.priceRangeWrapper} >
               <div className={styles2.priceRangeHeader}>
                 <IconAdjustmentsHorizontal className={styles2.iconSliders} />
                 <h3 className={styles2.priceRangeTitle}>Rango de precio</h3>
@@ -405,22 +405,28 @@ export default function CalalogPage() {
               <p>No hay productos disponibles</p>
             ) : null}
 
-            {products.map((product, i) => (
-              <div key={i}>
-                <ProductCard
-                  id={product.id}
-                  key={product.id}
-                  title={product.name}
-                  price={product.price}
-                  status={product.status}
-                  image={product.image}
-                  description={product.description}
-                  code={product.code}
-                  category={product.category}
-                  changed={changed}
-                />
-              </div>
-            ))}
+            {products.map((product, i) => {
+              console.log(product.slug)
+              return (
+                <div key={i}>
+                  <ProductCard
+                    id={product.id}
+                    key={product.id}
+                    title={product.name}
+                    price={product.price}
+                    status={product.status}
+                    image={product.image}
+                    description={product.description}
+                    code={product.code}
+                    category={product.category}
+                    changed={changed}
+                    slug={product.slug}
+                  />
+                </div>
+              )
+
+
+            })}
             {
               loading ? null : <CatalogPagination
                 currentPage={actualNextIndex}

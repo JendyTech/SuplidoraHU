@@ -64,11 +64,14 @@ export const getProductById = async (id: string, server: boolean = false) => {
   return response;
 };
 
-export const updateProduct = async (id: string, updateProductData : UpdateProduct) => {
-	const token = await getToken()
-	const { PATCH } = useClient(token)
+export const updateProduct = async (
+  id: string,
+  updateProductData: UpdateProduct
+) => {
+  const token = await getToken();
+  const { PATCH } = useClient(token);
 
-	console.log(updateProductData);
+  console.log(updateProductData);
 
   const response = await PATCH<IProduct>({
     endpoint: `/products/${id}`,
@@ -104,6 +107,21 @@ export const getAllCategories = async (params?: ParamsPaginationFilter) => {
     endpoint: `/category`,
     query,
   });
+
+  return response;
+};
+
+export const getAllCategoriesServer = async (
+  params?: ParamsPaginationFilter,
+  server: boolean = true
+) => {
+  const token = await getToken(server);
+  const { GET } = useClient(token);
+  const response = await GET<Category[]>({
+    endpoint: `/category/no-pagination`,
+  });
+
+  console.log(response);
 
   return response;
 };

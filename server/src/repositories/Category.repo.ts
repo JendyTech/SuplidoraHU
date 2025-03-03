@@ -27,6 +27,10 @@ export class CategoryRepository {
     })
   }
 
+  static async getCategoriesNoPg() {
+    return CategoryModel.find()
+  }
+
   static async createCategory(data: CreateCategories) {
     const newCategory = new CategoryModel(data)
 

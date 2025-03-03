@@ -1,7 +1,10 @@
 import { useClient } from "@/hooks/useClient";
 import { getToken } from "@/utils/tokenClient";
 import { Pagination, ParamsPaginationFilter } from "@/contracts/API";
-import { CatalogProduct } from "@/interfaces/catalog/CatalogProduct";
+import {
+  CatalogProduct,
+  ICatalogDetail,
+} from "@/interfaces/catalog/CatalogProduct";
 
 export const getCatalog = async (
   params?: ParamsPaginationFilter,
@@ -41,6 +44,18 @@ export const getCatalog = async (
   const response = await GET<Pagination<CatalogProduct>>({
     endpoint: "/catalog",
     query,
+  });
+
+  return response;
+};
+
+export const getCatalogBySlug = async (slug: string) => {
+  const token = await getToken();
+
+  const { GET } = useClient(token);
+
+  const response = await GET<ICatalogDetail>({
+    endpoint: `/catalog/${slug}`,
   });
 
   return response;

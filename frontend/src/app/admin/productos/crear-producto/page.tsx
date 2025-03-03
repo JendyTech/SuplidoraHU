@@ -1,25 +1,34 @@
-"use client"
-
 import React from 'react'
-import { Stepper, StepperItem } from '@/shared/components/Stepper'
-import { IconCheck, IconImageInPicture, IconInfoCircle } from '@tabler/icons-react'
-import { useCreateProduct } from '@/modules/productos/hooks/useCreateProduct'
 import GeneralInfo from '@/app/admin/productos/crear-producto/steps/GeneralInfo'
-import UploadImage from '@/app/admin/productos/crear-producto/steps/UploadImage'
-import Summary from '@/app/admin/productos/crear-producto/steps/Summary'
+import { getAllCategories, getAllCategoriesServer } from '@services/product'
 
-export default function CreateProductsPage() {
-
-  const { setImagesUrl, imagesUrl, createProduct, getCategories } = useCreateProduct()
-
-  return (
-    <div>
-
-      <GeneralInfo getCategories={getCategories} />
+export default async function CreateProductsPage() {
 
 
-      <div style={{ height: 24 }}></div>
+  try {
 
-    </div>
-  )
+    const categoriesResponse = await getAllCategoriesServer()
+
+
+    if (!categoriesResponse.ok) {
+      return <>Error al Buscar las Categorias</>
+    }
+
+    const categories = categoriesResponse.result
+
+    return (
+      <div>
+        <GeneralInfo categories={categories} />
+        <div style={{ height: 24 }}></div>
+
+      </div>
+    )
+
+
+  } catch (error) {
+    console.log(error)
+    return <>Error al Buscar las Categorias</>
+  }
+
+
 }

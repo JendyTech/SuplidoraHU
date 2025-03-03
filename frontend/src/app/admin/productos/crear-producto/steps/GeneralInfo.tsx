@@ -1,3 +1,5 @@
+'use client'
+
 import styles from "@/modules/productos/styles/GeneralInfo.module.css"
 import CustomInput from "@/shared/components/Form/Input"
 import CustomButton from "@/shared/components/Buttons/CustomButton"
@@ -18,15 +20,50 @@ import {
 import { toast } from "sonner"
 import CustomSelect from "@/shared/components/Form/Select"
 import { Category } from '@/interfaces/Category/Category'
+import { Autocomplete, Select, TextField } from '@mui/material'
+
+const inputProps = {
+  width: "100%",
+  backgroundColor: "#F4F5F9",
+  borderRadius: "8px",
+
+
+  "& .MuiInputLabel-root": {
+    fontSize: "14px",
+    fontWeight: 400,
+    color: "#727272",
+    marginBottom: "20px"
+  },
+
+
+  "& .MuiOutlinedInput-root": {
+    height: "46px",
+    fontSize: "14px",
+    color: "#727272",
+    padding: "0 16px",
+
+    "& fieldset": {
+      borderRadius: "8px",
+      border: "1px solid #DBDCDE",
+    },
+
+    "&:hover fieldset": {
+      borderColor: "#B0B3B8",
+    },
+
+    "&.Mui-focused fieldset": {
+      borderColor: "#727272",
+    },
+  },
+}
 
 const GeneralInfo = ({
-  getCategories,
+  categories,
 }: {
-  getCategories: () => Promise<Category[]>
+  categories: Category[]
 }) => {
   const { createProduct } = useCreateProduct()
   const [isOpen, setIsOpen] = useState(false)
-  const [categories, setCategories] = useState<Option[]>([])
   const [formData, setFormData] = useState<AddProductModel>({
     name: "",
     price: 0,
@@ -36,32 +73,6 @@ const GeneralInfo = ({
     status: true,
   })
   const [imagesUrl, setImagesUrl] = useState<string[]>([])
-
-  const handleSeachCategory = async (value: string) => {
-    try {
-      const categories = await getCategories()
-      if (!categories) return
-      setCategories((prevState) => [
-        ...prevState,
-        ...categories
-          .map((category) => ({
-            label: String(category.name),
-            value: category._id,
-          }))
-          .filter(
-            (newCategory) =>
-              !prevState.some(
-                (existingCategory) => existingCategory.value === newCategory.value
-              )
-          )
-          .slice(0, 2),
-      ])
-    } catch (error) {
-      console.log("error")
-
-    }
-  }
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -74,6 +85,8 @@ const GeneralInfo = ({
   }
 
   const handleSubmit = async () => {
+
+    console.log(formData)
     if (imagesUrl.length < 1) {
       toast.error("Debe subir al menos una imagen")
       return
@@ -102,7 +115,7 @@ const GeneralInfo = ({
 
       <div className={styles.formGrid}>
         <div className={styles.inputWrapper}>
-          <label>
+          <label style={{ display: "flex", alignItems: "center" }}>
             <IconPackage
               size={18}
               style={{ display: "inline", marginRight: "8px" }}
@@ -119,7 +132,7 @@ const GeneralInfo = ({
         </div>
 
         <div className={styles.inputWrapper}>
-          <label>
+          <label style={{ display: "flex", alignItems: "center" }}>
             <IconCurrencyDollar
               size={18}
               style={{ display: "inline", marginRight: "8px" }}
@@ -138,7 +151,7 @@ const GeneralInfo = ({
         </div>
 
         <div className={styles.inputWrapper}>
-          <label>
+          <label style={{ display: "flex", alignItems: "center" }}>
             <IconBarcode
               size={18}
               style={{ display: "inline", marginRight: "8px" }}
@@ -156,7 +169,7 @@ const GeneralInfo = ({
         </div>
 
         <div className={styles.inputWrapper}>
-          <label>
+          <label style={{ display: "flex", alignItems: "center" }}>
             <IconBoxSeam
               size={18}
               style={{ display: "inline", marginRight: "8px" }}
@@ -173,14 +186,36 @@ const GeneralInfo = ({
         </div>
 
         <div className={styles.inputWrapper} style={{ zIndex: 1000 }}>
-          <label>
+          <label style={{ display: "flex", alignItems: "center" }}>
             <IconCategory
               size={18}
               style={{ display: "inline", marginRight: "8px" }}
             />
             Categoría *
           </label>
-          <AutoComplete
+          <Autocomplete
+            disablePortal
+            options={categories}
+            getOptionLabel={(option) => option.name}
+            sx={{ width: '330px' }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Escribe aquí la categoría"
+                variant="outlined"
+
+                sx={inputProps}
+              />
+            )}
+            onChange={(event, newValue) => {
+              setFormData((prevState) => ({
+                ...prevState,
+                categoryId: newValue?._id,
+              }))
+            }}
+          />
+
+          {/* <AutoComplete
             placeholder="Seleccione o cree una categoría"
             options={categories}
             onInput={handleSeachCategory}
@@ -195,11 +230,12 @@ const GeneralInfo = ({
                   categoryId: value,
                 }))
             }}
-          />
+          /> */}
         </div>
 
         <div className={styles.inputWrapper}>
-          <label>Estado del Producto *</label>
+          <label style={{ display: "flex", alignItems: "center" }}>Estado del Producto *</label>
+
           <CustomSelect
             name="status"
             value={formData.status ? "true" : "false"}
@@ -218,7 +254,7 @@ const GeneralInfo = ({
         </div>
 
         <div className={`${styles.inputWrapper} ${styles.descriptionWrapper}`}>
-          <label>
+          <label style={{ display: "flex", alignItems: "center" }}>
             <IconFileDescription
               size={18}
               style={{ display: "inline", marginRight: "8px" }}

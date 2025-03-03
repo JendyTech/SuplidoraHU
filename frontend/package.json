@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@fileforge/react-print": "^0.1.150",
+    "@mui/material": "^6.4.6",
     "@onedoc/client": "^0.1.33",
     "@onedoc/react-print": "^0.1.133",
     "@tabler/icons-react": "3.21.0",
@@ -20,8 +23,8 @@
     "react": "19.0.0-rc-66855b96-20241106",
     "react-data-table-component": "7.6.2",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "sonner": "1.7.0",
-    "react-spinners": "^0.13.8"
+    "react-spinners": "^0.13.8",
+    "sonner": "1.7.0"
   },
   "devDependencies": {
     "@types/node": "20",

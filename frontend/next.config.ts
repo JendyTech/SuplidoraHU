@@ -1,11 +1,10 @@
-import type { NextConfig } from "next"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: false,
+  productionBrowserSourceMaps: true,
+  images: {
+    domains: ["res.cloudinary.com"], // 🔹 Permite imágenes desde Cloudinary
+  },
+};
 
-const nextConfig: NextConfig = {
-	reactStrictMode: false
-}
-
-module.exports = {
-	productionBrowserSourceMaps: true,
-  };
-
-export default nextConfig
+module.exports = nextConfig;

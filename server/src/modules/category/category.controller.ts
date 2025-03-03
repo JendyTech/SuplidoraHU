@@ -14,6 +14,12 @@ export class CategoryController {
   }
 
   @IsPublic()
+  @Get('/no-pagination')
+  getCategoriesNoPagination() {
+    return this.categoryService.getCategoriesNoPagination()
+  }
+
+  @IsPublic()
   @Get('/:id')
   getCategoryById(@Param('id') id: string) {
     return this.categoryService.getCategoryById(id)
