@@ -75,14 +75,14 @@ export function ProductCard(props: Props) {
         </span>
         <p className={styles.description}>{description}</p>
 
-        <CustomButton
+        {slug ? <CustomButton
           text="Ver Detalle"
           buttonType="button"
           maxWidth='120px'
           onClick={() => {
             window.location.href = `/catalogo/${slug}`
           }}
-        />
+        /> : ''}
       </div>
     </article>
   )

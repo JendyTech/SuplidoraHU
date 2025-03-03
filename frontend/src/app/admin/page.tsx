@@ -230,6 +230,7 @@ export default function AdminPage() {
                     changed={false}
                     description={""}
                     status={product.status}
+                    slug={product.slug}
                   />
                 </div>
               ))}

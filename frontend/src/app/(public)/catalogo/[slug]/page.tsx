@@ -6,6 +6,8 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import styles from "@/shared/styles/CatalogDetail.module.css"
 import { ICatalogDetail } from "@/interfaces/catalog/CatalogProduct"
+import { useDelay } from '@/hooks/useDelay'
+import { ClipLoader } from 'react-spinners'
 
 export default function CatalogDetail() {
   const params = useParams()
@@ -14,11 +16,13 @@ export default function CatalogDetail() {
 
   const [product, setProduct] = useState<ICatalogDetail | null>(null)
   const [selectedImage, setSelectedImage] = useState<string>("")
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchCatalogDetail = async () => {
       if (!slug) return
-
+      setLoading(true)
+      await useDelay(1000) // Para simular un retardo en la carga
       try {
         const response = await getCatalogBySlug(slug)
 
@@ -28,13 +32,31 @@ export default function CatalogDetail() {
         } else {
           console.error("Error al obtener datos del catálogo")
         }
+        setLoading(false)
       } catch (error) {
         console.error("Error de red", error)
+        setLoading(false) // Asegurarse de dejar de cargar incluso si hay un error
       }
     }
 
     fetchCatalogDetail()
   }, [slug])
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh", // Para asegurar que ocupe toda la pantalla mientras carga
+        }}
+      >
+        <ClipLoader size={100} color="#287881" />
+      </div>
+    )
+  }
 
   if (!product) {
     return <p className={styles.loading}>Cargando producto...</p>
