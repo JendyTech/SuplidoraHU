@@ -1,11 +1,11 @@
 "use client"
 
-import { getCatalogBySlug } from "@services/catalog"
-import { useParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 import Image from "next/image"
 import styles from "@/shared/styles/CatalogDetail.module.css"
 import { ICatalogDetail } from "@/interfaces/catalog/CatalogProduct"
+import { useParams, useRouter } from "next/navigation"
+import { getCatalogBySlug } from "@services/catalog"
+import { useEffect, useState } from "react"
 import { useDelay } from '@/hooks/useDelay'
 import { ClipLoader } from 'react-spinners'
 
@@ -22,20 +22,20 @@ export default function CatalogDetail() {
     const fetchCatalogDetail = async () => {
       if (!slug) return
       setLoading(true)
-      await useDelay(1000) // Para simular un retardo en la carga
+      await useDelay(1000)
       try {
         const response = await getCatalogBySlug(slug)
 
         if (response.ok) {
           setProduct(response.result)
-          setSelectedImage(response.result.images[0]?.url || "") // Primera imagen como principal
+          setSelectedImage(response.result.images[0]?.url || "")
         } else {
           console.error("Error al obtener datos del catálogo")
         }
         setLoading(false)
       } catch (error) {
         console.error("Error de red", error)
-        setLoading(false) // Asegurarse de dejar de cargar incluso si hay un error
+        setLoading(false)
       }
     }
 
@@ -50,7 +50,7 @@ export default function CatalogDetail() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh", // Para asegurar que ocupe toda la pantalla mientras carga
+          height: "100vh",
         }}
       >
         <ClipLoader size={100} color="#287881" />
