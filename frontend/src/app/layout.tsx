@@ -1,3 +1,4 @@
+// app/layout.tsx o app/layout.ts
 import "@/shared/styles/global.css"
 import { Metadata } from "next"
 import { LoaderProvider } from '@/contexts/Loader'
@@ -5,23 +6,24 @@ import { Toaster } from 'sonner'
 import { LoadAppScreen } from '@/shared/components/Screen/LoadAppScreen'
 import { poppins } from '@/config/fonts'
 
+// Puedes definir metadata aquí o en un archivo metadata.ts
 export const metadata: Metadata = {
   title: "Suplidora HU",
-  description: "Suplidora HU"
+  description: "Suplidora HU",
+  icons: {
+    icon: "/logomini.png", // Asegúrate que /public/logo.png existe
+  },
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
-
+}) {
   return (
     <html lang="es" className={poppins.className}>
       <body>
-        <div
-          id="top"
-        />
+        <div id="top" />
         <LoaderProvider>
           {children}
           <LoadAppScreen />
