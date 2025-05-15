@@ -4,8 +4,7 @@ interface AddProductModel {
 	code : string
 	description : string
 	unitsPerPack : number
-	categoryName? : string
-	categoryId? : string
+	categoryName : string
 	status : boolean
 	images? : string[]
 }

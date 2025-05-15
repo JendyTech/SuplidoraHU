@@ -16,6 +16,7 @@ interface Props {
   description: string
   code: string
   category: string
+  categoryName: string
   changed: boolean
   status: string
   slug: string
@@ -30,7 +31,8 @@ export function ProductCard(props: Props) {
   useEffect(() => {
     const fetchCategory = async () => {
       setIsLoading(true)
-      const response = await getCategoryNameById(props.category)
+
+      const response = await getCategoryNameById(props.categoryName)
 
       if (response.ok) {
         setCategoryName(response.result.name)

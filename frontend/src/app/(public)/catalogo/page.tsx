@@ -51,8 +51,9 @@ export default function CalalogPage() {
         setTotalPages(data.result.metadata.totalPages)
         setIsNextProducts(data.result.metadata.next)
         setTotalProducts(data.result.metadata.total)
-        console.log(data.result.metadata)
       } else {
+        console.log('bala=baro7')
+
         toast.error(data.messages[0].message)
       }
       setLoading(false)
@@ -75,7 +76,7 @@ export default function CalalogPage() {
   }, [])
 
   const [filter, setFilter] = useState<Filter>({
-    max: 20,
+    max: 30,
     search: "",
     maxPrice: 0,
     minPrice: 0,
@@ -83,7 +84,7 @@ export default function CalalogPage() {
   })
 
   const defaultFilter = {
-    max: 20,
+    max: 30,
     search: "",
     maxPrice: 0,
     minPrice: 0,
@@ -97,6 +98,8 @@ export default function CalalogPage() {
     }
 
     const areFiltersEqual = () => {
+
+
       return (
         filter.max === defaultFilter.max &&
         filter.search === defaultFilter.search &&
@@ -113,6 +116,7 @@ export default function CalalogPage() {
       if (data.ok) {
         setProducts(data.result.data)
       } else {
+        console.log('bala=baro2')
         toast.error(data.messages[0].message)
       }
       setLoading(false)
@@ -123,6 +127,8 @@ export default function CalalogPage() {
         if (category.ok) {
           setActualCategory(category.result.name)
         } else {
+          console.log('bala=baro3')
+
           toast.error(category.messages[0].message)
           return
         }
@@ -134,6 +140,8 @@ export default function CalalogPage() {
       if (data.ok) {
         setProducts(data.result.data)
       } else {
+        console.log('bala=baro4')
+
         toast.error(data.messages[0].message)
       }
       setLoading(false)
@@ -168,6 +176,8 @@ export default function CalalogPage() {
     if (data.ok) {
       setProducts(data.result.data)
     } else {
+      console.log('bala=baro6')
+
       toast.error(data.messages[0].message)
     }
     setLoading(false)
@@ -285,10 +295,10 @@ export default function CalalogPage() {
                         onChange={() => {
                           setFilter((prev) => ({
                             ...prev,
-                            category: category._id,
+                            category: category.name,
                           }))
                         }}
-                        checked={filter.category === category._id}
+                        checked={filter.category === category.name}
                       />
                       <span className={styles2.categoryLabel}>
                         {category.name}
@@ -421,6 +431,7 @@ export default function CalalogPage() {
                     category={product.category}
                     changed={changed}
                     slug={product.slug}
+                    categoryName={product.categoryName}
                   />
                 </div>
               )

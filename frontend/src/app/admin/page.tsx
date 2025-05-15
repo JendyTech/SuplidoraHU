@@ -71,7 +71,7 @@ export default function AdminPage() {
       )
       const last3 = sortedProducts.slice(0, 3)
 
-      await useDelay(3000)
+      await useDelay(1000)
       setAllProducts(productData)
       setLast3Products({ ...productData, data: last3 })
       setTotalProducts(productData.metadata.total)

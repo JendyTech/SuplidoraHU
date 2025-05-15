@@ -21,6 +21,7 @@ import { toast } from "sonner"
 import CustomSelect from "@/shared/components/Form/Select"
 import { Category } from '@/interfaces/Category/Category'
 import { Autocomplete, Select, TextField } from '@mui/material'
+import SelectInput from "@mui/material/Select/SelectInput"
 
 const inputProps = {
   width: "100%",
@@ -60,7 +61,7 @@ const inputProps = {
 const GeneralInfo = ({
   categories,
 }: {
-  categories: Category[]
+  categories: string[]
 }) => {
   const { createProduct } = useCreateProduct()
   const [isOpen, setIsOpen] = useState(false)
@@ -71,6 +72,7 @@ const GeneralInfo = ({
     code: "",
     unitsPerPack: 0,
     status: true,
+    categoryName: "N/A",
   })
   const [imagesUrl, setImagesUrl] = useState<string[]>([])
   const handleInputChange = (
@@ -92,7 +94,7 @@ const GeneralInfo = ({
       return
     }
 
-    if (!formData.categoryId && !formData.categoryName) {
+    if (!formData.categoryName) {
       toast.error("Debe seleccionar una categoría")
       return
     }
@@ -193,10 +195,11 @@ const GeneralInfo = ({
             />
             Categoría *
           </label>
+
           <Autocomplete
             disablePortal
             options={categories}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option}
             sx={{ width: '330px' }}
             renderInput={(params) => (
               <TextField
@@ -210,27 +213,12 @@ const GeneralInfo = ({
             onChange={(event, newValue) => {
               setFormData((prevState) => ({
                 ...prevState,
-                categoryId: newValue?._id,
+                categoryName: newValue ?? "N/A",
               }))
             }}
           />
 
-          {/* <AutoComplete
-            placeholder="Seleccione o cree una categoría"
-            options={categories}
-            onInput={handleSeachCategory}
-            onSelect={(value, label) => {
-              value === label
-                ? setFormData((prevState) => ({
-                  ...prevState,
-                  categoryName: value,
-                }))
-                : setFormData((prevState) => ({
-                  ...prevState,
-                  categoryId: value,
-                }))
-            }}
-          /> */}
+
         </div>
 
         <div className={styles.inputWrapper}>

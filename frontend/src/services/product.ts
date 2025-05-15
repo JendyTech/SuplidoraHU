@@ -105,19 +105,21 @@ export const getAllCategories = async (params?: ParamsPaginationFilter) => {
 
   const response = await GET<Pagination<Category>>({
     endpoint: `/category`,
-    query,
+    query : {
+      ...query,
+      max : 50
+    },
   });
 
   return response;
 };
 
 export const getAllCategoriesServer = async (
-  params?: ParamsPaginationFilter,
   server: boolean = true
 ) => {
   const token = await getToken(server);
   const { GET } = useClient(token);
-  const response = await GET<Category[]>({
+  const response = await GET<string[]>({
     endpoint: `/category/no-pagination`,
   });
 

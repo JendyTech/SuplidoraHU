@@ -8,6 +8,7 @@ export interface CatalogProduct {
   image: string;
   category: string;
   status: string;
+  categoryName : string
 }
 
 export interface ICatalogDetail {
