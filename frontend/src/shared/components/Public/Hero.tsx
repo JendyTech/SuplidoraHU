@@ -1,6 +1,7 @@
 import styles from "@/shared/styles/components/Public/Hero.module.css"
 import { Anchor } from '@/shared/components/Public/Anchor'
 
+
 export function Hero() {
   return (
     <header
@@ -8,7 +9,7 @@ export function Hero() {
     >
       <div className={styles.heroBackground}>
         <img
-          src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80"
+          src="./fondo.jpg"
           alt="Hero background"
           className={styles.heroImage}
         />
