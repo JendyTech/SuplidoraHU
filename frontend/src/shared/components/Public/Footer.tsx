@@ -60,20 +60,20 @@ export function Footer() {
             <ul>
               <li>
                 <IconMail />
-                <Link href="mailto:info@suplidorahu.com">
-                  info@suplidorahu.com
+                <Link href="mailto:suplidorahernandezg@gmail.com">
+                  suplidorahernandezg@gmail.com
                 </Link>
               </li>
               <li>
                 <IconPhone />
-                <Link href="tel:+555123467">
-                  +1 (555) 123-4567
+                <Link href="tel:+18094888685">
+                  +1 (809) 488-8685
                 </Link>
               </li>
               <li>
                 <IconMapPin />
                 <p>
-                  123 Business St, Suite 100
+                  Calle Real Cancino #11, Lucerna, Santo Domingo Este
                 </p>
               </li>
             </ul>
