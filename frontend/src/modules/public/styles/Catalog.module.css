@@ -9,7 +9,7 @@
   margin: 0px auto;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 24px;
   padding: 24px 24px;
 
 }
@@ -27,3 +27,173 @@
     padding: 16px 24px;
   }
 } */
+
+
+
+/* Contenedor principal del input de búsqueda */
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Estilos del input */
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  padding-right: 45px;
+  /* Espacio para el icono */
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #2c3e50;
+  background-color: #ffffff;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Placeholder personalizado */
+.input::placeholder {
+  color: #94a3b8;
+}
+
+/* Estados del input */
+.input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background-color: #fefefe;
+}
+
+.input:hover:not(:focus) {
+  border-color: #cbd5e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Icono de búsqueda */
+.iconSearch {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: #64748b;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+/* Cambiar color del icono cuando el input está enfocado */
+.searchBox:focus-within .iconSearch {
+  color: #3b82f6;
+}
+
+/* Versión responsiva */
+@media (max-width: 768px) {
+  .searchBox {
+    max-width: 100%;
+  }
+
+  .input {
+    padding: 10px 14px;
+    padding-right: 40px;
+    font-size: 14px;
+  }
+
+  .iconSearch {
+    width: 18px;
+    height: 18px;
+    right: 12px;
+  }
+}
+
+/* Variante con fondo gris claro */
+.searchBox.variant-gray .input {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.searchBox.variant-gray .input:focus {
+  background-color: #ffffff;
+  border-color: #3b82f6;
+}
+
+/* Variante compacta */
+.searchBox.compact .input {
+  padding: 8px 12px;
+  padding-right: 35px;
+  font-size: 14px;
+  border-radius: 20px;
+}
+
+.searchBox.compact .iconSearch {
+  width: 16px;
+  height: 16px;
+  right: 10px;
+}
+
+/* Animación sutil para el contenedor */
+.searchBox {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Efecto de loading (opcional) */
+.searchBox.loading .input {
+  background-image: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Dark mode (opcional) */
+@media (prefers-color-scheme: dark) {
+  .input {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+  }
+
+  .input::placeholder {
+    color: #6b7280;
+  }
+
+  .input:focus {
+    border-color: #60a5fa;
+    background-color: #111827;
+  }
+
+  .iconSearch {
+    color: #9ca3af;
+  }
+
+  .searchBox:focus-within .iconSearch {
+    color: #60a5fa;
+  }
+}

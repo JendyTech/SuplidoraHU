@@ -40,6 +40,10 @@ export default function CalalogPage() {
 
 
   const [totalProducts, setTotalProducts] = useState<number>(0)
+  const totalProductsPage = totalProducts > 30 ? 30 : totalProducts
+
+
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -63,7 +67,7 @@ export default function CalalogPage() {
       if (response && response.ok && response.result) {
         const isNextPage = !!response.result.metadata?.next
         setIsNext(isNextPage)
-        setCategories(response.result.data)
+        setCategories(response.result.data.sort((a, b) => a.name.localeCompare(b.name)))
 
       } else {
         console.error("Error en la respuesta de categorías:", response)
@@ -96,7 +100,6 @@ export default function CalalogPage() {
       return
     }
 
-    console.log(filter.category)
 
     const areFiltersEqual = () => {
 
@@ -135,13 +138,17 @@ export default function CalalogPage() {
 
       setLoading(true)
       await useDelay(1000)
-      const data = await getCatalog(filter)
+
+      const data = await getCatalog({ ...filter, page: 1 })
+
       if (data.ok) {
         setProducts(data.result.data)
+        setTotalProducts(data.result.metadata.total)
       } else {
 
         toast.error(data.messages[0].message)
       }
+      setActualNextIndex(1)
       setLoading(false)
       setIsFiltered(true)
       setChanged(!changed)
@@ -193,35 +200,38 @@ export default function CalalogPage() {
       <div className={styles.main}>
         <header>
           <Typography textAlign="left" variant="h1">
-            Catálogo de Productos de Alta Calidad para Todos tus Necesidades
+            Catálogo de Productos para Todas tus Necesidades
           </Typography>
-
-          <Typography
-            variant="span"
-            fontSize="16px"
-            fontWeight={500}
-            color="#6b7280"
-          >
-            Explora nuestro catálogo de productos cuidadosamente seleccionados
-            para ofrecerte lo mejor en calidad y variedad. Desde tecnología hasta
-            artículos para el hogar, encuentra todo lo que necesitas con opciones
-            accesibles y de confianza. Actualizado regularmente, nuestro catálogo
-            está diseñado para satisfacer tus expectativas y brindarte una
-            experiencia de compra única. ¡Descubre lo que tenemos para ti!
-          </Typography>
-        </header>
-        <section className={styles.container}>
-          <div className={styles2.card}>
-            <div className={styles2.inputWrapper}>
+          <div style={{
+            display: "flex",
+            gap: "24px",
+            alignItems: "center",
+          }}>
+            <div className={styles.searchBox}>
               <input
                 type="text"
                 placeholder="Buscar productos..."
-                className={styles2.input}
+                className={styles.input}
                 onChange={handleChangeSearch}
                 value={filter.search}
               />
-              <IconSearch className={styles2.iconSearch} />
+              <IconSearch className={styles.iconSearch} />
+
             </div>
+            <div style={{ width: "120px", }}>
+              <CustomButton
+                text="Buscar"
+                buttonType="button"
+                onClick={() => filterProducts()}
+                styles={{
+                  padding: "14px 26px"
+                }}
+              />
+            </div>
+          </div>
+        </header>
+        <section className={styles.container}>
+          <div className={styles2.card}>
 
             <div className={styles2.priceRangeWrapper} >
               <div className={styles2.priceRangeHeader}>
@@ -321,7 +331,7 @@ export default function CalalogPage() {
               </div>
               <div style={{ paddingTop: "20px" }}>
                 <CustomButton
-                  text="Buscar"
+                  text="Filtrar"
                   buttonType="button"
                   onClick={() => filterProducts()}
                 />
@@ -368,6 +378,7 @@ export default function CalalogPage() {
             ) : null}
             <div className={styles2.query} style={{ display: "flex", gap: "20px", justifyContent: "space-between" }}>
 
+
               <div className={styles2.filterButton} onClick={() => setShowModal(true)}>
                 <p>Filtros</p>
 
@@ -376,7 +387,7 @@ export default function CalalogPage() {
               <CatalogPagination
                 currentPage={actualNextIndex}
                 onPageChange={async function (page: number) {
-                  const response = await getCatalog({ page: page })
+                  const response = await getCatalog({ ...filter, page: page })
                   if (response.ok) {
                     setProducts(response.result.data)
                     setActualNextIndex(page)
@@ -387,7 +398,7 @@ export default function CalalogPage() {
 
                 isNextPage={isNextProducts}
               />
-              Mostrandose 30 Productos de {totalProducts}
+              Mostrandose {totalProductsPage} Productos de {totalProducts}
 
             </div>
 
@@ -444,6 +455,7 @@ export default function CalalogPage() {
                     setProducts(response.result.data)
                     setActualNextIndex(page)
                     setIsNextProducts(response.result.metadata.next)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
                   }
                 }}
                 totalPages={totalPages - 1}
@@ -464,14 +476,6 @@ export default function CalalogPage() {
           }
         }>
           <div className={styles2.inputWrapper} style={{ display: "flex", justifyContent: "space-between", alignContent: "center" }}>
-            <input
-              type="text"
-              placeholder="Buscar productos..."
-              className={styles2.input}
-              onChange={handleChangeSearch}
-              value={filter.search}
-            />
-            <IconSearch className={styles2.iconSearch} />
 
             <IconX onClick={() => setShowModal(false)} size={26} strokeWidth={1} />
 
@@ -577,7 +581,7 @@ export default function CalalogPage() {
             </div>
             <div style={{ paddingTop: "20px" }}>
               <CustomButton
-                text="Buscar"
+                text="Filtrar"
                 buttonType="button"
                 onClick={() => {
                   filterProducts()

@@ -15,15 +15,15 @@ const UserSummary = ({ userData, image }: { userData: AddUserModel, image: strin
             <span className={styles.value}>{userData.firstName}</span>
           </div>
           <div className={styles.infoItem}>
-            <span className={styles.label}>Precio:</span>
+            <span className={styles.label}>Apellido:</span>
             <span className={styles.value}>{userData.lastName}</span>
           </div>
           <div className={styles.infoItem}>
-            <span className={styles.label}>Descripción:</span>
+            <span className={styles.label}>Contraseña:</span>
             <span className={styles.value}>{userData.password}</span>
           </div>
           <div className={styles.infoItem}>
-            <span className={styles.label}>Código:</span>
+            <span className={styles.label}>Correo:</span>
             <span className={styles.value}>{userData.email}</span>
           </div>
         </div>

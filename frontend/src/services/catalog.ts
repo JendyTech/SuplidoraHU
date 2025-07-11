@@ -46,6 +46,8 @@ export const getCatalog = async (
     query,
   });
 
+  console.log(response);
+
   return response;
 };
 

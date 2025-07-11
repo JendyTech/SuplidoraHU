@@ -23,17 +23,57 @@ import {
   IconPhoto,
 } from "@tabler/icons-react"
 import CustomSelect from "@/shared/components/Form/Select"
+import { Autocomplete, TextField } from '@mui/material'
 
 interface ProductEditClientProps {
-  productData: GetProduct
+  productData: GetProduct,
+  categories: string[]
+}
+
+const inputProps = {
+  width: "100%",
+  backgroundColor: "#F4F5F9",
+  borderRadius: "8px",
+
+
+  "& .MuiInputLabel-root": {
+    fontSize: "14px",
+    fontWeight: 400,
+    color: "#727272",
+    marginBottom: "20px"
+  },
+
+
+  "& .MuiOutlinedInput-root": {
+    height: "46px",
+    fontSize: "14px",
+    color: "#727272",
+    padding: "0 16px",
+
+    "& fieldset": {
+      borderRadius: "8px",
+      border: "1px solid #DBDCDE",
+    },
+
+    "&:hover fieldset": {
+      borderColor: "#B0B3B8",
+    },
+
+    "&.Mui-focused fieldset": {
+      borderColor: "#727272",
+    },
+  },
 }
 
 const ProductEditClient: React.FC<ProductEditClientProps> = ({
   productData,
+  categories
+
 }) => {
   const [product, setProduct] = useState<GetProduct<Image>>(() => ({
     ...productData,
     images: productData.images.map((el) => el),
+    categoryName: productData.categoryName,
   }))
 
   const [status, setStatus] = useState<boolean>(productData.status)
@@ -65,7 +105,6 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
     }
   }
 
-  const [categories, setCategories] = useState<Option[]>([])
 
   const getCategories = async () => {
     const response = await getAllCategories()
@@ -78,25 +117,6 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
     return []
   }
 
-  const handleSeachCategory = async (value: string) => {
-    const categories = await getCategories()
-    if (!categories) return
-    setCategories((prevState) => [
-      ...prevState,
-      ...categories
-        .map((category) => ({
-          label: String(category.name),
-          value: category._id,
-        }))
-        .filter(
-          (newCategory) =>
-            !prevState.some(
-              (existingCategory) => existingCategory.value === newCategory.value
-            )
-        )
-        .slice(0, 2),
-    ])
-  }
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileInput = e.target
@@ -127,6 +147,7 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
         images: newImages,
       }))
     }
+
 
     fileInput.value = ""
 
@@ -248,23 +269,29 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
             />
             Categoría *
           </label>
-          <AutoComplete
-            placeholder="Seleccione o cree una categoría"
-            freeOption
+          <Autocomplete
+            disablePortal
             options={categories}
-            onInput={handleSeachCategory}
-            onSelect={(value, label) => {
-              value === label
-                ? setProduct((prevProduct) => ({
-                  ...prevProduct,
-                  categoryName: value,
-                }))
-                : setProduct((prevProduct) => ({
-                  ...prevProduct,
-                  categoryId: value,
-                }))
+            getOptionLabel={(option) => option}
+            sx={{ width: '330px' }}
+            defaultValue={product.categoryName}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Escribe aquí la categoría"
+                variant="outlined"
+
+                sx={inputProps}
+              />
+            )}
+            onChange={(event, newValue) => {
+              setProduct((prevState) => ({
+                ...prevState,
+                categoryName: newValue ?? "N/A",
+              }))
             }}
           />
+
         </div>
 
         <div className={styles.inputWrapper}>
@@ -349,7 +376,6 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
       <div className={styles.buttonContainer}>
         <CustomButton
           onClick={async () => {
-            console.log(product)
 
             setLoading(true)
             await useDelay(2000)
@@ -365,13 +391,12 @@ const ProductEditClient: React.FC<ProductEditClientProps> = ({
                 unitsPerPack: Number(product.unitsPerPack),
                 imagesToDelete: willDeleteImagesIds,
                 imagesToAdd: willAddImages,
-                categoryId: product.categoryId ?? "",
                 images: product.images,
+                categoryName: product.categoryName ?? "N/A",
               }
 
               const model: UpdateProduct = uProduct
 
-              console.log(model)
 
               const response = await updateProduct(productData._id, model)
 

@@ -16,7 +16,8 @@ interface AutoCompleteProps {
   placeholder?: string
   disabled?: boolean
   maxWidth?: string
-  value?: string
+  value?: string,
+  defaultValue?: string,
 }
 
 export function AutoComplete({
@@ -27,7 +28,8 @@ export function AutoComplete({
   placeholder = '',
   disabled = false,
   maxWidth = '330px',
-  value = ''
+  value = '',
+  defaultValue,
 }: AutoCompleteProps) {
   const [inputValue, setInputValue] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<Option | null>(null)
@@ -152,6 +154,7 @@ export function AutoComplete({
         onFocus={handleFocus}
         placeholder={placeholder}
         disabled={disabled}
+        defaultValue={defaultValue}
       />
 
       {isOpen && (filteredOptions.length > 0 || (freeOption && inputValue)) && (

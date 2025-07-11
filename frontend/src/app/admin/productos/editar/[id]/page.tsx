@@ -1,7 +1,7 @@
 
 import { PageParams } from "@/interfaces/Page"
 import ProductEditClient from "@/modules/productos/components/ProductEditClient"
-import { getProductById } from "@services/product"
+import { getAllCategoriesServer, getProductById } from "@services/product"
 import { ErrorLoadServer } from "@/shared/components/Error/ErrorLoadServer"
 
 export default async function ProductEdit(props: PageParams) {
@@ -14,9 +14,18 @@ export default async function ProductEdit(props: PageParams) {
 
     const { result: product } = response
 
-    const { categoryName, ...data } = product
 
-    return <ProductEditClient productData={data} />
+
+    const categoriesResponse = await getAllCategoriesServer()
+
+
+    if (!categoriesResponse.ok) {
+      return <>Error al Buscar las Categorias</>
+    }
+
+    const categories = categoriesResponse.result
+
+    return <ProductEditClient productData={product} categories={categories} />
   } catch (error) {
     return <ErrorLoadServer />
   }
