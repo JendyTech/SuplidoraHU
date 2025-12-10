@@ -2,7 +2,7 @@ import { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 import { readTokenServer } from "./utils/session"
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
 	const url = request.nextUrl.clone()
 	const pathname = url.pathname
 	const authUrl = new URL("/login", url.origin)

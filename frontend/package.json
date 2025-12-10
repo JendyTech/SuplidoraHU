@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -18,24 +18,24 @@
     "@tabler/icons-react": "3.21.0",
     "dayjs": "1.11.13",
     "framer-motion": "^11.15.0",
-    "next": "15.0.3",
+    "next": "16.0.8",
     "normalize.css": "8.0.1",
-    "react": "19.0.0-rc-66855b96-20241106",
+    "react": "19.2.1",
     "react-data-table-component": "7.6.2",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "react-spinners": "^0.13.8",
+    "react-dom": "19.2.1",
+    "react-spinners": "^0.17.0",
     "sonner": "1.7.0"
   },
   "devDependencies": {
     "@types/node": "20",
-    "@types/react": "18",
-    "@types/react-dom": "18",
-    "eslint": "8",
-    "eslint-config-next": "15.0.3",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.0.8",
     "typescript": "5"
   },
   "overrides": {
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3"
   }
 }
