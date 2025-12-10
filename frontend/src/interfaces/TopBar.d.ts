@@ -1,8 +1,10 @@
+import { JSX } from "react";
+
 export interface ItemMenu {
   url: string;
   title: string;
   items: ItemMenuSubItem[];
-  header?: JSX.Element
+  header?: JSX.Element;
 }
 
 interface ItemMenuSubItem {

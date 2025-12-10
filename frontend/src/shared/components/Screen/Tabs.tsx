@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import styles from '@/shared/styles/components/Screen/Tabs.module.css'
+import { JSX, useState } from "react";
+import styles from "@/shared/styles/components/Screen/Tabs.module.css";
 
 interface Tab {
-  label: string
-  content: JSX.Element
+  label: string;
+  content: JSX.Element;
 }
 
 interface TabsProps {
-  tabs: Tab[]
+  tabs: Tab[];
 }
 
 export const Tabs = ({ tabs }: TabsProps) => {
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <div>
@@ -21,16 +21,16 @@ export const Tabs = ({ tabs }: TabsProps) => {
         {tabs.map((tab, index) => (
           <button
             key={index}
-            className={`${styles.tabButton} ${index === activeTab ? styles.activeTab : ''}`}
+            className={`${styles.tabButton} ${
+              index === activeTab ? styles.activeTab : ""
+            }`}
             onClick={() => setActiveTab(index)}
           >
             {tab.label}
           </button>
         ))}
       </div>
-      <div className={styles.tabContent}>
-        {tabs[activeTab].content}
-      </div>
+      <div className={styles.tabContent}>{tabs[activeTab].content}</div>
     </div>
-  )
-}
+  );
+};
